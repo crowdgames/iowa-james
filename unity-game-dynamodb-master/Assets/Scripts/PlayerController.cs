@@ -40,10 +40,10 @@ public class PlayerController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        AudioSource[] aSources = GetComponents<AudioSource>();
+        /*AudioSource[] aSources = GetComponents<AudioSource>();
         audioFootstep = aSources[0];
         audioCoin = aSources[1];
-        audioJump = aSources[2];
+        audioJump = aSources[2];*/
         
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
