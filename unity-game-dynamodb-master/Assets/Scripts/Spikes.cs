@@ -13,6 +13,7 @@ public class Spikes : MonoBehaviour {
         ow = GetComponent<AudioSource>();
 	}
 
+    
     private void OnTriggerEnter2D(Collider2D col)
     {
         if(col.CompareTag("Player"))
