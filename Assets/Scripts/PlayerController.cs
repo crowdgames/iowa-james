@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour {
     public float knockbackLength;
     public float knockbackCount;
     public bool knockFromRight;
+    public float delay = 3;
 
     // Use this for initialization
     void Start () {
@@ -70,14 +71,14 @@ public class PlayerController : MonoBehaviour {
         {
             // Sliding stuff
             float slideAccell;
-            if (Input.GetKey(KeyCode.S) && grounded && Mathf.Abs(rb.velocity.x) > 3.0f)
+            /*if (Input.GetKey(KeyCode.S) && grounded && Mathf.Abs(rb.velocity.x) > 3.0f)
             {
                 sliding = true;
                 slideAccell = 2.0f;
                 slidingCollider.enabled = true;
                 myCol.enabled = false;
-            }
-            else
+            }*/
+            //else
             {
                 sliding = false;
                 slideAccell = 1.0f;
@@ -155,12 +156,20 @@ public class PlayerController : MonoBehaviour {
 
         if(col.CompareTag("Tchest"))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+            delay -= Time.deltaTime;
+            if (delay <= 0)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            }
         }
 
         if (col.CompareTag("Enemy"))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            delay -= Time.deltaTime;
+            if (delay <= 0)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                }
         }
     }
 

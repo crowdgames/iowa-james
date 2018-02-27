@@ -58,7 +58,7 @@ public class TurretScript : MonoBehaviour {
         bulletTimer += Time.deltaTime;
         if (bulletTimer >= shootInterval)
         {
-            Vector2 direction = target.transform.position - transform.position;
+            Vector2 direction = new Vector2(target.transform.position.x - transform.position.x,0);
             direction.Normalize();
            
             if (!attackingRight)
