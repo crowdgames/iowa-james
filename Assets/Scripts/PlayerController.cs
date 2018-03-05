@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
@@ -39,6 +40,11 @@ public class PlayerController : MonoBehaviour {
     public bool knockFromRight;
     public float delay = 3;
 
+
+    private int level = 1;
+    private Text levelText;
+    private GameObject levelImage;
+
     // Use this for initialization
     void Start () {
         /*AudioSource[] aSources = GetComponents<AudioSource>();
@@ -49,6 +55,8 @@ public class PlayerController : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         myCol = GetComponent<BoxCollider2D>();
+     
+        //levelImage.SetActive(false);
 
         curHealth = 1;
         //gm = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<gameMaster>();
@@ -156,20 +164,22 @@ public class PlayerController : MonoBehaviour {
 
         if(col.CompareTag("Tchest"))
         {
-            delay -= Time.deltaTime;
-            if (delay <= 0)
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-            }
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            //gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            //gameObject.GetComponent<Collider2D>().enabled = false;
+
+            //StartCoroutine(Wait(3.0F));
+        
         }
 
         if (col.CompareTag("Enemy"))
         {
-            delay -= Time.deltaTime;
-            if (delay <= 0)
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-                }
+
+             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            
+             
         }
     }
 
@@ -188,5 +198,15 @@ public class PlayerController : MonoBehaviour {
     {
         audioFootstep.Play();
     }
+
+    /*IEnumerator Wait(float waitTime)
+    {
+        float fadeTime = GameObject.Find("GameMaster").GetComponent<Fading>().BeginFade(1);
+        yield return new WaitForSeconds(fadeTime);
+        
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        
+    }*/
+
 
 }
