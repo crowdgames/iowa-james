@@ -1,5 +1,5 @@
 # unity-game-dynamodb
-A simple Unity platformer game with AWS DyanmoDB logging capabilities
+A simple Unity platformer game with AWS DynamoDB logging capabilities
 
 ###Tutorial:
 The logging system consists principally of three scripts: **Logger.cs**, **Dynode.cs**, and **DDBHTTP.cs**. A fourth script is used for the replaying of a logged path, allowing you to re-simulate exactly what the player did in a given run; this "replay" script is called **ScanDynamo.cs**.
