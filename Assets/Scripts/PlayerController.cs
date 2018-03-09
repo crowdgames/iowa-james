@@ -18,7 +18,6 @@ public class PlayerController : MonoBehaviour {
     bool facingRight = true;
     bool sliding;
     Rigidbody2D rb;
-    Animator anim;
     public BoxCollider2D slidingCollider;
     BoxCollider2D myCol;
 
@@ -28,7 +27,7 @@ public class PlayerController : MonoBehaviour {
     float groundRadius = 0.4f;
     public LayerMask whatIsGround;
 
-    public gameMaster gm;
+    //public gameMaster gm;
     AudioSource audioFootstep;
     AudioSource audioCoin;
     AudioSource audioJump;
@@ -44,7 +43,9 @@ public class PlayerController : MonoBehaviour {
     private int level = 1;
     private Text levelText;
     private GameObject levelImage;
-
+    private SpriteRenderer sr;
+    private Animator anim;
+    
     // Use this for initialization
     void Start () {
         /*AudioSource[] aSources = GetComponents<AudioSource>();
@@ -55,7 +56,9 @@ public class PlayerController : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         myCol = GetComponent<BoxCollider2D>();
-     
+        sr = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
+
         //levelImage.SetActive(false);
 
         curHealth = 1;
@@ -65,7 +68,8 @@ public class PlayerController : MonoBehaviour {
     void FixedUpdate()
     {
         // Check if grounded
-        grounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
+        //grounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
+        grounded = Physics2D.IsTouchingLayers(myCol, whatIsGround);
         anim.SetBool("Ground", grounded);
 
         anim.SetFloat("vSpeed", rb.velocity.y);
@@ -159,7 +163,7 @@ public class PlayerController : MonoBehaviour {
         {
             Destroy(col.gameObject);
             audioCoin.Play();
-            gm.points += 1;
+            //gm.points += 1;
         }    
 
         if(col.CompareTag("Tchest"))

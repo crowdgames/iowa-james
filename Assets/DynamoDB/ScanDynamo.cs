@@ -14,7 +14,7 @@ public class ScanDynamo : MonoBehaviour {
     public string key;
     public string secret;
     Button get;
-    Action[] points;
+    LogAction[] points;
 
     void Start() {
         http = gameObject.AddComponent<DynamoDB.DDBHTTP>();
@@ -48,7 +48,7 @@ public class ScanDynamo : MonoBehaviour {
                 var results = JSON.Parse(callback);
                 
                 // Sort results into an Action array
-                points = new Action[results["Items"].Count];
+                points = new LogAction[results["Items"].Count];
                 for(int i = 0; i < results["Items"].Count; i++) {
                     for(int p = 0; p < results["Items"].Count; p++)
                     {
@@ -57,7 +57,7 @@ public class ScanDynamo : MonoBehaviour {
                             string action = results["Items"][p]["Action"]["S"].Value;
                             double time = results["Items"][p]["Stamp"]["S"].AsDouble;
                             int action_count = results["Items"][p]["action_count"]["S"].AsInt;
-                            points[i] = new Action(action, time, action_count);
+                            points[i] = new LogAction(action, time, action_count);
                         }
                     }
                 }
@@ -113,13 +113,13 @@ public class ScanDynamo : MonoBehaviour {
 }
 
 // Action class for storing key events
-public class Action
+public class LogAction
 {
     public string action;
     public double stamp;
     public int action_count;
 
-    public Action(string a, double time, int actionCount)
+    public LogAction(string a, double time, int actionCount)
     {
         action = a;
         stamp = time;

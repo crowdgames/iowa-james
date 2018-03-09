@@ -3,18 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using SimpleJSON;
 
-public class Logger : MonoBehaviour {
+public class Logger : MonoBehaviour
+{
 
-    public string awsAccessKeyID = "";
-    public string awsSecretAccessKey = "";
-    public string tableName;
+    public string awsAccessKeyID = "AKIAISX5KCURGWDQKUDQ";
+    public string awsSecretAccessKey = "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";
+    public string tableName = "Unity";
     public string primaryKey;
-    public string log;
+    public static float X;
+    public static float Y;
+   // public string log;
     public bool logging;
-
+    int interval = 1;
+    float nextTime = 0;
+    private float time = 0.0f;
+    public float interpolationPeriod = 1f;
     DynamoDB.Dynode dynode;
 
-    void Start () {
+    void Start()
+    {
+
         // Create a session-unique, persistent object for logging.
         // If it already exists (from a previous run), then refind it.
         if ((GameObject.Find("DynamoDB")))
@@ -28,10 +36,10 @@ public class Logger : MonoBehaviour {
         }
 
         // Set Dynode's parameters
-        dynode.AWS_ACCESS_KEY_ID = awsAccessKeyID;
-        dynode.AWS_SECRET_ACCESS_KEY = awsSecretAccessKey;
-        dynode.table_name = tableName;
-        dynode.primary_key = primaryKey;
+        dynode.AWS_ACCESS_KEY_ID = "AKIAISX5KCURGWDQKUDQ";
+        dynode.AWS_SECRET_ACCESS_KEY = "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";
+        dynode.table_name = "Unity";
+        dynode.primary_key = "run_id";
 
         //InvokeRepeating("TestLog", 2.0f, 0.5f);
     }
@@ -39,69 +47,119 @@ public class Logger : MonoBehaviour {
 
     // A logging function. This would be called every second,
     // OR every time the user puts in an input.
-    void TestLog(string keyEvent)
+    void TestLog(string positionx, string positiony)
     {
         // Put in ONLY item data into the Item object.
         // Do NOT put in a primary key, as Dynode will handle that for you.
         // Remember to put in the data TYPE. This is VERY IMPORTANT!
 
+
         var Item = new JSONObject();
+        var obj = new JSONObject();
         //Item["Log"]["S"] = log;
-        Item["Person"]["S"] = MainMenu.username;
-        Item["Log"]["S"] = log;
-        Item["Action"]["S"] = keyEvent;
-       //Debug.Log("Key logged: " + keyEvent);
+        //Item["Person"]["S"] = MainMenu.username;
+
+        Item["X"]["S"] = positionx;
+        Item["Y"]["S"] = positiony;
+        //Item["Y coordinate"]["S"] = keyEvent;
+
+
+
+        //Debug.Log("Key logged: " + keyEvent);
 
         dynode.Send(Item);
     }
+
+    /* void TestLog2(string keyEvent2)
+     {
+         var Item = new JSONObject();
+         Item["Log"]["S"] = log;
+         Item["Person"]["S"] = MainMenu.username;
+         Item["Log"]["S"] = log;
+
+         dynode.Send(Item);
+     }*/
 
     // Call this function whenever user pauses the game!!!
     // Function will fire KeyUp events during pause menu, so that keys don't
     // stuck during pause time.
     public void LogPause()
     {
-        TestLog("RightUp");
-        TestLog("LeftUp");
-        TestLog("UpUp");
-        TestLog("SUp");
+        TestLog("RightUp", "x");
+        
     }
 
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update()
+    {
+
+        X = transform.position.x;
+
+        Y = transform.position.y;
+        //Debug.Log("X= " + transform.position.x);
+        //T = System.DateTime.Now;
+
+        //Debug.Log("Y= " + transform.position.y);
+        //Debug.Log("T= " + System.DateTime.Now);
         if (logging)
+
         {
-            if (Input.GetKeyDown(KeyCode.RightArrow))
+            // if (Time.time >= nextTime)
+            // {
+            time += Time.deltaTime;
+
+            if (time >= interpolationPeriod)
+            {
+                time = 0.0f;
+                //do something here every interval seconds
+                string sx = "" + X;
+
+                string sy = "" + Y;
+                string position = sx + ", " + sy;
+                Debug.Log(sx);
+                TestLog(sx, sy);
+                nextTime += interval;
+
+            }
+            /*if (Input.GetKeyDown(KeyCode.RightArrow))
             {
                 TestLog("RightDown");
             }
-            if (Input.GetKeyUp(KeyCode.RightArrow))
+            if (X = transform.position.x)
             {
-                TestLog("RightUp");
+                TestLog(X);
             }
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                TestLog("LeftDown");
-            }
-            if (Input.GetKeyUp(KeyCode.LeftArrow))
-            {
-                TestLog("LeftUp");
-            }
-            if (Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                TestLog("UpDown");
-            }
-            if (Input.GetKeyUp(KeyCode.UpArrow))
-            {
-                TestLog("UpUp");
-            }
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                TestLog("SDown");
-            }
-            if (Input.GetKeyUp(KeyCode.S))
-            {
-                TestLog("SUp");
-            }
+             if (Input.GetKeyUp(KeyCode.RightArrow))
+             {
+                 TestLog("RightUp");
+             }
+             if (Input.GetKeyDown(KeyCode.LeftArrow))
+             {
+                 TestLog("LeftDown");
+             }
+             if (Input.GetKeyUp(KeyCode.LeftArrow))
+             {
+                 TestLog("LeftUp");
+             }
+             if (Input.GetKeyDown(KeyCode.UpArrow))
+             {
+                 TestLog("UpDown");
+             }
+             if (Input.GetKeyUp(KeyCode.UpArrow))
+             {
+                 TestLog("UpUp");
+             }
+             if (Input.GetKeyDown(KeyCode.S))
+             {
+                 TestLog("SDown");
+             }
+             if (Input.GetKeyUp(KeyCode.S))
+             {
+                 TestLog("SUp");
+             }
+         }
+     }*/
+            //}
         }
     }
 }
