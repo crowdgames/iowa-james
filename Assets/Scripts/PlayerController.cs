@@ -57,7 +57,6 @@ public class PlayerController : MonoBehaviour {
         anim = GetComponent<Animator>();
         myCol = GetComponent<BoxCollider2D>();
         sr = GetComponent<SpriteRenderer>();
-        anim = GetComponent<Animator>();
 
         //levelImage.SetActive(false);
 
@@ -144,7 +143,7 @@ public class PlayerController : MonoBehaviour {
         {
             anim.SetBool("Ground", false);
             rb.AddForce(new Vector2(0, jumpForce));
-            audioJump.Play();
+            //audioJump.Play();
         }
     }
 
@@ -165,10 +164,12 @@ public class PlayerController : MonoBehaviour {
             audioCoin.Play();
             //gm.points += 1;
         }    
-
-        if(col.CompareTag("Tchest"))
+        
+        if(col.CompareTag("Chest"))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            int numScenes = SceneManager.sceneCountInBuildSettings;
+            int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+            SceneManager.LoadScene(nextSceneIndex);
 
             //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             //gameObject.GetComponent<SpriteRenderer>().enabled = false;
@@ -198,11 +199,12 @@ public class PlayerController : MonoBehaviour {
        // anim.Play("FlashRed");
     }
 
+    
     void Footstep()
     {
-        audioFootstep.Play();
+        //audioFootstep.Play();
     }
-
+    
     /*IEnumerator Wait(float waitTime)
     {
         float fadeTime = GameObject.Find("GameMaster").GetComponent<Fading>().BeginFade(1);

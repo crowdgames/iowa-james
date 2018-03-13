@@ -5,14 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class Win : MonoBehaviour {
 
-    /*public GameObject obj;
+    /*
     void OnTriggerEnter(Collider other)
     {
         //check if it's the player that is colliding with this reset object by name/tag or anything else you want
-        if (other.gameObject.CompareTag("Pick up"))
+        if (other.tag == "Player")
         {
             //do your reset here
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); //reset this level.
+            Debug.Log("Build Index: " + SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1); //reset this level.
         }
-    } */
+    } 
+    */
 } 
