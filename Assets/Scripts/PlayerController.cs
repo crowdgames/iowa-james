@@ -179,7 +179,7 @@ public class PlayerController : MonoBehaviour {
         
         }
 
-        if (col.CompareTag("Enemy"))
+        if (col.CompareTag("Enemy") || col.CompareTag("Killer"))
         {
 
              SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
