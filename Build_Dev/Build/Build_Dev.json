@@ -1,0 +1,13 @@
+{
+"companyName": "PLAIT",
+"productName": "Coin Collector",
+"dataUrl": "Build_Dev.data.unityweb",
+"asmCodeUrl": "Build_Dev.asm.code.unityweb",
+"asmMemoryUrl": "Build_Dev.asm.memory.unityweb",
+"asmFrameworkUrl": "Build_Dev.asm.framework.unityweb",
+"TOTAL_MEMORY": 536870912,
+"graphicsAPI": ["WebGL 2.0", "WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#231F20"
+}
