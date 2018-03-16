@@ -7,13 +7,15 @@ using System.Text;
 using System;
 using System.Globalization;
 
-namespace DynamoDB {
+namespace DynamoDB
+{
 
-    public class DDBHTTP : MonoBehaviour {
+    public class DDBHTTP : MonoBehaviour
+    {
 
-        public string AWS_ACCESS_KEY_ID = "AWSACCESSKEY";
-        public string AWS_SECRET_ACCESS_KEY = "AWSSECRETKEYUPDATEME";
-        public string action;
+        public string AWS_ACCESS_KEY_ID = "AKIAISX5KCURGWDQKUDQ";
+        public string AWS_SECRET_ACCESS_KEY = "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";
+        public string action = "DynamoDB_20120810.Scan";
         public string response;
 
         public WWW www;
@@ -39,7 +41,7 @@ namespace DynamoDB {
         /// </summary>
         void Start()
         {
-            //Debug.Log("DDBHTTP instance created.");
+            Debug.Log("DDBHTTP instance created.");
         }
 
         /// <summary>
@@ -285,7 +287,7 @@ namespace DynamoDB {
                 response(www.text);
 
                 //foreach (var item in www.responseHeaders)
-                  //  Debug.Log(item.ToString());
+                //  Debug.Log(item.ToString());
             }
             else
             {

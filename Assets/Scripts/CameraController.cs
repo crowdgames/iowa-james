@@ -4,7 +4,7 @@ using System.Collections;
 public class CameraController : MonoBehaviour
 {
 
-    public float dampTime = 0.15f;
+    /*public float dampTime = 0.15f;
     private Vector3 velocity = Vector3.zero;
     public Transform target;
 
@@ -18,6 +18,23 @@ public class CameraController : MonoBehaviour
             Vector3 destination = transform.position + delta;
             transform.position = Vector3.SmoothDamp(transform.position, destination, ref velocity, dampTime);
         }
+
+    }*/
+
+    public GameObject player;
+    public float off = -1.25f;
+
+    private Vector3 offset;
+
+    private void Start()
+    {
+        offset = transform.position - player.transform.position;
+
+    }
+
+    private void Update()
+    {
+        transform.position =new Vector3( player.transform.position.x + offset.x, player.transform.position.y+(off*offset.y), offset.z);
 
     }
 }

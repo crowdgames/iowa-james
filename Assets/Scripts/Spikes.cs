@@ -29,7 +29,7 @@ public class Spikes : MonoBehaviour {
             
             // Set knockback timer
             player.knockbackCount = 0.2f;
-            ow.Play();
+            //ow.Play();
         }
     }
 }
