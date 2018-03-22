@@ -43,8 +43,8 @@ namespace DynamoDB
 
             http = gameObject.AddComponent<DDBHTTP>();
             http.action = "DynamoDB_20120810.PutItem";
-            http.AWS_ACCESS_KEY_ID = "AKIAISX5KCURGWDQKUDQ";
-            http.AWS_SECRET_ACCESS_KEY = "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";
+            http.AWS_ACCESS_KEY_ID = "";
+            http.AWS_SECRET_ACCESS_KEY = "";
 
             //Debug.Log("Dynode instance created...");
         }
@@ -73,10 +73,10 @@ namespace DynamoDB
 
             http.BuildWWWRequest(obj.ToString(), stamp);
             StartCoroutine(http.WaitForRequest(http.www, callback => {
-                if (callback != null)
-                {
-                    //Debug.Log(callback);
-                }
+                //if (callback != null)
+                //{
+                //    //Debug.Log(callback);
+                //}
             }));
         }
 

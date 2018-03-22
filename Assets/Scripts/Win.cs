@@ -9,10 +9,10 @@ public class Win : MonoBehaviour {
     void OnTriggerEnter(Collider other)
     {
         //check if it's the player that is colliding with this reset object by name/tag or anything else you want
-        if (other.gameObject.CompareTag("Pick up"))
+        if (other.gameObject.CompareTag("Player"))
         {
             //do your reset here
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); //reset this level.
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1); 
         }
     } */
 } 

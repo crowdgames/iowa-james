@@ -6,9 +6,9 @@ using SimpleJSON;
 public class Logger : MonoBehaviour
 {
 
-    public string awsAccessKeyID = "AKIAISX5KCURGWDQKUDQ";
-    public string awsSecretAccessKey = "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";
-    public string tableName = "Unity";
+    public string awsAccessKeyID = "";
+    public string awsSecretAccessKey = "";
+    public string tableName = "";
     public string primaryKey;
     public static float X;
     public static float Y;
@@ -36,10 +36,10 @@ public class Logger : MonoBehaviour
         }
 
         // Set Dynode's parameters
-        dynode.AWS_ACCESS_KEY_ID = "AKIAISX5KCURGWDQKUDQ";
-        dynode.AWS_SECRET_ACCESS_KEY = "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";
-        dynode.table_name = "Unity";
-        dynode.primary_key = "run_id";
+        dynode.AWS_ACCESS_KEY_ID = "";
+        dynode.AWS_SECRET_ACCESS_KEY = "";
+        dynode.table_name = "";
+        dynode.primary_key = "";
 
         //InvokeRepeating("TestLog", 2.0f, 0.5f);
     }

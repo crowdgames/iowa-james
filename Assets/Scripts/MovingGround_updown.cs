@@ -16,7 +16,8 @@ public class MovingGround_updown : MonoBehaviour
     void Update()
     {
         Vector3 v = startPos;
-        v.y += delta * Mathf.Cos(Time.time * speed);
+        v.y += delta * Mathf.Sin(Time.time * speed);
         transform.position = v;
     }
+
 }

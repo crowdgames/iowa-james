@@ -13,9 +13,10 @@ public class PlayerController : MonoBehaviour {
     //public int maxHealth = 5;
 
     // General physics variables
+    public static bool end = false;
     public float maxSpeed = 6.9f;
     public float jumpForce = 1000.0f;
-    bool facingRight = true;
+    public bool facingRight = true;
     bool sliding;
     Rigidbody2D rb;
     Animator anim;
@@ -41,9 +42,10 @@ public class PlayerController : MonoBehaviour {
     public float delay = 3;
 
 
-    private int level = 1;
+    private int level;
     private Text levelText;
     private GameObject levelImage;
+    public GameObject EndUI;
 
     // Use this for initialization
     void Start () {
@@ -59,7 +61,7 @@ public class PlayerController : MonoBehaviour {
         //levelImage.SetActive(false);
 
         curHealth = 1;
-        //gm = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<gameMaster>();
+        gm = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<gameMaster>();
     }
 
     void FixedUpdate()
@@ -164,22 +166,14 @@ public class PlayerController : MonoBehaviour {
 
         if(col.CompareTag("Tchest"))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-            //gameObject.GetComponent<SpriteRenderer>().enabled = false;
-            //gameObject.GetComponent<Collider2D>().enabled = false;
-
-            //StartCoroutine(Wait(3.0F));
-        
+           SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
         }
 
         if (col.CompareTag("Enemy"))
         {
 
-             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            
-             
+            Die();             
+
         }
     }
 
@@ -199,14 +193,5 @@ public class PlayerController : MonoBehaviour {
         audioFootstep.Play();
     }
 
-    /*IEnumerator Wait(float waitTime)
-    {
-        float fadeTime = GameObject.Find("GameMaster").GetComponent<Fading>().BeginFade(1);
-        yield return new WaitForSeconds(fadeTime);
-        
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        
-    }*/
-
-
+  
 }
