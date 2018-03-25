@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Spikes : MonoBehaviour {
 
-    public PlayerController player;
-    AudioSource ow;
+    PlayerController player;
+    //AudioSource ow;
 
 	// Use this for initialization
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        ow = GetComponent<AudioSource>();
+        //ow = GetComponent<AudioSource>();
 	}
 
     
@@ -29,7 +29,7 @@ public class Spikes : MonoBehaviour {
             
             // Set knockback timer
             player.knockbackCount = 0.2f;
-            ow.Play();
+     //       ow.Play();
         }
     }
 }

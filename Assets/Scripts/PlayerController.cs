@@ -181,10 +181,8 @@ public class PlayerController : MonoBehaviour {
 
         if (col.CompareTag("Enemy") || col.CompareTag("Killer"))
         {
-
-             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            
-             
+            Debug.Log("Tag: " + col.tag);
+            Die();
         }
     }
 
