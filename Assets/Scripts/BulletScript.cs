@@ -11,7 +11,7 @@ public class BulletScript : MonoBehaviour {
         {
             if (col.CompareTag("Player"))
             {
-                col.GetComponent<PlayerController>().Damage(1);
+                //col.GetComponent<PlayerController>().Damage(1);
             }
 
             Destroy(gameObject);

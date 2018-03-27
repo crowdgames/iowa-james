@@ -16,6 +16,7 @@ public class Spikes : MonoBehaviour {
     
     private void OnTriggerEnter2D(Collider2D col)
     {
+        /*
         if(col.CompareTag("Player"))
         {
             player.Damage(2);
@@ -31,5 +32,6 @@ public class Spikes : MonoBehaviour {
             player.knockbackCount = 0.2f;
      //       ow.Play();
         }
+        */
     }
 }

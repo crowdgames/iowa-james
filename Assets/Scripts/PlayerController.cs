@@ -8,6 +8,9 @@ public class PlayerController : MonoBehaviour {
 
     // Analytics
     Vector3 previousPos;
+    Vector3 startPos;
+
+    LevelManager lm;
 
     public int curHealth=1;
     //public int maxHealth = 5;
@@ -62,6 +65,12 @@ public class PlayerController : MonoBehaviour {
 
         curHealth = 1;
         //gm = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<gameMaster>();
+
+        startPos = transform.position;
+
+        lm = GameObject.FindObjectOfType<LevelManager>();
+
+        Debug.Log("Start: " + startPos);
     }
 
     void FixedUpdate()
@@ -129,7 +138,7 @@ public class PlayerController : MonoBehaviour {
         // Check if dead
         if (curHealth <= 0)
         {
-            Die();
+            lm.Die();
         }
 
         // Check for max health
@@ -167,9 +176,9 @@ public class PlayerController : MonoBehaviour {
         
         if(col.CompareTag("Chest"))
         {
-            int numScenes = SceneManager.sceneCountInBuildSettings;
-            int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-            SceneManager.LoadScene(nextSceneIndex);
+            //int numScenes = SceneManager.sceneCountInBuildSettings;
+            lm.FadeOut();
+            
 
             //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             //gameObject.GetComponent<SpriteRenderer>().enabled = false;
@@ -182,14 +191,12 @@ public class PlayerController : MonoBehaviour {
         if (col.CompareTag("Enemy") || col.CompareTag("Killer"))
         {
             Debug.Log("Tag: " + col.tag);
-            Die();
+            lm.Die();
+            Debug.Log("Grounded: " + grounded);
         }
     }
 
-    void Die()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
+   
 
     public void Damage(int dmg)
     {
