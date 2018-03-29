@@ -7,9 +7,9 @@ using UnityEngine.SceneManagement;
 public class Logger : MonoBehaviour
 {
 
-    public string awsAccessKeyID = "AKIAILF2YEQK53W5QNNA";
-    public string awsSecretAccessKey = "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";
-    public string tableName = "Coin_Game";
+    public string awsAccessKeyID = "";
+    public string awsSecretAccessKey = "";
+    public string tableName = "";
     public string primaryKey;
     public static float X;
     public static float Y;
@@ -37,10 +37,10 @@ public class Logger : MonoBehaviour
         }
 
         // Set Dynode's parameters
-        dynode.AWS_ACCESS_KEY_ID = "AKIAILF2YEQK53W5QNNA";
-        dynode.AWS_SECRET_ACCESS_KEY = "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";
-        dynode.table_name = "Coin_Game";
-        dynode.primary_key = "id";
+        dynode.AWS_ACCESS_KEY_ID = "";
+        dynode.AWS_SECRET_ACCESS_KEY = "";
+        dynode.table_name = "";
+        dynode.primary_key = "";
 
         //InvokeRepeating("TestLog", 2.0f, 0.5f);
     }
