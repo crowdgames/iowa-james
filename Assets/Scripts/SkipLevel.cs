@@ -23,7 +23,7 @@ public class SkipLevel : MonoBehaviour {
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         SceneManager.LoadScene(nextSceneIndex);
         */
-        lm.LoadNextLevel();
+        Randomizer.LoadNextLevel();
 
     }
 }

@@ -20,9 +20,11 @@ public class PlayerController : MonoBehaviour {
     public float jumpForce = 1000.0f;
     bool facingRight = true;
     bool sliding;
-    Rigidbody2D rb;
+    public Rigidbody2D rb;
     public BoxCollider2D slidingCollider;
     BoxCollider2D myCol;
+    bool canMove;
+    bool canDie;
 
     // Variables for checking for ground
     bool grounded = false;
@@ -47,7 +49,9 @@ public class PlayerController : MonoBehaviour {
     private Text levelText;
     private GameObject levelImage;
     private SpriteRenderer sr;
-    private Animator anim;
+    public Animator anim;
+
+    float move;
     
     // Use this for initialization
     void Start () {
@@ -71,6 +75,10 @@ public class PlayerController : MonoBehaviour {
         lm = GameObject.FindObjectOfType<LevelManager>();
 
         Debug.Log("Start: " + startPos);
+
+        canMove = true;
+        canDie = true;
+        Debug.Log("Can move in start: " + canMove);
     }
 
     void FixedUpdate()
@@ -80,11 +88,14 @@ public class PlayerController : MonoBehaviour {
         grounded = Physics2D.IsTouchingLayers(myCol, whatIsGround);
         anim.SetBool("Ground", grounded);
 
-        anim.SetFloat("vSpeed", rb.velocity.y);
+        if (canMove)
+        {
+            anim.SetFloat("vSpeed", rb.velocity.y);
 
-        // Horizontal motion
-        float move = Input.GetAxis("Horizontal");
-        anim.SetFloat("Speed", Mathf.Abs(move));
+            // Horizontal motion
+            move = Input.GetAxis("Horizontal");
+            anim.SetFloat("Speed", Mathf.Abs(move));
+        }
         
         // Knockback and motion stuff
         if (knockbackCount <= 0) // You can't move while getting knocked back.
@@ -108,7 +119,8 @@ public class PlayerController : MonoBehaviour {
             anim.SetBool("Sliding", sliding);
 
             // MOTION
-            rb.velocity = new Vector2(move * maxSpeed * slideAccell, rb.velocity.y);
+            if(canMove)
+                rb.velocity = new Vector2(move * maxSpeed * slideAccell, rb.velocity.y);
             /*
              *  For logging stuff 
              * if (transform.position != previousPos)
@@ -127,16 +139,16 @@ public class PlayerController : MonoBehaviour {
         }
 
         // Animation flips
-        if (move > 0 && !facingRight)
+        if (move > 0 && !facingRight && canMove)
             Flip();
-        else if (move < 0 && facingRight)
+        else if (move < 0 && facingRight && canMove)
             Flip();
     }
 
 
     void Update () {
         // Check if dead
-        if (curHealth <= 0)
+        if (curHealth <= 0 && canDie)
         {
             lm.Die();
         }
@@ -148,7 +160,7 @@ public class PlayerController : MonoBehaviour {
         }*/
 
         // Jumping
-        if (grounded && Input.GetKeyDown(KeyCode.UpArrow))
+        if (grounded && Input.GetKeyDown(KeyCode.UpArrow) && canMove)
         {
             anim.SetBool("Ground", false);
             rb.AddForce(new Vector2(0, jumpForce));
@@ -177,19 +189,25 @@ public class PlayerController : MonoBehaviour {
         if(col.CompareTag("Chest"))
         {
             //int numScenes = SceneManager.sceneCountInBuildSettings;
+            canMove = false;
+            canDie = false;
+            Debug.Log("Can move: " + canMove);
             lm.FadeOut();
-            
+            Debug.Log("Can move: " + canMove);
+
 
             //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             //gameObject.GetComponent<SpriteRenderer>().enabled = false;
             //gameObject.GetComponent<Collider2D>().enabled = false;
 
             //StartCoroutine(Wait(3.0F));
-        
+
         }
 
-        if (col.CompareTag("Enemy") || col.CompareTag("Killer"))
+        if ((col.CompareTag("Enemy") || col.CompareTag("Killer")) && canDie)
         {
+            
+            //anim.Play("FlashRed");
             Debug.Log("Tag: " + col.tag);
             lm.Die();
             Debug.Log("Grounded: " + grounded);

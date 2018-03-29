@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SimpleJSON;
+using UnityEngine.SceneManagement;
 
 public class Logger : MonoBehaviour
 {
 
-    public string awsAccessKeyID = "AKIAISX5KCURGWDQKUDQ";
-    public string awsSecretAccessKey = "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";
-    public string tableName = "Unity";
+    public string awsAccessKeyID = "AKIAILF2YEQK53W5QNNA";
+    public string awsSecretAccessKey = "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";
+    public string tableName = "Coin_Game";
     public string primaryKey;
     public static float X;
     public static float Y;
@@ -36,10 +37,10 @@ public class Logger : MonoBehaviour
         }
 
         // Set Dynode's parameters
-        dynode.AWS_ACCESS_KEY_ID = "AKIAISX5KCURGWDQKUDQ";
-        dynode.AWS_SECRET_ACCESS_KEY = "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";
-        dynode.table_name = "Unity";
-        dynode.primary_key = "run_id";
+        dynode.AWS_ACCESS_KEY_ID = "AKIAILF2YEQK53W5QNNA";
+        dynode.AWS_SECRET_ACCESS_KEY = "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";
+        dynode.table_name = "Coin_Game";
+        dynode.primary_key = "id";
 
         //InvokeRepeating("TestLog", 2.0f, 0.5f);
     }
@@ -57,7 +58,7 @@ public class Logger : MonoBehaviour
         var Item = new JSONObject();
         var obj = new JSONObject();
         //Item["Log"]["S"] = log;
-        //Item["Person"]["S"] = MainMenu.username;
+        //Item["Persn"]["S"] = MainMenu.username;
 
         Item["X"]["S"] = positionx;
         Item["Y"]["S"] = positiony;
@@ -116,10 +117,13 @@ public class Logger : MonoBehaviour
 
                 string sy = "" + Y;
                 string position = sx + ", " + sy;
-                Debug.Log(sx);
+                // Debug.Log(sx);
+               // Debug.Log(sy);
                 TestLog(sx, sy);
+                Scene scene = SceneManager.GetActiveScene();
+                Debug.Log("Active scene is '" + scene.name + "'.");
                 nextTime += interval;
-
+                
             }
             /*if (Input.GetKeyDown(KeyCode.RightArrow))
             {
