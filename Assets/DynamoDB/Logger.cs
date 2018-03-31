@@ -6,11 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class Logger : MonoBehaviour
 {
-
-    public string awsAccessKeyID = "";
-    public string awsSecretAccessKey = "";
-    public string tableName = "";
-    public string primaryKey;
+    string awsAccessKeyID = "";
+    string awsSecretAccessKey = "";
+    string tableName = "";
+    string primaryKey = "";
     public static float X;
     public static float Y;
    // public string log;
@@ -18,12 +17,12 @@ public class Logger : MonoBehaviour
     int interval = 1;
     float nextTime = 0;
     private float time = 0.0f;
-    public float interpolationPeriod = 1f;
+    float interpolationPeriod = 0.1f;
     DynamoDB.Dynode dynode;
 
     void Start()
     {
-
+        logging = true;
         // Create a session-unique, persistent object for logging.
         // If it already exists (from a previous run), then refind it.
         if ((GameObject.Find("DynamoDB")))
@@ -37,10 +36,17 @@ public class Logger : MonoBehaviour
         }
 
         // Set Dynode's parameters
+        /*
         dynode.AWS_ACCESS_KEY_ID = "";
         dynode.AWS_SECRET_ACCESS_KEY = "";
         dynode.table_name = "";
         dynode.primary_key = "";
+        */
+        dynode.AWS_ACCESS_KEY_ID = awsAccessKeyID;
+        dynode.AWS_SECRET_ACCESS_KEY = awsSecretAccessKey;
+        dynode.table_name = tableName;
+        dynode.primary_key = primaryKey;
+
 
         //InvokeRepeating("TestLog", 2.0f, 0.5f);
     }
@@ -48,7 +54,7 @@ public class Logger : MonoBehaviour
 
     // A logging function. This would be called every second,
     // OR every time the user puts in an input.
-    void TestLog(string positionx, string positiony)
+    void LogPosition(string positionx, string positiony)
     {
         // Put in ONLY item data into the Item object.
         // Do NOT put in a primary key, as Dynode will handle that for you.
@@ -59,7 +65,7 @@ public class Logger : MonoBehaviour
         var obj = new JSONObject();
         //Item["Log"]["S"] = log;
         //Item["Persn"]["S"] = MainMenu.username;
-
+        Item["Event"]["S"] = "Pos";
         Item["X"]["S"] = positionx;
         Item["Y"]["S"] = positiony;
         //Item["Y coordinate"]["S"] = keyEvent;
@@ -69,6 +75,32 @@ public class Logger : MonoBehaviour
         //Debug.Log("Key logged: " + keyEvent);
 
         dynode.Send(Item);
+    }
+
+    public void LogWin()
+    {
+        if (logging)
+        {
+            var Item = new JSONObject();
+            Item["Event"]["S"] = "Win";
+            dynode.Send(Item);
+            Debug.Log("Win logged");
+        }
+    }
+
+    public void LogDeath(string tag, int count)
+    {
+        if (logging)
+        {
+            var Item = new JSONObject();
+            Item["Event"]["S"] = "Death";
+            Item["X"]["S"] = transform.position.x;
+            Item["Y"]["S"] = transform.position.y;
+            Item["Killer"]["S"] = tag;
+            Item["Count"]["S"] = count.ToString();
+            dynode.Send(Item);
+            Debug.Log("Death logged");
+        }
     }
 
     /* void TestLog2(string keyEvent2)
@@ -86,8 +118,7 @@ public class Logger : MonoBehaviour
     // stuck during pause time.
     public void LogPause()
     {
-        TestLog("RightUp", "x");
-        
+        //TestLog("RightUp", "x");
     }
 
     // Update is called once per frame
@@ -119,7 +150,7 @@ public class Logger : MonoBehaviour
                 string position = sx + ", " + sy;
                 // Debug.Log(sx);
                // Debug.Log(sy);
-                TestLog(sx, sy);
+                LogPosition(sx, sy);
                 Scene scene = SceneManager.GetActiveScene();
                 Debug.Log("Active scene is '" + scene.name + "'.");
                 nextTime += interval;

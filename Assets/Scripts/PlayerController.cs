@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SimpleJSON;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -11,6 +12,7 @@ public class PlayerController : MonoBehaviour {
     Vector3 startPos;
 
     LevelManager lm;
+    Logger logger;
 
     public int curHealth=1;
     //public int maxHealth = 5;
@@ -25,6 +27,8 @@ public class PlayerController : MonoBehaviour {
     BoxCollider2D myCol;
     bool canMove;
     bool canDie;
+    string[] killers;
+    int deathCount;
 
     // Variables for checking for ground
     bool grounded = false;
@@ -51,6 +55,8 @@ public class PlayerController : MonoBehaviour {
     private SpriteRenderer sr;
     public Animator anim;
 
+    int win = 0;
+
     float move;
     
     // Use this for initialization
@@ -64,7 +70,10 @@ public class PlayerController : MonoBehaviour {
         anim = GetComponent<Animator>();
         myCol = GetComponent<BoxCollider2D>();
         sr = GetComponent<SpriteRenderer>();
+        logger = GetComponent<Logger>();
 
+
+        killers = new string[] { "Killer", "RisingSpikes", "Spikes", "Bullet", "Ninja", "Lava", "Pit" };
         //levelImage.SetActive(false);
 
         curHealth = 1;
@@ -74,11 +83,13 @@ public class PlayerController : MonoBehaviour {
 
         lm = GameObject.FindObjectOfType<LevelManager>();
 
-        Debug.Log("Start: " + startPos);
+        //Debug.Log("Start: " + startPos);
 
         canMove = true;
         canDie = true;
-        Debug.Log("Can move in start: " + canMove);
+        //Debug.Log("Can move in start: " + canMove);
+
+        deathCount = 0;
     }
 
     void FixedUpdate()
@@ -189,11 +200,12 @@ public class PlayerController : MonoBehaviour {
         if(col.CompareTag("Chest"))
         {
             //int numScenes = SceneManager.sceneCountInBuildSettings;
+            logger.LogWin();
             canMove = false;
             canDie = false;
-            Debug.Log("Can move: " + canMove);
+            //Debug.Log("Can move: " + canMove);
             lm.FadeOut();
-            Debug.Log("Can move: " + canMove);
+            //Debug.Log("Can move: " + canMove);
 
 
             //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -204,13 +216,16 @@ public class PlayerController : MonoBehaviour {
 
         }
 
-        if ((col.CompareTag("Enemy") || col.CompareTag("Killer")) && canDie)
+        //if ((col.CompareTag("Enemy") || col.CompareTag("Killer")) && canDie)
+        if ((System.Array.IndexOf(killers,col.tag) > -1) && canDie)
         {
-            
+            Debug.Log("Killed by: " + col.tag);
+            deathCount++;
+            logger.LogDeath(col.tag,deathCount);
             //anim.Play("FlashRed");
             Debug.Log("Tag: " + col.tag);
             lm.Die();
-            Debug.Log("Grounded: " + grounded);
+            //Debug.Log("Grounded: " + grounded);
         }
     }
 

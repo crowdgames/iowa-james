@@ -1,0 +1,13 @@
+{
+"companyName": "PLAIT",
+"productName": "Iowa James: Treasure Hunter",
+"dataUrl": "pretrial.data.unityweb",
+"asmCodeUrl": "pretrial.asm.code.unityweb",
+"asmMemoryUrl": "pretrial.asm.memory.unityweb",
+"asmFrameworkUrl": "pretrial.asm.framework.unityweb",
+"TOTAL_MEMORY": 536870912,
+"graphicsAPI": ["WebGL 2.0", "WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#231F20"
+}
