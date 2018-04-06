@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour {
     BoxCollider2D myCol;
     bool canMove;
     bool canDie;
+    bool jumpPressed;
     string[] killers;
     int deathCount;
 
@@ -55,6 +56,9 @@ public class PlayerController : MonoBehaviour {
     private SpriteRenderer sr;
     public Animator anim;
 
+    GameObject coinTextObj;
+    Text coinText;
+
     int win = 0;
 
     float move;
@@ -71,7 +75,7 @@ public class PlayerController : MonoBehaviour {
         myCol = GetComponent<BoxCollider2D>();
         sr = GetComponent<SpriteRenderer>();
         logger = GetComponent<Logger>();
-
+        
 
         killers = new string[] { "Killer", "RisingSpikes", "Spikes", "Bullet", "Ninja", "Lava", "Pit" };
         //levelImage.SetActive(false);
@@ -87,16 +91,27 @@ public class PlayerController : MonoBehaviour {
 
         canMove = true;
         canDie = true;
+        jumpPressed = false;
         //Debug.Log("Can move in start: " + canMove);
 
         deathCount = 0;
+
+        /*
+        coinTextObj = GameObject.FindGameObjectWithTag("CoinText");
+        if (coinTextObj)
+        {
+            coinText = coinTextObj.GetComponent<Text>();
+            coinText.text = "Coins: 0";
+        }
+        */
     }
 
     void FixedUpdate()
     {
         // Check if grounded
         //grounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
-        grounded = Physics2D.IsTouchingLayers(myCol, whatIsGround);
+        grounded = Physics2D.IsTouchingLayers(groundCheck.GetComponent<Collider2D>(), whatIsGround);
+        //Debug.Log("Grounded: " + grounded);
         anim.SetBool("Ground", grounded);
 
         if (canMove)
@@ -154,6 +169,20 @@ public class PlayerController : MonoBehaviour {
             Flip();
         else if (move < 0 && facingRight && canMove)
             Flip();
+
+        // Jumping
+        //if (grounded && Input.GetKeyDown(KeyCode.UpArrow) && canMove)
+        if (grounded && jumpPressed && canMove)
+        {
+            //Debug.Log("Jumping called");
+            anim.SetBool("Ground", false);
+            rb.AddForce(new Vector2(0, 20), ForceMode2D.Impulse);
+            //rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            grounded = false;
+            //audioJump.Play();
+            jumpPressed = false;
+            //Debug.Log("grounded: " + grounded + "\tJump: " + jumpPressed);
+        }
     }
 
 
@@ -170,12 +199,20 @@ public class PlayerController : MonoBehaviour {
             curHealth = maxHealth;
         }*/
 
+        /*
         // Jumping
         if (grounded && Input.GetKeyDown(KeyCode.UpArrow) && canMove)
         {
+            Debug.Log("Jumping");
             anim.SetBool("Ground", false);
             rb.AddForce(new Vector2(0, jumpForce));
             //audioJump.Play();
+        }
+        */
+
+        if(Input.GetKeyDown(KeyCode.UpArrow) && !jumpPressed && grounded)
+        {
+            jumpPressed = true;
         }
     }
 
@@ -190,13 +227,24 @@ public class PlayerController : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.CompareTag("Coin"))
+        /*
+        if (DataManager.mode != 0)
         {
-            Destroy(col.gameObject);
-            audioCoin.Play();
-            //gm.points += 1;
+            if (col.CompareTag("Coin"))
+            {
+                Debug.Log("Coin trigger called");
+                if (this.tag != "GroundCheck")
+                {
+                    //audioCoin.Play();
+                    Destroy(col.gameObject);
+                    DataManager.points++;
+                    if(coinText)
+                        coinText.text = "Coins: " + DataManager.points;
+                    //gm.points += 1;
+                }
+            }
         }    
-        
+        */
         if(col.CompareTag("Chest"))
         {
             //int numScenes = SceneManager.sceneCountInBuildSettings;
@@ -204,7 +252,8 @@ public class PlayerController : MonoBehaviour {
             canMove = false;
             canDie = false;
             //Debug.Log("Can move: " + canMove);
-            lm.FadeOut();
+            //lm.FadeOut();
+            StartCoroutine(lm.FadeOut());
             //Debug.Log("Can move: " + canMove);
 
 
@@ -213,23 +262,29 @@ public class PlayerController : MonoBehaviour {
             //gameObject.GetComponent<Collider2D>().enabled = false;
 
             //StartCoroutine(Wait(3.0F));
+            //Randomizer.LoadNextLevel();
 
         }
 
         //if ((col.CompareTag("Enemy") || col.CompareTag("Killer")) && canDie)
         if ((System.Array.IndexOf(killers,col.tag) > -1) && canDie)
         {
-            Debug.Log("Killed by: " + col.tag);
-            deathCount++;
-            logger.LogDeath(col.tag,deathCount);
-            //anim.Play("FlashRed");
-            Debug.Log("Tag: " + col.tag);
-            lm.Die();
-            //Debug.Log("Grounded: " + grounded);
+            if (this.tag != "GroundCheck")
+            {
+                jumpPressed = false;
+                Debug.Log("Killed by: " + col.tag);
+                deathCount++;
+                float pos_x = transform.position.x;
+                float pos_y = transform.position.y;
+                //logger.LogDeath(col.tag,deathCount,transform.position.x,transform.position.y);
+                Debug.Log("Tag: " + col.tag);
+                lm.Die();
+                //Debug.Log("Grounded: " + grounded);
+                logger.LogDeath(col.tag, deathCount, pos_x, pos_y);
+            }
         }
     }
-
-   
+    
 
     public void Damage(int dmg)
     {

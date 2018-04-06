@@ -12,9 +12,9 @@ namespace DynamoDB
 
     public class DDBHTTP : MonoBehaviour
     {
-
-        public string AWS_ACCESS_KEY_ID = "";
-        public string AWS_SECRET_ACCESS_KEY = "";
+        
+        public string AWS_ACCESS_KEY_ID = Credentials.awsAccessKeyID;
+        public string AWS_SECRET_ACCESS_KEY = Credentials.awsSecretAccessKey;
         public string action = "DynamoDB_20120810.Scan";
         public string response;
 

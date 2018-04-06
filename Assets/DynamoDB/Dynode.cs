@@ -20,13 +20,13 @@ namespace DynamoDB
         public string AWS_SECRET_ACCESS_KEY;
         public static float X;
         private string player_id;
-        private int level_count;
+        private int run_id;
         private int run_count = 0;
         private int action_count;
         private DateTime startTime;
         public Scene level;
         
-        void Start()
+        void Awake()
         {
             // Achieve Session Persistence
             DontDestroyOnLoad(gameObject);
@@ -37,16 +37,22 @@ namespace DynamoDB
             onSceneChanged(SceneManager.GetActiveScene(), SceneManager.GetActiveScene());
             
             player_id = "MT-" + generateID();
-            level_count = 1;
+
+            //DataManager.mode = player_id.ToCharArray()[player_id.Length - 1] % 3;
+            Debug.Log("COIN MODE: " + DataManager.mode.ToString());
+            
+            run_id = 1;
             Debug.Log("Player id: " + player_id);
             startTime = DateTime.UtcNow;
             Debug.Log("Start: " + startTime);
 
             http = gameObject.AddComponent<DDBHTTP>();
             http.action = "DynamoDB_20120810.PutItem";
-            http.AWS_ACCESS_KEY_ID = "";
-            http.AWS_SECRET_ACCESS_KEY = "";
-
+            
+            http.AWS_ACCESS_KEY_ID = Credentials.awsAccessKeyID;
+            http.AWS_SECRET_ACCESS_KEY = Credentials.awsSecretAccessKey;
+            table_name = Credentials.tableName;
+            primary_key = Credentials.primaryKey;
             //Debug.Log("Dynode instance created...");
         }
 
@@ -59,7 +65,7 @@ namespace DynamoDB
             // for consistency purposes.
             DateTime stamp = DateTime.UtcNow;
             Scene scene = SceneManager.GetActiveScene();
-            Debug.Log("Active scene is '" + scene.name + "'.");
+            //Debug.Log("Active scene is '" + scene.name + "'.");
 
             var obj = new JSONObject();
             obj["TableName"] = table_name;
@@ -67,7 +73,7 @@ namespace DynamoDB
            // obj["Item"]["level_count"]["S"] = run_count.ToString();
             obj["Item"]["level"]["S"] = scene.name.ToString();
             //obj["Item"]["action_count"]["S"] = action_count.ToString();
-            obj["Item"]["level_count"]["S"] = level_count.ToString();
+            //obj["Item"]["run_id"]["S"] = level_count.ToString();
             
             obj["Item"]["player_id"]["S"] = player_id;
             // obj["Item"]["level"]["S"] = scene;
@@ -101,7 +107,7 @@ namespace DynamoDB
         private void onSceneChanged(Scene one, Scene two)
         {
             //run_id = generateID();
-            level_count++;
+         //   level_count++;
            // run_id = generateID();
             startTime = DateTime.UtcNow;
             

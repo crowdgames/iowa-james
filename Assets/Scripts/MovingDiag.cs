@@ -27,7 +27,7 @@ public class MovingDiag : MonoBehaviour {
         if (collision.gameObject.tag == "Player")
         {
             //   moving = true;
-            collision.collider.transform.SetParent(transform);
+            collision.gameObject.transform.SetParent(transform);
             Debug.Log("Enter");
         }
     }
@@ -35,7 +35,7 @@ public class MovingDiag : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Player")
         {
-            collision.collider.transform.SetParent(null);
+            collision.gameObject.transform.SetParent(null);
             // moving = false;
             Debug.Log("Exit");
         }

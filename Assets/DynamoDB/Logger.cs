@@ -2,27 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SimpleJSON;
+using System;
 using UnityEngine.SceneManagement;
 
 public class Logger : MonoBehaviour
 {
-    string awsAccessKeyID = "";
-    string awsSecretAccessKey = "";
-    string tableName = "";
-    string primaryKey = "";
+    string awsAccessKeyID = Credentials.awsAccessKeyID;
+    string awsSecretAccessKey = Credentials.awsSecretAccessKey;
+    string tableName = Credentials.tableName;
+    string primaryKey = Credentials.primaryKey;
+    
     public static float X;
     public static float Y;
    // public string log;
     public bool logging;
     int interval = 1;
+    string run_id;
     float nextTime = 0;
     private float time = 0.0f;
     float interpolationPeriod = 0.1f;
     DynamoDB.Dynode dynode;
+    int deathCount;
 
     void Start()
     {
         logging = true;
+        run_id = generateID();
         // Create a session-unique, persistent object for logging.
         // If it already exists (from a previous run), then refind it.
         if ((GameObject.Find("DynamoDB")))
@@ -47,6 +52,7 @@ public class Logger : MonoBehaviour
         dynode.table_name = tableName;
         dynode.primary_key = primaryKey;
 
+        deathCount = 0;
 
         //InvokeRepeating("TestLog", 2.0f, 0.5f);
     }
@@ -59,47 +65,67 @@ public class Logger : MonoBehaviour
         // Put in ONLY item data into the Item object.
         // Do NOT put in a primary key, as Dynode will handle that for you.
         // Remember to put in the data TYPE. This is VERY IMPORTANT!
+        if (logging)
+        {
+            DataManager.index++;
+            var Item = new JSONObject();
+            var obj = new JSONObject();
+            //Item["Log"]["S"] = log;
+            //Item["Persn"]["S"] = MainMenu.username;
+            Item["Event"]["S"] = "Pos";
+            Item["X"]["S"] = positionx;
+            Item["Y"]["S"] = positiony;
+            Item["run_id"]["S"] = run_id;
+            Item["Index"]["S"] = DataManager.index.ToString();
+            //Item["Y coordinate"]["S"] = keyEvent;
 
 
-        var Item = new JSONObject();
-        var obj = new JSONObject();
-        //Item["Log"]["S"] = log;
-        //Item["Persn"]["S"] = MainMenu.username;
-        Item["Event"]["S"] = "Pos";
-        Item["X"]["S"] = positionx;
-        Item["Y"]["S"] = positiony;
-        //Item["Y coordinate"]["S"] = keyEvent;
 
+            //Debug.Log("Key logged: " + keyEvent);
 
-
-        //Debug.Log("Key logged: " + keyEvent);
-
-        dynode.Send(Item);
+            dynode.Send(Item);
+        }
     }
+
+    public string generateID()
+    {
+        return Guid.NewGuid().ToString();
+    }
+
 
     public void LogWin()
     {
         if (logging)
         {
+            logging = false;
+            DataManager.index++;
             var Item = new JSONObject();
             Item["Event"]["S"] = "Win";
+            Item["run_id"]["S"] = run_id;
+            Item["Index"]["S"] = DataManager.index.ToString();
             dynode.Send(Item);
             Debug.Log("Win logged");
         }
     }
 
-    public void LogDeath(string tag, int count)
+    public void LogDeath(string tag, int count, float x, float y)
     {
         if (logging)
         {
+            DataManager.index++;
+            deathCount++;
             var Item = new JSONObject();
             Item["Event"]["S"] = "Death";
-            Item["X"]["S"] = transform.position.x;
-            Item["Y"]["S"] = transform.position.y;
+            Item["X"]["S"] = x.ToString();
+            Item["Y"]["S"] = y.ToString();
             Item["Killer"]["S"] = tag;
-            Item["Count"]["S"] = count.ToString();
+            Item["Count"]["S"] = deathCount.ToString();
+            Item["run_id"]["S"] = run_id;
+            Item["Index"]["S"] = DataManager.index.ToString();
             dynode.Send(Item);
             Debug.Log("Death logged");
+            run_id = generateID();
+            logging = false;
         }
     }
 
@@ -152,7 +178,7 @@ public class Logger : MonoBehaviour
                // Debug.Log(sy);
                 LogPosition(sx, sy);
                 Scene scene = SceneManager.GetActiveScene();
-                Debug.Log("Active scene is '" + scene.name + "'.");
+                //Debug.Log("Active scene is '" + scene.name + "'.");
                 nextTime += interval;
                 
             }

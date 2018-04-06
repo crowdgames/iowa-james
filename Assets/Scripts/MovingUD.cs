@@ -26,17 +26,17 @@ public class MovingUD : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             //   moving = true;
-            collision.collider.transform.SetParent(transform);
-            Debug.Log("Enter");
+            collision.gameObject.transform.SetParent(transform);
+            //Debug.Log("Enter");
         }
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
-            collision.collider.transform.SetParent(null);
+            collision.gameObject.transform.SetParent(null);
             // moving = false;
-            Debug.Log("Exit");
+            //Debug.Log("Exit");
         }
     }
 
