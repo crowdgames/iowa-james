@@ -19,7 +19,7 @@ namespace DynamoDB
         public string AWS_ACCESS_KEY_ID;
         public string AWS_SECRET_ACCESS_KEY;
         public static float X;
-        private string player_id;
+        public string player_id;
         private int run_id;
         private int run_count = 0;
         private int action_count;
@@ -38,7 +38,8 @@ namespace DynamoDB
             
             player_id = "MT-" + generateID();
 
-            //DataManager.mode = player_id.ToCharArray()[player_id.Length - 1] % 3;
+            DataManager.mode = player_id.ToCharArray()[player_id.Length - 1] % 3;
+            Debug.Log(player_id.ToCharArray()[player_id.Length - 1]);
             Debug.Log("COIN MODE: " + DataManager.mode.ToString());
             
             run_id = 1;
@@ -76,6 +77,7 @@ namespace DynamoDB
             //obj["Item"]["run_id"]["S"] = level_count.ToString();
             
             obj["Item"]["player_id"]["S"] = player_id;
+            obj["Item"]["mode"]["S"] = DataManager.mode.ToString();
             // obj["Item"]["level"]["S"] = scene;
             obj["Item"][primary_key]["S"] = generateID();
             //obj["Item"]["Stamp"]["S"] = (stamp - startTime).TotalSeconds.ToString();
@@ -101,9 +103,6 @@ namespace DynamoDB
 
         // Every time a level is loaded.
         // Make sure you don't log during non-playing levels (such as menus).
-
-
-
         private void onSceneChanged(Scene one, Scene two)
         {
             //run_id = generateID();

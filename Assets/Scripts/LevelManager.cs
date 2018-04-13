@@ -22,90 +22,65 @@ public class LevelManager : MonoBehaviour {
     public GameObject deathEffect;
     public GameObject coin;
     GameObject coinTextObj;
-    Text coinText;
-    /*
-    void Awake()
-    {
-        player = GameObject.FindObjectOfType<PlayerController>();
-        fadePanel = GameObject.FindObjectOfType<Fade>();
-        cg = fadePanel.GetComponent<CanvasGroup>();
-        startPos = player.transform.position;
-        /*
-        if (!created)
-        {
-            Debug.Log("Created level manager");
-            DontDestroyOnLoad(this.gameObject);
-            created = true;
-            levelOrder = new List<int>();
-            for (int i=0; i < SceneManager.sceneCountInBuildSettings-1; i++)
-            {
-                levelOrder.Add(i);
-            }
-            Debug.Log(levelOrder.Count);
-            if (randomized)
-            {
-                if(levelOrder.Count != SceneManager.sceneCountInBuildSettings - 1)
-                        LoadNextLevel();
-                else
-                        levelOrder.RemoveAt(SceneManager.GetActiveScene().buildIndex);
-            }
-            //else
-             //   SceneManager.LoadScene(0);
-            
-        }
-        
-    }
-    */
+
     void Start()
     {
         player = GameObject.FindObjectOfType<PlayerController>();
         log = player.GetComponent<Logger>();
         fadePanel = GameObject.FindObjectOfType<Fade>();
         startPos = player.transform.position;
-        
         coinTextObj = GameObject.FindGameObjectWithTag("CoinText");
-        if (coinTextObj)
-        {
-            coinText = coinTextObj.GetComponent<Text>();
-        }
-
+        
         if(DataManager.mode == 0)
         {
             //No coins
-            coinText.gameObject.SetActive(false);
+            coinTextObj.SetActive(false);
             Debug.Log("No coins " + DataManager.mode);
         }
         else
         {
             Debug.Log("Mode " + DataManager.mode);
             //Path coins (==1) or random coins (==2)
-            coinText.gameObject.SetActive(true);
+            coinTextObj.SetActive(true);
             GenerateCoins(DataManager.mode);
         }
         
-        /*
-        if(Randomizer.randomized)
-        {
-            Debug.Log(Randomizer.levels.Count);
-            LoadNextLevel();
-        }
-        */
     }
 
     public void GenerateCoins(int mode)
     {
-        string path = "Assets/Coins/";
+        List<Vector2> pos = new List<Vector2>();
         string name = SceneManager.GetActiveScene().name;
-        path += mode == 1 ? "out_" + name + "_path.txt" : "out_" + name + "_randall.txt";
+        string path = "Coins/";
+        path += mode == 1 ? "out_" + name + "_path" : "out_" + name + "_randall";
         Debug.Log(path);
-        StreamReader sr = new StreamReader(path);
-        while(!sr.EndOfStream)
+        TextAsset coinData = Resources.Load<TextAsset>(path);
+        //Debug.Log(coinData.text);
+        string[] lines = coinData.text.Split('\n');
+        for (int i=0; i<lines.Length-1; i++)
         {
-            string line = sr.ReadLine();
+            string line = lines[i];
+            //Debug.Log("Line: " + line);
             float x = float.Parse(line.Split(',')[0]);
             float y = float.Parse(line.Split(',')[1]);
-            Debug.Log("x: " + x + "y: " + y);
-            Instantiate(coin, new Vector2(x,y), Quaternion.identity);
+            pos.Add(new Vector2(x, y));
+            //Debug.Log("x: " + x + "y: " + y);
+        }
+        if(mode == 1)   // Path
+        {
+            foreach(Vector2 p in pos)
+            {
+                Instantiate(coin, p, Quaternion.identity);
+            }
+        }
+        else            //Randall
+        {
+            for(int i=0; i<DataManager.NCOINS; i++)
+            {
+                int index = Random.Range(0, pos.Count);
+                Instantiate(coin, pos[index], Quaternion.identity);
+                pos.RemoveAt(index);
+            }
         }
     }
     
@@ -130,31 +105,6 @@ public class LevelManager : MonoBehaviour {
         Debug.Log("Set to true" + player.transform.position);
         log.logging = true;
     }
-
-    /*
-    public void LoadNextLevel()
-    {
-        if (Randomizer.randomized)
-        {
-            if (Randomizer.levels.Count > 0)
-            {
-                int index = Random.Range(0, Randomizer.levels.Count);
-                int level = Randomizer.levels[index];
-                Debug.Log(index + " " + level);
-                Randomizer.levels.Remove(level);
-                Debug.Log(Randomizer.levels.Count);
-                Debug.Log("Loading level " + level);
-                SceneManager.LoadScene(level);
-            }
-            else
-                SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 1);
-        }
-        else
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        }
-    }
-    */
 
     public IEnumerator FadeOut()
     {

@@ -21,7 +21,7 @@ public class Logger : MonoBehaviour
     float nextTime = 0;
     private float time = 0.0f;
     float interpolationPeriod = 0.1f;
-    DynamoDB.Dynode dynode;
+    public DynamoDB.Dynode dynode;
     int deathCount;
 
     void Start()
@@ -30,9 +30,10 @@ public class Logger : MonoBehaviour
         run_id = generateID();
         // Create a session-unique, persistent object for logging.
         // If it already exists (from a previous run), then refind it.
-        if ((GameObject.Find("DynamoDB")))
+        GameObject ddb = GameObject.Find("DynamoDB");
+        if(ddb)
         {
-            dynode = GameObject.Find("DynamoDB").GetComponent<DynamoDB.Dynode>();
+            dynode = ddb.GetComponent<DynamoDB.Dynode>();
         }
         else
         {
@@ -40,13 +41,6 @@ public class Logger : MonoBehaviour
             dynode = DynodeObject.AddComponent<DynamoDB.Dynode>();
         }
 
-        // Set Dynode's parameters
-        /*
-        dynode.AWS_ACCESS_KEY_ID = "";
-        dynode.AWS_SECRET_ACCESS_KEY = "";
-        dynode.table_name = "";
-        dynode.primary_key = "";
-        */
         dynode.AWS_ACCESS_KEY_ID = awsAccessKeyID;
         dynode.AWS_SECRET_ACCESS_KEY = awsSecretAccessKey;
         dynode.table_name = tableName;
@@ -70,19 +64,13 @@ public class Logger : MonoBehaviour
             DataManager.index++;
             var Item = new JSONObject();
             var obj = new JSONObject();
-            //Item["Log"]["S"] = log;
-            //Item["Persn"]["S"] = MainMenu.username;
+
             Item["Event"]["S"] = "Pos";
             Item["X"]["S"] = positionx;
             Item["Y"]["S"] = positiony;
             Item["run_id"]["S"] = run_id;
             Item["Index"]["S"] = DataManager.index.ToString();
-            //Item["Y coordinate"]["S"] = keyEvent;
-
-
-
-            //Debug.Log("Key logged: " + keyEvent);
-
+            Item["play_time"]["S"] = DataManager.play_time.ToString();
             dynode.Send(Item);
         }
     }
@@ -93,7 +81,7 @@ public class Logger : MonoBehaviour
     }
 
 
-    public void LogWin()
+    public void LogWin(int coins)
     {
         if (logging)
         {
@@ -103,8 +91,25 @@ public class Logger : MonoBehaviour
             Item["Event"]["S"] = "Win";
             Item["run_id"]["S"] = run_id;
             Item["Index"]["S"] = DataManager.index.ToString();
+            Item["coins"]["S"] = coins.ToString();
+            Item["play_time"]["S"] = DataManager.play_time.ToString();
             dynode.Send(Item);
-            Debug.Log("Win logged");
+            Debug.Log("Win logged: " + coins);
+        }
+    }
+
+    public void LogCoins(int coins)
+    {
+        if (logging)
+        {
+            DataManager.index++;
+            var Item = new JSONObject();
+            Item["Event"]["S"] = "Coin";
+            Item["Index"]["S"] = DataManager.index.ToString();
+            Item["coins"]["S"] = coins.ToString();
+            Item["play_time"]["S"] = DataManager.play_time.ToString();
+            dynode.Send(Item);
+            Debug.Log("Coin logged: " + coins );
         }
     }
 
@@ -119,25 +124,17 @@ public class Logger : MonoBehaviour
             Item["X"]["S"] = x.ToString();
             Item["Y"]["S"] = y.ToString();
             Item["Killer"]["S"] = tag;
-            Item["Count"]["S"] = deathCount.ToString();
+            Item["Count"]["S"] = count.ToString();
             Item["run_id"]["S"] = run_id;
             Item["Index"]["S"] = DataManager.index.ToString();
+            Item["play_time"]["S"] = DataManager.play_time.ToString();
             dynode.Send(Item);
             Debug.Log("Death logged");
-            run_id = generateID();
             logging = false;
+            run_id = generateID();
         }
     }
-
-    /* void TestLog2(string keyEvent2)
-     {
-         var Item = new JSONObject();
-         Item["Log"]["S"] = log;
-         Item["Person"]["S"] = MainMenu.username;
-         Item["Log"]["S"] = log;
-
-         dynode.Send(Item);
-     }*/
+    
 
     // Call this function whenever user pauses the game!!!
     // Function will fire KeyUp events during pause menu, so that keys don't
@@ -154,11 +151,6 @@ public class Logger : MonoBehaviour
         X = transform.position.x;
 
         Y = transform.position.y;
-        //Debug.Log("X= " + transform.position.x);
-        //T = System.DateTime.Now;
-
-        //Debug.Log("Y= " + transform.position.y);
-        //Debug.Log("T= " + System.DateTime.Now);
         if (logging)
 
         {
@@ -174,53 +166,12 @@ public class Logger : MonoBehaviour
 
                 string sy = "" + Y;
                 string position = sx + ", " + sy;
-                // Debug.Log(sx);
-               // Debug.Log(sy);
                 LogPosition(sx, sy);
                 Scene scene = SceneManager.GetActiveScene();
-                //Debug.Log("Active scene is '" + scene.name + "'.");
                 nextTime += interval;
                 
             }
-            /*if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                TestLog("RightDown");
-            }
-            if (X = transform.position.x)
-            {
-                TestLog(X);
-            }
-             if (Input.GetKeyUp(KeyCode.RightArrow))
-             {
-                 TestLog("RightUp");
-             }
-             if (Input.GetKeyDown(KeyCode.LeftArrow))
-             {
-                 TestLog("LeftDown");
-             }
-             if (Input.GetKeyUp(KeyCode.LeftArrow))
-             {
-                 TestLog("LeftUp");
-             }
-             if (Input.GetKeyDown(KeyCode.UpArrow))
-             {
-                 TestLog("UpDown");
-             }
-             if (Input.GetKeyUp(KeyCode.UpArrow))
-             {
-                 TestLog("UpUp");
-             }
-             if (Input.GetKeyDown(KeyCode.S))
-             {
-                 TestLog("SDown");
-             }
-             if (Input.GetKeyUp(KeyCode.S))
-             {
-                 TestLog("SUp");
-             }
-         }
-     }*/
-            //}
+           
         }
     }
 }

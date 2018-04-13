@@ -58,11 +58,13 @@ public class PlayerController : MonoBehaviour {
 
     GameObject coinTextObj;
     Text coinText;
-
+    int coins;
     int win = 0;
 
     float move;
-    
+
+    DynamoDB.Dynode dynode;
+
     // Use this for initialization
     void Start () {
         /*AudioSource[] aSources = GetComponents<AudioSource>();
@@ -72,7 +74,7 @@ public class PlayerController : MonoBehaviour {
         
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        myCol = GetComponent<BoxCollider2D>();
+        //myCol = GetComponent<BoxCollider2D>();
         sr = GetComponent<SpriteRenderer>();
         logger = GetComponent<Logger>();
         
@@ -96,14 +98,13 @@ public class PlayerController : MonoBehaviour {
 
         deathCount = 0;
 
-        /*
+        coins = 0;
         coinTextObj = GameObject.FindGameObjectWithTag("CoinText");
-        if (coinTextObj)
+        if (DataManager.mode != 0)
         {
             coinText = coinTextObj.GetComponent<Text>();
-            coinText.text = "Coins: 0";
+            coinText.text = "Coins: " + coins + "/" + DataManager.NCOINS; //+ "\tLevel: " + (SceneManager.GetActiveScene().buildIndex + 1) + "/" + (SceneManager.sceneCountInBuildSettings - 1); //+ " ID: " + logger.dynode.player_id;
         }
-        */
     }
 
     void FixedUpdate()
@@ -111,7 +112,6 @@ public class PlayerController : MonoBehaviour {
         // Check if grounded
         //grounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
         grounded = Physics2D.IsTouchingLayers(groundCheck.GetComponent<Collider2D>(), whatIsGround);
-        //Debug.Log("Grounded: " + grounded);
         anim.SetBool("Ground", grounded);
 
         if (canMove)
@@ -126,6 +126,7 @@ public class PlayerController : MonoBehaviour {
         // Knockback and motion stuff
         if (knockbackCount <= 0) // You can't move while getting knocked back.
         {
+            /*
             // Sliding stuff
             float slideAccell;
             /*if (Input.GetKey(KeyCode.S) && grounded && Mathf.Abs(rb.velocity.x) > 3.0f)
@@ -134,7 +135,7 @@ public class PlayerController : MonoBehaviour {
                 slideAccell = 2.0f;
                 slidingCollider.enabled = true;
                 myCol.enabled = false;
-            }*/
+            }
             //else
             {
                 sliding = false;
@@ -143,17 +144,11 @@ public class PlayerController : MonoBehaviour {
                 myCol.enabled = true;
             }
             anim.SetBool("Sliding", sliding);
-
+           */
             // MOTION
             if(canMove)
-                rb.velocity = new Vector2(move * maxSpeed * slideAccell, rb.velocity.y);
-            /*
-             *  For logging stuff 
-             * if (transform.position != previousPos)
-            {
-                Debug.Log(transform.position + ": at time: " + Time.time);
-                previousPos = transform.position;
-            }*/
+                rb.velocity = new Vector2(move * maxSpeed, rb.velocity.y);
+            
         }
         else
         {
@@ -171,17 +166,14 @@ public class PlayerController : MonoBehaviour {
             Flip();
 
         // Jumping
-        //if (grounded && Input.GetKeyDown(KeyCode.UpArrow) && canMove)
         if (grounded && jumpPressed && canMove)
         {
             //Debug.Log("Jumping called");
             anim.SetBool("Ground", false);
             rb.AddForce(new Vector2(0, 20), ForceMode2D.Impulse);
-            //rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             grounded = false;
             //audioJump.Play();
             jumpPressed = false;
-            //Debug.Log("grounded: " + grounded + "\tJump: " + jumpPressed);
         }
     }
 
@@ -198,22 +190,14 @@ public class PlayerController : MonoBehaviour {
         {
             curHealth = maxHealth;
         }*/
-
-        /*
-        // Jumping
-        if (grounded && Input.GetKeyDown(KeyCode.UpArrow) && canMove)
-        {
-            Debug.Log("Jumping");
-            anim.SetBool("Ground", false);
-            rb.AddForce(new Vector2(0, jumpForce));
-            //audioJump.Play();
-        }
-        */
-
+        
         if(Input.GetKeyDown(KeyCode.UpArrow) && !jumpPressed && grounded)
         {
             jumpPressed = true;
         }
+
+        DataManager.play_time += Time.deltaTime;
+        //coinText.text = "Coins: " + coins + "/" + DataManager.NCOINS + "Time: " + DataManager.play_time + " Level: " + (SceneManager.GetActiveScene().buildIndex + 1) + "/" + (SceneManager.sceneCountInBuildSettings - 1); //+ " ID: " + logger.dynode.player_id;
     }
 
 
@@ -227,61 +211,50 @@ public class PlayerController : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        /*
+        
         if (DataManager.mode != 0)
         {
             if (col.CompareTag("Coin"))
             {
-                Debug.Log("Coin trigger called");
-                if (this.tag != "GroundCheck")
-                {
+                   Debug.Log("Coin trigger called");
                     //audioCoin.Play();
                     Destroy(col.gameObject);
-                    DataManager.points++;
-                    if(coinText)
-                        coinText.text = "Coins: " + DataManager.points;
-                    //gm.points += 1;
+                    //DataManager.points++;
+                    coins++;
+                Debug.Log("ID: " + logger.dynode.player_id);
+                if (coinText)
+                    //coinText.text = "Coins: " + DataManager.points;
+                    coinText.text = "Coins: " + coins + "/" + DataManager.NCOINS;// + "\tLevel: " + (SceneManager.GetActiveScene().buildIndex + 1) + "/" + (SceneManager.sceneCountInBuildSettings - 1); //+ " ID: " + logger.dynode.player_id;
+                if (coins == DataManager.NCOINS)
+                {
+                    coinText.color = Color.green;
                 }
+                logger.LogCoins(coins);
             }
         }    
-        */
+        
         if(col.CompareTag("Chest"))
         {
-            //int numScenes = SceneManager.sceneCountInBuildSettings;
-            logger.LogWin();
+            Debug.Log("Coins: " + coins);
+            logger.LogWin(coins);
             canMove = false;
             canDie = false;
-            //Debug.Log("Can move: " + canMove);
-            //lm.FadeOut();
             StartCoroutine(lm.FadeOut());
-            //Debug.Log("Can move: " + canMove);
-
-
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-            //gameObject.GetComponent<SpriteRenderer>().enabled = false;
-            //gameObject.GetComponent<Collider2D>().enabled = false;
-
-            //StartCoroutine(Wait(3.0F));
-            //Randomizer.LoadNextLevel();
 
         }
 
         //if ((col.CompareTag("Enemy") || col.CompareTag("Killer")) && canDie)
         if ((System.Array.IndexOf(killers,col.tag) > -1) && canDie)
         {
-            if (this.tag != "GroundCheck")
-            {
+            
                 jumpPressed = false;
                 Debug.Log("Killed by: " + col.tag);
                 deathCount++;
                 float pos_x = transform.position.x;
                 float pos_y = transform.position.y;
-                //logger.LogDeath(col.tag,deathCount,transform.position.x,transform.position.y);
                 Debug.Log("Tag: " + col.tag);
                 lm.Die();
-                //Debug.Log("Grounded: " + grounded);
                 logger.LogDeath(col.tag, deathCount, pos_x, pos_y);
-            }
         }
     }
     
