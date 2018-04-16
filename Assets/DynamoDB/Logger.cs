@@ -26,7 +26,7 @@ public class Logger : MonoBehaviour
 
     void Start()
     {
-        logging = true;
+        logging = false;
         run_id = generateID();
         // Create a session-unique, persistent object for logging.
         // If it already exists (from a previous run), then refind it.

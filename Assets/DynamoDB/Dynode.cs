@@ -38,7 +38,8 @@ namespace DynamoDB
             
             player_id = "MT-" + generateID();
 
-            DataManager.mode = player_id.ToCharArray()[player_id.Length - 1] % 3;
+            //DataManager.mode = player_id.ToCharArray()[player_id.Length - 1] % 3;
+            DataManager.mode = 0;
             Debug.Log(player_id.ToCharArray()[player_id.Length - 1]);
             Debug.Log("COIN MODE: " + DataManager.mode.ToString());
             
