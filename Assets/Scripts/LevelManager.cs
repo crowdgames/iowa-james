@@ -25,63 +25,112 @@ public class LevelManager : MonoBehaviour {
 
     void Start()
     {
+
+        Debug.Log("inside level manager start");
         player = GameObject.FindObjectOfType<PlayerController>();
         log = player.GetComponent<Logger>();
         fadePanel = GameObject.FindObjectOfType<Fade>();
         startPos = player.transform.position;
         coinTextObj = GameObject.FindGameObjectWithTag("CoinText");
         
-        if(DataManager.mode == 0)
+        if(DataManager.mode == 3)
         {
             //No coins
             coinTextObj.SetActive(false);
             Debug.Log("No coins " + DataManager.mode);
+            DisableCoins();
         }
         else
         {
             Debug.Log("Mode " + DataManager.mode);
-            //Path coins (==1) or random coins (==2)
+            //Designer coins (==0) or Path coins (==1) or random coins (==2)
             coinTextObj.SetActive(true);
             GenerateCoins(DataManager.mode);
         }
         
     }
 
+    public void DisableCoins()
+    {
+        GameObject[] coins = GameObject.FindGameObjectsWithTag("Coin");
+        foreach (GameObject c in coins)
+        {
+            c.SetActive(false);
+            Debug.Log("making coin inactive");
+        }
+    }
+
     public void GenerateCoins(int mode)
     {
-        List<Vector2> pos = new List<Vector2>();
-        string name = SceneManager.GetActiveScene().name;
-        string path = "Coins/";
-        path += mode == 1 ? "out_" + name + "_path" : "out_" + name + "_randall";
-        Debug.Log(path);
-        TextAsset coinData = Resources.Load<TextAsset>(path);
-        //Debug.Log(coinData.text);
-        string[] lines = coinData.text.Split('\n');
-        for (int i=0; i<lines.Length-1; i++)
+        Debug.Log("Inside generate coins with mode " + mode);
+        if (mode != 0 || mode != 3)
         {
-            string line = lines[i];
-            //Debug.Log("Line: " + line);
-            float x = float.Parse(line.Split(',')[0]);
-            float y = float.Parse(line.Split(',')[1]);
-            pos.Add(new Vector2(x, y));
-            //Debug.Log("x: " + x + "y: " + y);
-        }
-        if(mode == 1)   // Path
-        {
-            foreach(Vector2 p in pos)
+            List<Vector2> pos = new List<Vector2>();
+            string name = SceneManager.GetActiveScene().name;
+            string path = "Coins/";
+            path += mode == 1 ? "out_" + name + "_path" : "out_" + name + "_randall";
+            Debug.Log(path);
+            TextAsset coinData = Resources.Load<TextAsset>(path);
+            //Debug.Log(coinData.text);
+            string[] lines = coinData.text.Split('\n');
+            for (int i = 0; i < lines.Length - 1; i++)
             {
-                Instantiate(coin, p, Quaternion.identity);
+                string line = lines[i];
+                //Debug.Log("Line: " + line);
+                float x = float.Parse(line.Split(',')[0]);
+                float y = float.Parse(line.Split(',')[1]);
+                pos.Add(new Vector2(x, y));
+                //Debug.Log("x: " + x + "y: " + y);
+            }
+            if (mode == 1)   // Path
+            {
+                Debug.Log("Inside mode 1");
+                /*
+                GameObject[] coins = GameObject.FindGameObjectsWithTag("Coin");
+                foreach (GameObject c in coins)
+                {
+                    c.SetActive(false);
+                    Debug.Log("making coin inactive");
+                }
+                */
+                DisableCoins();
+                foreach (Vector2 p in pos)
+                {
+                    Instantiate(coin, p, Quaternion.identity);
+                    Debug.Log("instantiating path coin");
+                }
+            }
+            else if (mode == 2)            //Randall
+            {
+                Debug.Log("Inside mode 2");
+                /*
+                GameObject[] coins = GameObject.FindGameObjectsWithTag("Coin");
+                foreach (GameObject c in coins)
+                {
+                    c.SetActive(false);
+                    Debug.Log("making coin inactive");
+                }
+                */
+                DisableCoins();
+
+                for (int i = 0; i < DataManager.NCOINS; i++)
+                {
+                    int index = Random.Range(0, pos.Count);
+                    Instantiate(coin, pos[index], Quaternion.identity);
+                    Debug.Log("instantiating random coin");
+                    pos.RemoveAt(index);
+                }
             }
         }
-        else            //Randall
+        /*
+        else if(mode == 3)  // No coins
         {
-            for(int i=0; i<DataManager.NCOINS; i++)
-            {
-                int index = Random.Range(0, pos.Count);
-                Instantiate(coin, pos[index], Quaternion.identity);
-                pos.RemoveAt(index);
-            }
-        }
+            Debug.Log("Inside mode 3");
+            GameObject[] coins = GameObject.FindGameObjectsWithTag("Coin");
+            foreach (GameObject c in coins)
+                c.SetActive(false);
+            Debug.Log("Deactivated all coins");
+        } */
     }
     
     public void Die()

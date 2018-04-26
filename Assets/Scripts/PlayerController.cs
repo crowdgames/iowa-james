@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour {
 
         coins = 0;
         coinTextObj = GameObject.FindGameObjectWithTag("CoinText");
-        if (DataManager.mode != 0)
+        if (DataManager.mode != 3)
         {
             coinText = coinTextObj.GetComponent<Text>();
             coinText.text = "Coins: " + coins + "/" + DataManager.NCOINS; //+ "\tLevel: " + (SceneManager.GetActiveScene().buildIndex + 1) + "/" + (SceneManager.sceneCountInBuildSettings - 1); //+ " ID: " + logger.dynode.player_id;
@@ -212,7 +212,7 @@ public class PlayerController : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D col)
     {
         
-        if (DataManager.mode != 0)
+        //if (DataManager.mode != 0)
         {
             if (col.CompareTag("Coin"))
             {
@@ -224,7 +224,7 @@ public class PlayerController : MonoBehaviour {
                 Debug.Log("ID: " + logger.dynode.player_id);
                 if (coinText)
                     //coinText.text = "Coins: " + DataManager.points;
-                    coinText.text = "Coins: " + coins + "/" + DataManager.NCOINS;// + "\tLevel: " + (SceneManager.GetActiveScene().buildIndex + 1) + "/" + (SceneManager.sceneCountInBuildSettings - 1); //+ " ID: " + logger.dynode.player_id;
+                    coinText.text = "Coins: " + coins + "/" + DataManager.NCOINS; // + "\tMode: " + DataManager.mode;// + "\tLevel: " + (SceneManager.GetActiveScene().buildIndex + 1) + "/" + (SceneManager.sceneCountInBuildSettings - 1); //+ " ID: " + logger.dynode.player_id;
                 if (coins == DataManager.NCOINS)
                 {
                     coinText.color = Color.green;

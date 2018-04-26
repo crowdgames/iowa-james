@@ -28,18 +28,19 @@ namespace DynamoDB
         
         void Awake()
         {
+            
             // Achieve Session Persistence
             DontDestroyOnLoad(gameObject);
-
+            Debug.Log("Inside dynode awake");
             // For detecting scene changes
             SceneManager.activeSceneChanged += onSceneChanged;
             // Call function on game start
             onSceneChanged(SceneManager.GetActiveScene(), SceneManager.GetActiveScene());
-            
-            player_id = "MT-" + generateID();
 
-            //DataManager.mode = player_id.ToCharArray()[player_id.Length - 1] % 3;
-            DataManager.mode = 0;
+            player_id = "MT-" + generateID();
+            //player_id = "MT0";
+            DataManager.mode = player_id.ToCharArray()[player_id.Length - 1] % 4;
+            //DataManager.mode = 0;
             Debug.Log(player_id.ToCharArray()[player_id.Length - 1]);
             Debug.Log("COIN MODE: " + DataManager.mode.ToString());
             

@@ -20,13 +20,13 @@ public class Logger : MonoBehaviour
     string run_id;
     float nextTime = 0;
     private float time = 0.0f;
-    float interpolationPeriod = 0.1f;
+    float interpolationPeriod = 1.0f;
     public DynamoDB.Dynode dynode;
     int deathCount;
 
-    void Start()
+    void Awake()
     {
-        logging = false;
+        logging = true;
         run_id = generateID();
         // Create a session-unique, persistent object for logging.
         // If it already exists (from a previous run), then refind it.
