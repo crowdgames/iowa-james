@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SimpleJSON;
 using UnityEngine.UI;
-using WindowsInput;
+//using WindowsInput;
 
 public class ScanDynamo : MonoBehaviour {
 
@@ -99,6 +99,7 @@ public class ScanDynamo : MonoBehaviour {
     {
         switch(Event)
         {
+            /*
             case "RightDown": InputSimulator.SimulateKeyDown(VirtualKeyCode.RIGHT); break;
             case "RightUp": InputSimulator.SimulateKeyUp(VirtualKeyCode.RIGHT); break;
             case "LeftDown": InputSimulator.SimulateKeyDown(VirtualKeyCode.LEFT); break;
@@ -107,6 +108,7 @@ public class ScanDynamo : MonoBehaviour {
             case "UpUp": InputSimulator.SimulateKeyUp(VirtualKeyCode.UP); break;
             case "SDown": InputSimulator.SimulateKeyDown(VirtualKeyCode.VK_S); break;
             case "SUp": InputSimulator.SimulateKeyUp(VirtualKeyCode.VK_S); break;
+            */
             default: Debug.Log("Unknown key event"); break;
         }
     }
