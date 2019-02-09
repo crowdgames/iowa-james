@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SimpleJSON;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
 
 namespace DynamoDB
 {
@@ -25,6 +26,7 @@ namespace DynamoDB
         private int action_count;
         private DateTime startTime;
         public Scene level;
+        SkillManager sm;
         
         void Awake()
         {
@@ -37,8 +39,19 @@ namespace DynamoDB
             // Call function on game start
             onSceneChanged(SceneManager.GetActiveScene(), SceneManager.GetActiveScene());
 
+            GameObject smo = GameObject.Find("SkillManager");
+            if (smo)
+            {
+                sm = smo.GetComponent<SkillManager>();
+            }
+            else
+            {
+                GameObject smobj = new GameObject("SkillManager");
+                sm = smobj.AddComponent<SkillManager>();
+            }
+
             player_id = "MT-" + generateID();
-            //player_id = "MT0";
+            DataManager.player_id = player_id;
             DataManager.mode = player_id.ToCharArray()[player_id.Length - 1] % 4;
             //DataManager.mode = 0;
             Debug.Log(player_id.ToCharArray()[player_id.Length - 1]);
@@ -48,6 +61,11 @@ namespace DynamoDB
             Debug.Log("Player id: " + player_id);
             startTime = DateTime.UtcNow;
             Debug.Log("Start: " + startTime);
+
+            //REGISTER PLAYER HERE
+            //StartCoroutine(RegisterPlayer());
+            sm.RegisterPlayer(player_id);
+                
 
             http = gameObject.AddComponent<DDBHTTP>();
             http.action = "DynamoDB_20120810.PutItem";
@@ -112,6 +130,27 @@ namespace DynamoDB
             startTime = DateTime.UtcNow;
             
             action_count = 0;
+        }
+
+        IEnumerator RegisterPlayer()
+        {
+            string reg_player = "http://localhost:3004/register?q={\"id\":\"" + player_id + "\",\"type\":\"player\",\"trurat\":" + 1500 + "}";
+            Debug.Log(reg_player);
+            UnityWebRequest www = UnityWebRequest.Get(reg_player);
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                // Show results as text
+                Debug.Log(www.downloadHandler.text);
+
+                // Or retrieve results as binary data
+                byte[] results = www.downloadHandler.data;
+            }
         }
     }
 }

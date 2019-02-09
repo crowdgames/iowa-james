@@ -22,6 +22,8 @@ public class LevelManager : MonoBehaviour {
     public GameObject deathEffect;
     public GameObject coin;
     GameObject coinTextObj;
+    SkillManager sm;
+    //JavaScriptSerializer serializer;
 
     void Start()
     {
@@ -32,7 +34,9 @@ public class LevelManager : MonoBehaviour {
         fadePanel = GameObject.FindObjectOfType<Fade>();
         startPos = player.transform.position;
         coinTextObj = GameObject.FindGameObjectWithTag("CoinText");
-        
+        sm = GameObject.Find("SkillManager").GetComponent<SkillManager>();
+        //serializer = new JavaScriptSerializer();
+
         if(DataManager.mode == 3)
         {
             //No coins
@@ -161,9 +165,15 @@ public class LevelManager : MonoBehaviour {
         player.rb.velocity = Vector3.zero;
         player.anim.SetFloat("Speed", 0f);
         player.anim.SetFloat("vSpeed", 0f);
+        string level = SceneManager.GetActiveScene().name;
+        yield return sm.ReportAndRequest(1, level);
+        Debug.Log("NEXT LEVEL: " + sm.server_data);
+        string next_level = sm.server_data.Substring(sm.server_data.IndexOf("Level"),8);
         yield return StartCoroutine(FadeCo(cg, cg.alpha, 1));
         //Invoke("LoadNextLevel",3f);
-        Randomizer.LoadNextLevel();
+        SceneManager.LoadScene(next_level);
+        //Randomizer.LoadNextLevel();
+        
         Debug.Log("Exiting fade out");
     }
 

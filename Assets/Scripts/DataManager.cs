@@ -9,4 +9,5 @@ public class DataManager {
     public static int mode = 0; //0 - Designer, 1 - Path, 2 - Random, 3 - No coins
     public static int NCOINS = 10;
     public static float play_time = 0.0f;
+    public static string player_id = "";
 }
