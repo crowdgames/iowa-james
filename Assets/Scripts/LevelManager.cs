@@ -60,20 +60,20 @@ public class LevelManager : MonoBehaviour {
         foreach (GameObject c in coins)
         {
             c.SetActive(false);
-            Debug.Log("making coin inactive");
+        //    Debug.Log("making coin inactive");
         }
     }
 
     public void GenerateCoins(int mode)
     {
-        Debug.Log("Inside generate coins with mode " + mode);
+        //Debug.Log("Inside generate coins with mode " + mode);
         if (mode != 0 || mode != 3)
         {
             List<Vector2> pos = new List<Vector2>();
             string name = SceneManager.GetActiveScene().name;
             string path = "Coins/";
             path += mode == 1 ? "out_" + name + "_path" : "out_" + name + "_randall";
-            Debug.Log(path);
+            //Debug.Log(path);
             TextAsset coinData = Resources.Load<TextAsset>(path);
             //Debug.Log(coinData.text);
             string[] lines = coinData.text.Split('\n');
@@ -88,7 +88,7 @@ public class LevelManager : MonoBehaviour {
             }
             if (mode == 1)   // Path
             {
-                Debug.Log("Inside mode 1");
+             //   Debug.Log("Inside mode 1");
                 /*
                 GameObject[] coins = GameObject.FindGameObjectsWithTag("Coin");
                 foreach (GameObject c in coins)
@@ -106,7 +106,7 @@ public class LevelManager : MonoBehaviour {
             }
             else if (mode == 2)            //Randall
             {
-                Debug.Log("Inside mode 2");
+                //Debug.Log("Inside mode 2");
                 /*
                 GameObject[] coins = GameObject.FindGameObjectsWithTag("Coin");
                 foreach (GameObject c in coins)
@@ -126,15 +126,6 @@ public class LevelManager : MonoBehaviour {
                 }
             }
         }
-        /*
-        else if(mode == 3)  // No coins
-        {
-            Debug.Log("Inside mode 3");
-            GameObject[] coins = GameObject.FindGameObjectsWithTag("Coin");
-            foreach (GameObject c in coins)
-                c.SetActive(false);
-            Debug.Log("Deactivated all coins");
-        } */
     }
     
     public void Die()

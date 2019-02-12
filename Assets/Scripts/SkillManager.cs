@@ -7,6 +7,7 @@ using UnityEngine.Networking;
 public class SkillManager : MonoBehaviour {
 
     public string server_data = "";
+    public string host = "viridian.ccs.neu.edu:3004";
 
     void Awake()
     {
@@ -26,7 +27,8 @@ public class SkillManager : MonoBehaviour {
 
     public void RegisterPlayer(string pid, int trurat=1500)
     {
-        string reg_player = "http://localhost:3004/register?q={\"id\":\"" + pid + "\",\"type\":\"player\",\"trurat\":" + trurat + "}";
+        string reg_player = "http://" + host + "/register?q={\"id\":\"" + pid + "\",\"type\":\"player\",\"trurat\":" + trurat + "}";
+        //string reg_player = "http://localhost:3004/register?q={\"id\":\"" + pid + "\",\"type\":\"player\",\"trurat\":" + trurat + "}";
         Debug.Log(reg_player);
         StartCoroutine(ContactServer(reg_player));
     }
@@ -52,11 +54,11 @@ public class SkillManager : MonoBehaviour {
     public IEnumerator ReportAndRequest(int result, string level)
     {
         string token = DateTime.UtcNow.ToString();
-        string report = "http://localhost:3004/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"score1\":\"" + result + "\"}";
+        string report = "http://" + host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"score1\":\"" + result + "\"}";
         Debug.Log("***REPORT****: " + report);
         yield return StartCoroutine(ContactServer(report));
         Debug.Log("DATA FROM REPORT: " + server_data);
-        string request = "http://localhost:3004/requestMatch?q={\"id\":\"" + DataManager.player_id + "\"}";
+        string request = "http://" + host + "/requestMatch?q={\"id\":\"" + DataManager.player_id + "\"}";
         Debug.Log("***REQ***: " + request);
         yield return StartCoroutine(ContactServer(request));
         Debug.Log("DATA FROM REQUEST: " + server_data);
