@@ -216,12 +216,12 @@ public class PlayerController : MonoBehaviour {
         {
             if (col.CompareTag("Coin"))
             {
-                   Debug.Log("Coin trigger called");
+                   //Debug.Log("Coin trigger called");
                     //audioCoin.Play();
                     Destroy(col.gameObject);
                     //DataManager.points++;
                     coins++;
-                Debug.Log("ID: " + logger.dynode.player_id);
+                //Debug.Log("ID: " + logger.dynode.player_id);
                 if (coinText)
                     //coinText.text = "Coins: " + DataManager.points;
                     coinText.text = "Coins: " + coins + "/" + DataManager.NCOINS; // + "\tMode: " + DataManager.mode;// + "\tLevel: " + (SceneManager.GetActiveScene().buildIndex + 1) + "/" + (SceneManager.sceneCountInBuildSettings - 1); //+ " ID: " + logger.dynode.player_id;

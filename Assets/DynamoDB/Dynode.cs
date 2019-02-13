@@ -102,7 +102,7 @@ namespace DynamoDB
             obj["Item"][primary_key]["S"] = generateID();
             //obj["Item"]["Stamp"]["S"] = (stamp - startTime).TotalSeconds.ToString();
             obj["Item"]["Timestamp"]["S"] = DateTime.UtcNow.ToString();
-            Debug.Log("OBJ: " + obj.ToString());
+            //Debug.Log("OBJ: " + obj.ToString());
             // Scene scene = SceneManager.GetActiveScene();
             // Debug.Log("Active scene is '" + scene.name + "'.");
             http.BuildWWWRequest(obj.ToString(), stamp);

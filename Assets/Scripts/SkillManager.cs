@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 public class SkillManager : MonoBehaviour {
 
     public string server_data = "";
-    public string host = "viridian.ccs.neu.edu:3004";
+    public string host = "localhost:3004";
 
     void Awake()
     {
@@ -53,6 +53,7 @@ public class SkillManager : MonoBehaviour {
     
     public IEnumerator ReportAndRequest(int result, string level)
     {
+        Debug.Log("INSIDE REPORTANDREQUEST");
         string token = DateTime.UtcNow.ToString();
         string report = "http://" + host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"score1\":\"" + result + "\"}";
         Debug.Log("***REPORT****: " + report);

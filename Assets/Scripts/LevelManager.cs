@@ -88,40 +88,22 @@ public class LevelManager : MonoBehaviour {
             }
             if (mode == 1)   // Path
             {
-             //   Debug.Log("Inside mode 1");
-                /*
-                GameObject[] coins = GameObject.FindGameObjectsWithTag("Coin");
-                foreach (GameObject c in coins)
-                {
-                    c.SetActive(false);
-                    Debug.Log("making coin inactive");
-                }
-                */
                 DisableCoins();
                 foreach (Vector2 p in pos)
                 {
                     Instantiate(coin, p, Quaternion.identity);
-                    Debug.Log("instantiating path coin");
+                    //Debug.Log("instantiating path coin");
                 }
             }
             else if (mode == 2)            //Randall
             {
-                //Debug.Log("Inside mode 2");
-                /*
-                GameObject[] coins = GameObject.FindGameObjectsWithTag("Coin");
-                foreach (GameObject c in coins)
-                {
-                    c.SetActive(false);
-                    Debug.Log("making coin inactive");
-                }
-                */
                 DisableCoins();
 
                 for (int i = 0; i < DataManager.NCOINS; i++)
                 {
                     int index = Random.Range(0, pos.Count);
                     Instantiate(coin, pos[index], Quaternion.identity);
-                    Debug.Log("instantiating random coin");
+                    //Debug.Log("instantiating random coin");
                     pos.RemoveAt(index);
                 }
             }
@@ -159,7 +141,15 @@ public class LevelManager : MonoBehaviour {
         string level = SceneManager.GetActiveScene().name;
         yield return sm.ReportAndRequest(1, level);
         Debug.Log("NEXT LEVEL: " + sm.server_data);
-        string next_level = sm.server_data.Substring(sm.server_data.IndexOf("Level"),8);
+        string next_level = "";
+        try
+        {
+            next_level = sm.server_data.Substring(sm.server_data.IndexOf("Level"), 8);
+        }
+        catch
+        {
+            next_level = "Level_End";
+        }
         yield return StartCoroutine(FadeCo(cg, cg.alpha, 1));
         //Invoke("LoadNextLevel",3f);
         SceneManager.LoadScene(next_level);
