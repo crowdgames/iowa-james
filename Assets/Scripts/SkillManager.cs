@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 public class SkillManager : MonoBehaviour {
 
     public string server_data = "";
-    public string host = "viridian.ccs.neu.edu:3004";
 
     void Awake()
     {
@@ -17,7 +16,7 @@ public class SkillManager : MonoBehaviour {
 
     public void RegisterPlayer(int trurat=1500)
     {
-        string reg_player = "http://" + host + "/register?q={\"id\":\"" + DataManager.player_id + "\",\"type\":\"player\",\"trurat\":" + trurat + "}";
+        string reg_player = "http://" + DataManager.host + "/register?q={\"id\":\"" + DataManager.player_id + "\",\"type\":\"player\",\"trurat\":" + trurat + "}";
         Debug.Log(reg_player);
         StartCoroutine(ContactServer(reg_player));
     }
@@ -43,11 +42,11 @@ public class SkillManager : MonoBehaviour {
     {
         Debug.Log("INSIDE REPORTANDREQUEST");
         string token = DateTime.UtcNow.ToString();
-        string report = "http://" + host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"score1\":\"" + result + "\"}";
+        string report = "http://" + DataManager.host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"score1\":\"" + result + "\"}";
         Debug.Log("***REPORT****: " + report);
         yield return StartCoroutine(ContactServer(report));
         Debug.Log("DATA FROM REPORT: " + server_data);
-        string request = "http://" + host + "/requestMatch?q={\"id\":\"" + DataManager.player_id + "\"}";
+        string request = "http://" + DataManager.host + "/requestMatch?q={\"id\":\"" + DataManager.player_id + "\"}";
         Debug.Log("***REQ***: " + request);
         yield return StartCoroutine(ContactServer(request));
         Debug.Log("DATA FROM REQUEST: " + server_data);
@@ -61,7 +60,7 @@ public class SkillManager : MonoBehaviour {
     public IEnumerator RequestMatch()
     {
         Debug.Log("REQUESTING A MATCH");
-        string request = "http://" + host + "/requestMatch?q={\"id\":\"" + DataManager.player_id + "\"}";
+        string request = "http://" + DataManager.host + "/requestMatch?q={\"id\":\"" + DataManager.player_id + "\"}";
         Debug.Log(request);
         yield return StartCoroutine(ContactServer(request));
         Debug.Log("DATA FROM REQUEST: " + server_data);

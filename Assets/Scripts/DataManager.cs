@@ -10,4 +10,5 @@ public class DataManager {
     public static int NCOINS = 10;
     public static float play_time = 0.0f;
     public static string player_id = "";
+    public static string host = "viridian.ccs.neu.edu:3004";
 }

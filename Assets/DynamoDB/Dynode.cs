@@ -53,11 +53,8 @@ namespace DynamoDB
             Debug.Log("Player id: " + player_id);
             startTime = DateTime.UtcNow;
             Debug.Log("Start: " + startTime);
-
-            //REGISTER PLAYER HERE
-            //StartCoroutine(RegisterPlayer());
+            
             sm.RegisterPlayer();
-                
 
             http = gameObject.AddComponent<DDBHTTP>();
             http.action = "DynamoDB_20120810.PutItem";
@@ -122,27 +119,6 @@ namespace DynamoDB
             startTime = DateTime.UtcNow;
             
             action_count = 0;
-        }
-
-        IEnumerator RegisterPlayer()
-        {
-            string reg_player = "http://localhost:3004/register?q={\"id\":\"" + player_id + "\",\"type\":\"player\",\"trurat\":" + 1500 + "}";
-            Debug.Log(reg_player);
-            UnityWebRequest www = UnityWebRequest.Get(reg_player);
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                // Show results as text
-                Debug.Log(www.downloadHandler.text);
-
-                // Or retrieve results as binary data
-                byte[] results = www.downloadHandler.data;
-            }
         }
     }
 }
