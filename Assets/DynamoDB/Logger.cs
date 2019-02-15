@@ -109,7 +109,7 @@ public class Logger : MonoBehaviour
             Item["coins"]["S"] = coins.ToString();
             Item["play_time"]["S"] = DataManager.play_time.ToString();
             dynode.Send(Item);
-            Debug.Log("Coin logged: " + coins );
+            //Debug.Log("Coin logged: " + coins );
         }
     }
 
@@ -132,6 +132,20 @@ public class Logger : MonoBehaviour
             Debug.Log("Death logged");
             logging = false;
             run_id = generateID();
+        }
+    }
+
+    public void LogMatch(string result)
+    {
+        if(logging)
+        {
+            DataManager.index++;
+            var Item = new JSONObject();
+            Item["Event"]["S"] = "Match";
+            Item["Index"]["S"] = DataManager.index.ToString();
+            Item["Result"]["S"] = result;
+            Item["play_time"]["S"] = DataManager.play_time.ToString();
+            dynode.Send(Item);
         }
     }
     

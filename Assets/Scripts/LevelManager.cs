@@ -23,7 +23,6 @@ public class LevelManager : MonoBehaviour {
     public GameObject coin;
     GameObject coinTextObj;
     SkillManager sm;
-    //JavaScriptSerializer serializer;
 
     void Start()
     {
@@ -35,7 +34,6 @@ public class LevelManager : MonoBehaviour {
         startPos = player.transform.position;
         coinTextObj = GameObject.FindGameObjectWithTag("CoinText");
         sm = GameObject.Find("SkillManager").GetComponent<SkillManager>();
-        //serializer = new JavaScriptSerializer();
 
         if(DataManager.mode == 3)
         {
@@ -123,12 +121,13 @@ public class LevelManager : MonoBehaviour {
         Debug.Log("Inside respawn...");
         Debug.Log(player.transform.position);
         Instantiate(deathEffect, player.transform.position, player.transform.rotation);
+        player.transform.parent = null;
         player.gameObject.SetActive(false);
         yield return new WaitForSeconds(1.0f);
         player.transform.position = startPos;
         player.gameObject.SetActive(true);
-        Debug.Log("Active: " + player.gameObject.activeSelf);
-        Debug.Log("Set to true" + player.transform.position);
+        //Debug.Log("Active: " + player.gameObject.activeSelf);
+        //Debug.Log("Set to true" + player.transform.position);
         log.logging = true;
     }
 
@@ -140,7 +139,7 @@ public class LevelManager : MonoBehaviour {
         player.anim.SetFloat("vSpeed", 0f);
         string level = SceneManager.GetActiveScene().name;
         yield return sm.ReportAndRequest(1, level);
-        Debug.Log("NEXT LEVEL: " + sm.server_data);
+        //Debug.Log("NEXT LEVEL: " + sm.server_data);
         string next_level = "";
         try
         {
@@ -155,12 +154,12 @@ public class LevelManager : MonoBehaviour {
         SceneManager.LoadScene(next_level);
         //Randomizer.LoadNextLevel();
         
-        Debug.Log("Exiting fade out");
+     //   Debug.Log("Exiting fade out");
     }
 
     public IEnumerator FadeCo(CanvasGroup cg, float start, float end, float lerpTime = 2f)
     {
-        Debug.Log("Inside fadeco");
+     //   Debug.Log("Inside fadeco");
         float timeStartedLerping = Time.time;
         float timeSinceStarted = Time.time - timeStartedLerping;
         float percentageCompleted = timeSinceStarted / lerpTime;
@@ -189,7 +188,7 @@ public class LevelManager : MonoBehaviour {
         */
         //DestroyImmediate(deathEffect,true);
         //Randomizer.LoadNextLevel();
-        Debug.Log("Exiting fadeco");
+        //Debug.Log("Exiting fadeco");
      //   yield return null;
     }
 

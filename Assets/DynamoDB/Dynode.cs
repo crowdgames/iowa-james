@@ -40,20 +40,12 @@ namespace DynamoDB
             onSceneChanged(SceneManager.GetActiveScene(), SceneManager.GetActiveScene());
 
             GameObject smo = GameObject.Find("SkillManager");
-            if (smo)
-            {
-                sm = smo.GetComponent<SkillManager>();
-            }
-            else
-            {
-                GameObject smobj = new GameObject("SkillManager");
-                sm = smobj.AddComponent<SkillManager>();
-            }
+            sm = smo.GetComponent<SkillManager>();
 
             player_id = "MT-" + generateID();
             DataManager.player_id = player_id;
-            DataManager.mode = player_id.ToCharArray()[player_id.Length - 1] % 4;
-            //DataManager.mode = 0;
+            //DataManager.mode = player_id.ToCharArray()[player_id.Length - 1] % 4;
+            DataManager.mode = 1;
             Debug.Log(player_id.ToCharArray()[player_id.Length - 1]);
             Debug.Log("COIN MODE: " + DataManager.mode.ToString());
             
@@ -64,7 +56,7 @@ namespace DynamoDB
 
             //REGISTER PLAYER HERE
             //StartCoroutine(RegisterPlayer());
-            sm.RegisterPlayer(player_id);
+            sm.RegisterPlayer();
                 
 
             http = gameObject.AddComponent<DDBHTTP>();

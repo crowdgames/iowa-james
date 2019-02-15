@@ -3,32 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 public class SkillManager : MonoBehaviour {
 
     public string server_data = "";
-    public string host = "localhost:3004";
+    public string host = "viridian.ccs.neu.edu:3004";
 
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
     }
 
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-    public void RegisterPlayer(string pid, int trurat=1500)
+    public void RegisterPlayer(int trurat=1500)
     {
-        string reg_player = "http://" + host + "/register?q={\"id\":\"" + pid + "\",\"type\":\"player\",\"trurat\":" + trurat + "}";
-        //string reg_player = "http://localhost:3004/register?q={\"id\":\"" + pid + "\",\"type\":\"player\",\"trurat\":" + trurat + "}";
+        string reg_player = "http://" + host + "/register?q={\"id\":\"" + DataManager.player_id + "\",\"type\":\"player\",\"trurat\":" + trurat + "}";
         Debug.Log(reg_player);
         StartCoroutine(ContactServer(reg_player));
     }
@@ -46,8 +35,7 @@ public class SkillManager : MonoBehaviour {
         else
         {
             server_data = www.downloadHandler.text;
-            // Or retrieve results as binary data
-            byte[] results = www.downloadHandler.data;
+            //byte[] results = www.downloadHandler.data;
         }
     }
     
@@ -63,5 +51,21 @@ public class SkillManager : MonoBehaviour {
         Debug.Log("***REQ***: " + request);
         yield return StartCoroutine(ContactServer(request));
         Debug.Log("DATA FROM REQUEST: " + server_data);
+    }
+
+    public void GetFirstMatch()
+    {
+        StartCoroutine("RequestMatch");
+    }
+
+    public IEnumerator RequestMatch()
+    {
+        Debug.Log("REQUESTING A MATCH");
+        string request = "http://" + host + "/requestMatch?q={\"id\":\"" + DataManager.player_id + "\"}";
+        Debug.Log(request);
+        yield return StartCoroutine(ContactServer(request));
+        Debug.Log("DATA FROM REQUEST: " + server_data);
+        string first_level = server_data.Substring(server_data.IndexOf("Level"), 8);
+        SceneManager.LoadScene(first_level);
     }
 }

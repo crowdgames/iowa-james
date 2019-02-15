@@ -102,8 +102,11 @@ public class PlayerController : MonoBehaviour {
         coinTextObj = GameObject.FindGameObjectWithTag("CoinText");
         if (DataManager.mode != 3)
         {
-            coinText = coinTextObj.GetComponent<Text>();
-            coinText.text = "Coins: " + coins + "/" + DataManager.NCOINS; //+ "\tLevel: " + (SceneManager.GetActiveScene().buildIndex + 1) + "/" + (SceneManager.sceneCountInBuildSettings - 1); //+ " ID: " + logger.dynode.player_id;
+            if (coinTextObj)
+            {
+                coinText = coinTextObj.GetComponent<Text>();
+                coinText.text = "Coins: " + coins + "/" + DataManager.NCOINS; //+ "\tLevel: " + (SceneManager.GetActiveScene().buildIndex + 1) + "/" + (SceneManager.sceneCountInBuildSettings - 1); //+ " ID: " + logger.dynode.player_id;
+            }
         }
     }
 
@@ -237,6 +240,7 @@ public class PlayerController : MonoBehaviour {
         {
             Debug.Log("Coins: " + coins);
             logger.LogWin(coins);
+            logger.LogMatch("win");
             canMove = false;
             canDie = false;
             StartCoroutine(lm.FadeOut());

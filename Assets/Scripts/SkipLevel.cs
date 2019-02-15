@@ -7,11 +7,13 @@ public class SkipLevel : MonoBehaviour {
 
     LevelManager lm;
     SkillManager sm;
+    Logger log;
 
 	// Use this for initialization
 	void Start () {
         lm = GameObject.FindObjectOfType<LevelManager>();
         sm = GameObject.FindObjectOfType<SkillManager>();
+        log = GameObject.FindObjectOfType<PlayerController>().GetComponent<Logger>();
 	}
 	
 	// Update is called once per frame
@@ -21,6 +23,7 @@ public class SkipLevel : MonoBehaviour {
 
     public void Skip()
     {
+        log.LogMatch("loss");
         StartCoroutine("SkipCo");
     }
     
@@ -35,7 +38,6 @@ public class SkipLevel : MonoBehaviour {
         // Randomizer.LoadNextLevel();
         string level = SceneManager.GetActiveScene().name;
         yield return sm.ReportAndRequest(0, level);
-        Debug.Log("NEXT LEVEL: " + sm.server_data);
         try
         {
             string next_level = sm.server_data.Substring(sm.server_data.IndexOf("Level"), 8);
