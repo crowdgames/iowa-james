@@ -14,11 +14,12 @@ public class SkillManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
     }
 
-    public void RegisterPlayer(int trurat=1500)
+    public IEnumerator RegisterPlayer(int trurat=1500)
     {
+        Debug.Log("REGISTER PLAYER");
         string reg_player = "http://" + DataManager.host + "/register?q={\"id\":\"" + DataManager.player_id + "\",\"type\":\"player\",\"trurat\":" + trurat + "}";
         Debug.Log(reg_player);
-        StartCoroutine(ContactServer(reg_player));
+        yield return StartCoroutine(ContactServer(reg_player));
     }
 
     IEnumerator ContactServer(string rp)
@@ -29,7 +30,7 @@ public class SkillManager : MonoBehaviour {
 
         if (www.isNetworkError || www.isHttpError)
         {
-            Debug.Log(www.error);
+            Debug.Log("WWW ERROR: " + www.error);
         }
         else
         {
@@ -38,11 +39,11 @@ public class SkillManager : MonoBehaviour {
         }
     }
     
-    public IEnumerator ReportAndRequest(int result, string level)
+    public IEnumerator ReportAndRequest(float score, string level)
     {
         Debug.Log("INSIDE REPORTANDREQUEST");
         string token = DateTime.UtcNow.ToString();
-        string report = "http://" + DataManager.host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"score1\":\"" + result + "\"}";
+        string report = "http://" + DataManager.host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"score1\":\"" + score + "\"}";
         Debug.Log("***REPORT****: " + report);
         yield return StartCoroutine(ContactServer(report));
         Debug.Log("DATA FROM REPORT: " + server_data);
@@ -52,9 +53,15 @@ public class SkillManager : MonoBehaviour {
         Debug.Log("DATA FROM REQUEST: " + server_data);
     }
 
-    public void GetFirstMatch()
+    public void RegisterAndGetFirstMatch()
     {
-        StartCoroutine("RequestMatch");
+        StartCoroutine("StartGame");
+    }
+
+    public IEnumerator StartGame()
+    {
+        yield return StartCoroutine(RegisterPlayer());
+        StartCoroutine(RequestMatch());
     }
 
     public IEnumerator RequestMatch()

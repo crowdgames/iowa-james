@@ -54,8 +54,6 @@ namespace DynamoDB
             startTime = DateTime.UtcNow;
             Debug.Log("Start: " + startTime);
             
-            sm.RegisterPlayer();
-
             http = gameObject.AddComponent<DDBHTTP>();
             http.action = "DynamoDB_20120810.PutItem";
             

@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour {
     bool canDie;
     bool jumpPressed;
     string[] killers;
-    int deathCount;
+    public int deathCount;
 
     // Variables for checking for ground
     bool grounded = false;

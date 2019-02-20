@@ -138,7 +138,9 @@ public class LevelManager : MonoBehaviour {
         player.anim.SetFloat("Speed", 0f);
         player.anim.SetFloat("vSpeed", 0f);
         string level = SceneManager.GetActiveScene().name;
-        yield return sm.ReportAndRequest(1, level);
+        float score = Mathf.Max(0f, 1f - ((0.1f * player.deathCount)));
+        Debug.Log("SCORE: " + score);
+        yield return sm.ReportAndRequest(score, level);
         //Debug.Log("NEXT LEVEL: " + sm.server_data);
         string next_level = "";
         try
