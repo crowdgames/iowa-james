@@ -37,7 +37,9 @@ public class SkipLevel : MonoBehaviour {
         */
         // Randomizer.LoadNextLevel();
         string level = SceneManager.GetActiveScene().name;
-        yield return sm.ReportAndRequest(0, level);
+        sm.score = 0f;
+        sm.level = level;
+        yield return sm.ReportAndRequest();
         try
         {
             string next_level = sm.server_data.Substring(sm.server_data.IndexOf("Level"), 8);
@@ -45,7 +47,10 @@ public class SkipLevel : MonoBehaviour {
         }
         catch
         {
-            SceneManager.LoadScene("Level_End");
+            if (sm.server_data != "ERROR")
+                SceneManager.LoadScene("Level_End");
+            else
+                sm.server_error = "SkipLevel";
         }
         
     }

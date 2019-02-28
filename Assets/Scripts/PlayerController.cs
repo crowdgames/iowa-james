@@ -25,8 +25,8 @@ public class PlayerController : MonoBehaviour {
     public Rigidbody2D rb;
     public BoxCollider2D slidingCollider;
     BoxCollider2D myCol;
-    bool canMove;
-    bool canDie;
+    public bool canMove;
+    public bool canDie;
     bool jumpPressed;
     string[] killers;
     public int deathCount;

@@ -23,6 +23,7 @@ public class Logger : MonoBehaviour
     float interpolationPeriod = 1.0f;
     public DynamoDB.Dynode dynode;
     int deathCount;
+    //GameObject errorObj;
 
     void Awake()
     {
@@ -40,7 +41,9 @@ public class Logger : MonoBehaviour
             GameObject DynodeObject = new GameObject("DynamoDB");
             dynode = DynodeObject.AddComponent<DynamoDB.Dynode>();
         }
-
+        //errorObj = GameObject.Find("Error");
+        //if (errorObj)
+         //   errorObj.SetActive(false);
         dynode.AWS_ACCESS_KEY_ID = awsAccessKeyID;
         dynode.AWS_SECRET_ACCESS_KEY = awsSecretAccessKey;
         dynode.table_name = tableName;

@@ -23,6 +23,9 @@ public class LevelManager : MonoBehaviour {
     public GameObject coin;
     GameObject coinTextObj;
     SkillManager sm;
+    GameObject errorObj;
+    SkipLevel skip;
+    GameObject skipObj;
 
     void Start()
     {
@@ -34,11 +37,18 @@ public class LevelManager : MonoBehaviour {
         startPos = player.transform.position;
         coinTextObj = GameObject.FindGameObjectWithTag("CoinText");
         sm = GameObject.Find("SkillManager").GetComponent<SkillManager>();
+        errorObj = GameObject.Find("Error");
+        skipObj = GameObject.Find("Skip");
+        if(skipObj)
+            skip = skipObj.GetComponent<SkipLevel>();
+        if (errorObj)
+            errorObj.SetActive(false);
 
         if(DataManager.mode == 3)
         {
             //No coins
-            coinTextObj.SetActive(false);
+            if(coinTextObj)
+                coinTextObj.SetActive(false);
             Debug.Log("No coins " + DataManager.mode);
             DisableCoins();
         }
@@ -46,7 +56,8 @@ public class LevelManager : MonoBehaviour {
         {
             Debug.Log("Mode " + DataManager.mode);
             //Designer coins (==0) or Path coins (==1) or random coins (==2)
-            coinTextObj.SetActive(true);
+            if(coinTextObj)
+                coinTextObj.SetActive(true);
             GenerateCoins(DataManager.mode);
         }
         
@@ -57,7 +68,8 @@ public class LevelManager : MonoBehaviour {
         GameObject[] coins = GameObject.FindGameObjectsWithTag("Coin");
         foreach (GameObject c in coins)
         {
-            c.SetActive(false);
+            if(c)
+                c.SetActive(false);
         //    Debug.Log("making coin inactive");
         }
     }
@@ -140,8 +152,10 @@ public class LevelManager : MonoBehaviour {
         string level = SceneManager.GetActiveScene().name;
         float score = Mathf.Max(0f, 1f - ((0.1f * player.deathCount)));
         Debug.Log("SCORE: " + score);
-        yield return sm.ReportAndRequest(score, level);
-        //Debug.Log("NEXT LEVEL: " + sm.server_data);
+        sm.score = score;
+        sm.level = level;
+        yield return sm.ReportAndRequest();
+        Debug.Log("NEXT LEVEL: " + sm.server_data);
         string next_level = "";
         try
         {
@@ -149,14 +163,19 @@ public class LevelManager : MonoBehaviour {
         }
         catch
         {
-            next_level = "Level_End";
+            if(sm.server_data != "ERROR")
+                next_level = "Level_End";
         }
-        yield return StartCoroutine(FadeCo(cg, cg.alpha, 1));
-        //Invoke("LoadNextLevel",3f);
-        SceneManager.LoadScene(next_level);
-        //Randomizer.LoadNextLevel();
-        
-     //   Debug.Log("Exiting fade out");
+        if (sm.server_data != "ERROR")
+        {
+            yield return StartCoroutine(FadeCo(cg, cg.alpha, 1));
+            SceneManager.LoadScene(next_level);
+        }
+        else
+        {
+            player.canMove = true;
+            player.canMove = false;
+        }
     }
 
     public IEnumerator FadeCo(CanvasGroup cg, float start, float end, float lerpTime = 2f)
@@ -200,4 +219,22 @@ public class LevelManager : MonoBehaviour {
         Randomizer.LoadNextLevel();
     }
 
+    public void ShowError()
+    {
+        errorObj.SetActive(true);
+    }
+
+    public void Recontact()
+    {
+        Debug.Log("Recontact");
+        Debug.Log("REQ: " + sm.server_request);
+        Debug.Log("ERR: " + sm.server_error);
+        if (sm.server_error == "StartGame")
+            sm.RegisterAndGetFirstMatch();
+        else if (sm.server_error == "ReportAndRequest")
+            StartCoroutine(FadeOut()); //StartCoroutine(sm.ReportAndRequest());
+        else if (sm.server_error == "SkipLevel")
+            skip.Skip();
+
+    }
 }
