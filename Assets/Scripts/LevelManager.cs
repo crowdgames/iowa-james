@@ -24,6 +24,8 @@ public class LevelManager : MonoBehaviour {
     GameObject coinTextObj;
     SkillManager sm;
     GameObject errorObj;
+    GameObject tryObj;
+    GameObject errTryObj;
     SkipLevel skip;
     GameObject skipObj;
 
@@ -39,6 +41,8 @@ public class LevelManager : MonoBehaviour {
         sm = GameObject.Find("SkillManager").GetComponent<SkillManager>();
         errorObj = GameObject.Find("Error");
         skipObj = GameObject.Find("Skip");
+        tryObj = GameObject.Find("TryButton");
+        errTryObj = GameObject.Find("ErrorTry");
         if(skipObj)
             skip = skipObj.GetComponent<SkipLevel>();
         if (errorObj)
@@ -49,12 +53,12 @@ public class LevelManager : MonoBehaviour {
             //No coins
             if(coinTextObj)
                 coinTextObj.SetActive(false);
-            Debug.Log("No coins " + DataManager.mode);
+            //Debug.Log("No coins " + DataManager.mode);
             DisableCoins();
         }
         else
         {
-            Debug.Log("Mode " + DataManager.mode);
+         //   Debug.Log("Mode " + DataManager.mode);
             //Designer coins (==0) or Path coins (==1) or random coins (==2)
             if(coinTextObj)
                 coinTextObj.SetActive(true);
@@ -219,13 +223,19 @@ public class LevelManager : MonoBehaviour {
         Randomizer.LoadNextLevel();
     }
 
-    public void ShowError()
+    public IEnumerator ShowError()
     {
         errorObj.SetActive(true);
+        errTryObj.SetActive(false);
+        tryObj.SetActive(false);
+        yield return new WaitForSeconds(3.0f);
+        errTryObj.SetActive(true);
+        tryObj.SetActive(true);
     }
 
     public void Recontact()
     {
+        HideError();
         Debug.Log("Recontact");
         Debug.Log("REQ: " + sm.server_request);
         Debug.Log("ERR: " + sm.server_error);
@@ -235,6 +245,12 @@ public class LevelManager : MonoBehaviour {
             StartCoroutine(FadeOut()); //StartCoroutine(sm.ReportAndRequest());
         else if (sm.server_error == "SkipLevel")
             skip.Skip();
+    }
+
+    public void HideError()
+    {
+        if (errorObj)
+            errorObj.SetActive(false);
 
     }
 }

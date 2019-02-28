@@ -33,7 +33,7 @@ namespace DynamoDB
             
             // Achieve Session Persistence
             DontDestroyOnLoad(gameObject);
-            Debug.Log("Inside dynode awake");
+            //Debug.Log("Inside dynode awake");
             // For detecting scene changes
             SceneManager.activeSceneChanged += onSceneChanged;
             // Call function on game start
@@ -46,13 +46,13 @@ namespace DynamoDB
             DataManager.player_id = player_id;
             //DataManager.mode = player_id.ToCharArray()[player_id.Length - 1] % 4;
             DataManager.mode = 1;
-            Debug.Log(player_id.ToCharArray()[player_id.Length - 1]);
-            Debug.Log("COIN MODE: " + DataManager.mode.ToString());
+            //Debug.Log(player_id.ToCharArray()[player_id.Length - 1]);
+            //Debug.Log("COIN MODE: " + DataManager.mode.ToString());
             
             run_id = 1;
             Debug.Log("Player id: " + player_id);
             startTime = DateTime.UtcNow;
-            Debug.Log("Start: " + startTime);
+            //Debug.Log("Start: " + startTime);
             
             http = gameObject.AddComponent<DDBHTTP>();
             http.action = "DynamoDB_20120810.PutItem";

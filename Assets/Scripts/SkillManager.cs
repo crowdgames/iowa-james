@@ -40,10 +40,12 @@ public class SkillManager : MonoBehaviour {
             server_data = "ERROR";
             //LevelManager lm = GameObject.Find("Character").GetComponent<Logger>();
             LevelManager lm = GameObject.Find("LevelManager").GetComponent<LevelManager>();
-            lm.ShowError();
+            StartCoroutine(lm.ShowError());
         }
         else
         {
+            LevelManager lm = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+            lm.HideError();
             server_data = www.downloadHandler.text;
             //byte[] results = www.downloadHandler.data;
         }
@@ -51,7 +53,7 @@ public class SkillManager : MonoBehaviour {
     
     public IEnumerator ReportAndRequest()
     {
-        Debug.Log("INSIDE REPORTANDREQUEST");
+     //   Debug.Log("INSIDE REPORTANDREQUEST");
         string token = DateTime.UtcNow.ToString();
         string report = "http://" + DataManager.host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"score1\":\"" + score + "\"}";
         server_request = "http://" + DataManager.host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"score1\":\"" + score + "\"}";
@@ -78,13 +80,13 @@ public class SkillManager : MonoBehaviour {
 
     public IEnumerator StartGame()
     {
-        Debug.Log("Inside StartGame");
+        //Debug.Log("Inside StartGame");
         yield return StartCoroutine(RegisterPlayer());
         if (server_data != "ERROR")
             StartCoroutine(RequestMatch());
         else
             server_error = "StartGame";
-        Debug.Log("Exiting StartGame");
+        //Debug.Log("Exiting StartGame");
     }
 
     public IEnumerator RequestMatch()

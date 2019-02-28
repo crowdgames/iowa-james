@@ -244,7 +244,6 @@ public class PlayerController : MonoBehaviour {
             canMove = false;
             canDie = false;
             StartCoroutine(lm.FadeOut());
-
         }
 
         //if ((col.CompareTag("Enemy") || col.CompareTag("Killer")) && canDie)
