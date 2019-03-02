@@ -85,11 +85,12 @@ public class LevelManager : MonoBehaviour {
         {
             List<Vector2> pos = new List<Vector2>();
             string name = SceneManager.GetActiveScene().name;
+            if (name == "Start")
+                return;
             string path = "Coins/";
             path += mode == 1 ? "out_" + name + "_path" : "out_" + name + "_randall";
             //Debug.Log(path);
             TextAsset coinData = Resources.Load<TextAsset>(path);
-            //Debug.Log(coinData.text);
             string[] lines = coinData.text.Split('\n');
             for (int i = 0; i < lines.Length - 1; i++)
             {
@@ -227,10 +228,10 @@ public class LevelManager : MonoBehaviour {
     {
         errorObj.SetActive(true);
         errTryObj.SetActive(false);
-        tryObj.SetActive(false);
+        tryObj.GetComponent<Button>().interactable = false;
         yield return new WaitForSeconds(3.0f);
         errTryObj.SetActive(true);
-        tryObj.SetActive(true);
+        tryObj.GetComponent<Button>().interactable = true;
     }
 
     public void Recontact()
