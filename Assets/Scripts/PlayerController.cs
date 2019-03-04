@@ -3,13 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
-public class PlayerController : MonoBehaviour {
-
+public class PlayerController : MonoBehaviour
+{
+    public Sprite openChest;
+    public GameObject[] sceneHCHItems;
+    //Inventory script
+    InventoryManager inventoryManager;
+    int inventoryCount = 0;
+    public GameObject tChest;
+    public int inventoryLimit;
+    public GameObject collectable = null;
+    string collectableName;
     // Analytics
     Vector3 previousPos;
 
-    public int curHealth=1;
+    public int curHealth;
     //public int maxHealth = 5;
 
     // General physics variables
@@ -47,21 +57,27 @@ public class PlayerController : MonoBehaviour {
     private GameObject levelImage;
     public GameObject EndUI;
 
+    ItemsGenerator itemsgenerator;
+
     // Use this for initialization
-    void Start () {
-        /*AudioSource[] aSources = GetComponents<AudioSource>();
-        audioFootstep = aSources[0];
-        audioCoin = aSources[1];
-        audioJump = aSources[2];*/
-        
+    void Start()
+    {
+        inventoryManager = GetComponent<InventoryManager>();
+        itemsgenerator = GameObject.FindGameObjectWithTag("ItemsMaster").GetComponent<ItemsGenerator>();
+
+
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         myCol = GetComponent<BoxCollider2D>();
-     
-        //levelImage.SetActive(false);
+        curHealth = 3;
 
-        curHealth = 1;
-        gm = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<gameMaster>();
+
+        inventoryManager.DisplayHeart(GamePersistentManager.Instance.currentLives);
+        FillInventoryDuringStart();
+        // gm = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<gameMaster>();
+        //sceneHCHItems = GameObject.FindGameObjectsWithTag("HCGItem");
+
+        //EnableAllHGCItems();
     }
 
     void FixedUpdate()
@@ -75,20 +91,13 @@ public class PlayerController : MonoBehaviour {
         // Horizontal motion
         float move = Input.GetAxis("Horizontal");
         anim.SetFloat("Speed", Mathf.Abs(move));
-        
+
         // Knockback and motion stuff
         if (knockbackCount <= 0) // You can't move while getting knocked back.
         {
             // Sliding stuff
             float slideAccell;
-            /*if (Input.GetKey(KeyCode.S) && grounded && Mathf.Abs(rb.velocity.x) > 3.0f)
-            {
-                sliding = true;
-                slideAccell = 2.0f;
-                slidingCollider.enabled = true;
-                myCol.enabled = false;
-            }*/
-            //else
+
             {
                 sliding = false;
                 slideAccell = 1.0f;
@@ -99,13 +108,7 @@ public class PlayerController : MonoBehaviour {
 
             // MOTION
             rb.velocity = new Vector2(move * maxSpeed * slideAccell, rb.velocity.y);
-            /*
-             *  For logging stuff 
-             * if (transform.position != previousPos)
-            {
-                Debug.Log(transform.position + ": at time: " + Time.time);
-                previousPos = transform.position;
-            }*/
+
         }
         else
         {
@@ -124,11 +127,24 @@ public class PlayerController : MonoBehaviour {
     }
 
 
-    void Update () {
+    void Update()
+    {
+
+
+
+        if (GamePersistentManager.Instance.inventoryCount == inventoryLimit)
+        {
+            tChest.GetComponent<SpriteRenderer>().sprite = openChest;
+            // tChest.SetActive(true);
+
+        }
+
+
+
         // Check if dead
         if (curHealth <= 0)
         {
-            Die();
+            // Die();
         }
 
         // Check for max health
@@ -142,7 +158,8 @@ public class PlayerController : MonoBehaviour {
         {
             anim.SetBool("Ground", false);
             rb.AddForce(new Vector2(0, jumpForce));
-            audioJump.Play();
+            if (audioJump != null)
+                audioJump.Play();
         }
     }
 
@@ -155,43 +172,135 @@ public class PlayerController : MonoBehaviour {
         transform.localScale = theScale;
     }
 
+
+
     void OnTriggerEnter2D(Collider2D col)
     {
+
+        if (col.gameObject.tag == "HCGItem")
+        {
+            string objectName = col.gameObject.name;
+            objectName = objectName.Replace("(Clone)", "");
+
+
+            if (itemsgenerator.itemsForCurrentlocation.Contains(objectName))
+            {
+                inventoryManager.AddItem(col.gameObject);
+                GamePersistentManager.Instance.inventoryItems.Add(objectName);
+                GamePersistentManager.Instance.inventoryCount += 1;
+              //  inventoryCount += 1;
+            }
+
+            else
+            {
+                //Die and restart
+                //Restart level
+                // Reduce one heart
+                Destroy(col.gameObject);
+                GamePersistentManager.Instance.currentLives -= 1;
+                //Debug.Log(GamePersistentManager.Instance.currentLives);
+                inventoryManager.DisplayHeart(GamePersistentManager.Instance.currentLives);
+                Die();
+            }
+
+        }
+
+
+        if (col.CompareTag("Hazard"))
+        {
+            Destroy(col.gameObject);
+            GamePersistentManager.Instance.currentLives -= 1;
+            //Debug.Log(GamePersistentManager.Instance.currentLives);
+            inventoryManager.DisplayHeart(GamePersistentManager.Instance.currentLives);
+            Die();
+        }
         if (col.CompareTag("Coin"))
         {
             Destroy(col.gameObject);
             audioCoin.Play();
             gm.points += 1;
-        }    
-
-        if(col.CompareTag("Tchest"))
-        {
-           SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
         }
+
+        if (col.CompareTag("Tchest"))
+        {
+            GamePersistentManager.Instance.inventoryCount = GetSceneIndex(SceneManager.GetActiveScene().buildIndex+1);
+            GamePersistentManager.Instance.currentLives = 3;
+            GamePersistentManager.Instance.inventoryItems.Clear();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
+        }
+
+
 
         if (col.CompareTag("Enemy"))
         {
 
-            Die();             
+            //  Die();
 
         }
     }
 
+
     void Die()
     {
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void Damage(int dmg)
     {
         curHealth -= dmg;
-       // anim.Play("FlashRed");
+        // anim.Play("FlashRed");
     }
 
     void Footstep()
     {
-        audioFootstep.Play();
+        if (audioFootstep != null)
+            audioFootstep.Play();
     }
 
-  
+    void FillInventoryDuringStart()
+    {
+        //Clear the inventory
+        inventoryManager.ClearInventory();
+
+        //Debug.Log(GamePersistentManager.Instance.inventoryItems.Count);
+        //Grab the items from persistent manager
+
+        if (GamePersistentManager.Instance.inventoryItems.Count > 0)
+        {
+            //GameObject myObject;
+            for (int i = 0; i < GamePersistentManager.Instance.inventoryItems.Count; i++)
+            {
+                for (int j = 0; j < GamePersistentManager.Instance.itemsList.Count; j++)
+                {
+                    if (GamePersistentManager.Instance.inventoryItems[i] == GamePersistentManager.Instance.itemsList[j].gameObject.name)
+                    {
+                        inventoryManager.AddItem(GamePersistentManager.Instance.itemsList[j].gameObject);
+                    }
+                }
+            }
+        }
+    }
+
+    int GetSceneIndex(int value)
+    {
+        switch (value)
+        {
+            case 1:
+                return 5;
+            case 2:
+                return 7;
+            case 3:
+                return 10;
+            case 4:
+                return 12;
+             case 5:
+                return 14;
+            default:
+                return 0;
+        }
+    }
+
+
 }

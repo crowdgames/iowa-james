@@ -117,7 +117,7 @@ public class Logger : MonoBehaviour
                 string sy = "" + Y;
                 string position = sx + ", " + sy;
                 // Debug.Log(sx);
-                Debug.Log(sy);
+                //Debug.Log(sy);
                 TestLog(sx, sy);
                 nextTime += interval;
 
