@@ -41,8 +41,21 @@ namespace DynamoDB
 
             GameObject smo = GameObject.Find("SkillManager");
             sm = smo.GetComponent<SkillManager>();
+            string test = "http://viridian.ccs.neu.edu/instructions.html?workerId=MT-8d151263359973cd187ffce12db71fe2&hitId=ensemble";
+            #if UNITY_EDITOR
+                    player_id = "MT-" + generateID();
+                    Debug.Log("Editor PID: " + player_id);
+            #else
+                    string url_string = Application.absoluteURL;
+                    Debug.Log("URL: " + url_string);
+                    string worker_param = "";
+                    if(url_string.Length > 0 && url_string.Contains("?") && url_string.Contains("&"))
+                        worker_param = url_string.Split('?')[1].Split('&')[0];
+                    if(worker_param.Contains("="))
+                        player_id = worker_param.Substring(worker_param.IndexOf("=") + 1);
+                    Debug.Log("Web PID: " + player_id);
+            #endif
 
-            player_id = "MT-" + generateID();
             DataManager.player_id = player_id;
             //DataManager.mode = player_id.ToCharArray()[player_id.Length - 1] % 4;
             DataManager.mode = 1;
@@ -50,7 +63,7 @@ namespace DynamoDB
             //Debug.Log("COIN MODE: " + DataManager.mode.ToString());
             
             run_id = 1;
-            Debug.Log("Player id: " + player_id);
+            //Debug.Log("Player id: " + player_id);
             startTime = DateTime.UtcNow;
             //Debug.Log("Start: " + startTime);
             
