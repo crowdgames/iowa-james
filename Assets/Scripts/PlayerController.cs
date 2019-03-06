@@ -7,8 +7,19 @@ using System.Linq;
 
 public class PlayerController : MonoBehaviour
 {
+    private bool oneHit = true;
+    private bool HCGOneHit = true;
+    private bool isAlive = true;
+    //UI text aspects
+    public GameObject GameOverUI;
+    public Text relevantitems;
+    public Text irrelevantItems;
     public Sprite openChest;
     public GameObject[] sceneHCHItems;
+    public GameObject itemMismatchUI;
+    public Image irrelevantImage;
+
+
     //Inventory script
     InventoryManager inventoryManager;
     int inventoryCount = 0;
@@ -71,13 +82,14 @@ public class PlayerController : MonoBehaviour
         myCol = GetComponent<BoxCollider2D>();
         curHealth = 3;
 
-
-        inventoryManager.DisplayHeart(GamePersistentManager.Instance.currentLives);
-        FillInventoryDuringStart();
-        // gm = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<gameMaster>();
-        //sceneHCHItems = GameObject.FindGameObjectsWithTag("HCGItem");
-
-        //EnableAllHGCItems();
+        //reload all collected items if the player is alive
+        if (GamePersistentManager.Instance.currentLives > -1)
+        {
+            Time.timeScale = 1;
+            inventoryManager.DisplayHeart(GamePersistentManager.Instance.currentLives);
+            FillInventoryDuringStart();
+        }
+        
     }
 
     void FixedUpdate()
@@ -129,16 +141,25 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-
+        if(GamePersistentManager.Instance.currentLives < -1)
+        {
+            isAlive = false;
+        }
 
 
         if (GamePersistentManager.Instance.inventoryCount == inventoryLimit)
         {
             tChest.GetComponent<SpriteRenderer>().sprite = openChest;
-            // tChest.SetActive(true);
-
         }
 
+
+        if (GamePersistentManager.Instance.currentLives < 0)
+        {
+            GameOverUI.SetActive(true);
+            relevantitems.text = "Relevant Items Collected: " + GamePersistentManager.Instance.relevantItemsCollected;
+            irrelevantItems.text = "Irrelevant Items Collected: " + GamePersistentManager.Instance.irrelevantItemsCollected;
+            Time.timeScale = 0;
+        }
 
 
         // Check if dead
@@ -185,10 +206,20 @@ public class PlayerController : MonoBehaviour
 
             if (itemsgenerator.itemsForCurrentlocation.Contains(objectName))
             {
-                inventoryManager.AddItem(col.gameObject);
-                GamePersistentManager.Instance.inventoryItems.Add(objectName);
-                GamePersistentManager.Instance.inventoryCount += 1;
-              //  inventoryCount += 1;
+                if (HCGOneHit)
+                {
+                    HCGOneHit = false;
+                    inventoryManager.AddItem(col.gameObject);
+                    GamePersistentManager.Instance.inventoryItems.Add(objectName);
+                    GamePersistentManager.Instance.inventoryCount += 1;
+                    GamePersistentManager.Instance.relevantItemsCollected += 1;
+
+                    if (GamePersistentManager.Instance.inventoryCount > inventoryLimit)
+                    {
+                        col.gameObject.SetActive(false);
+                    }
+                }
+
             }
 
             else
@@ -196,11 +227,24 @@ public class PlayerController : MonoBehaviour
                 //Die and restart
                 //Restart level
                 // Reduce one heart
-                Destroy(col.gameObject);
-                GamePersistentManager.Instance.currentLives -= 1;
-                //Debug.Log(GamePersistentManager.Instance.currentLives);
-                inventoryManager.DisplayHeart(GamePersistentManager.Instance.currentLives);
-                Die();
+
+                if (HCGOneHit)
+                {
+                    HCGOneHit = false;
+                    Destroy(col.gameObject);
+                    GamePersistentManager.Instance.currentLives -= 1;
+                    GamePersistentManager.Instance.irrelevantItemsCollected += 1;
+                    inventoryManager.DisplayHeart(GamePersistentManager.Instance.currentLives);
+
+
+                    if (GamePersistentManager.Instance.currentLives > 0)
+                    {
+                        itemMismatchUI.SetActive(true);
+                        irrelevantImage.overrideSprite = col.gameObject.GetComponent<SpriteRenderer>().sprite;
+                        Time.timeScale = 0;
+                    }
+            
+                }
             }
 
         }
@@ -209,7 +253,11 @@ public class PlayerController : MonoBehaviour
         if (col.CompareTag("Hazard"))
         {
             Destroy(col.gameObject);
-            GamePersistentManager.Instance.currentLives -= 1;
+            if (oneHit)
+            {
+                oneHit = false;
+                GamePersistentManager.Instance.currentLives -= 1;
+            }
             //Debug.Log(GamePersistentManager.Instance.currentLives);
             inventoryManager.DisplayHeart(GamePersistentManager.Instance.currentLives);
             Die();
@@ -223,7 +271,7 @@ public class PlayerController : MonoBehaviour
 
         if (col.CompareTag("Tchest"))
         {
-            GamePersistentManager.Instance.inventoryCount = GetSceneIndex(SceneManager.GetActiveScene().buildIndex+1);
+            GamePersistentManager.Instance.inventoryCount = GetSceneIndex(SceneManager.GetActiveScene().buildIndex + 1);
             GamePersistentManager.Instance.currentLives = 3;
             GamePersistentManager.Instance.inventoryItems.Clear();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -241,7 +289,15 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    void Die()
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        oneHit = true;
+        HCGOneHit = true;
+    }
+
+
+    public void Die()
     {
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -295,7 +351,7 @@ public class PlayerController : MonoBehaviour
                 return 10;
             case 4:
                 return 12;
-             case 5:
+            case 5:
                 return 14;
             default:
                 return 0;

@@ -10,6 +10,9 @@ public class GamePersistentManager : MonoBehaviour {
     public List<string>inventoryItems;
     public List<GameObject> itemsList;
     public int inventoryCount = 0;
+
+    public int relevantItemsCollected = 0;
+    public int irrelevantItemsCollected = 0;
     //public Dictionary<string,GameObject> HCGItems = new Dictionary<string, GameObject>();
 
 
