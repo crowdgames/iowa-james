@@ -155,7 +155,7 @@ public class LevelManager : MonoBehaviour {
         player.anim.SetFloat("Speed", 0f);
         player.anim.SetFloat("vSpeed", 0f);
         string level = SceneManager.GetActiveScene().name;
-        float score = Mathf.Max(0f, 1f - ((0.1f * player.deathCount)));
+        float score = Mathf.Max(0f, 1f - ((0.34f * player.deathCount)));
         Debug.Log("SCORE: " + score);
         sm.score = score;
         sm.level = level;
