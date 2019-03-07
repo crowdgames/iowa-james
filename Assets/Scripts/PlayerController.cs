@@ -73,6 +73,7 @@ public class PlayerController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        GamePersistentManager.Instance.startPosition = transform.position;
         inventoryManager = GetComponent<InventoryManager>();
         itemsgenerator = GameObject.FindGameObjectWithTag("ItemsMaster").GetComponent<ItemsGenerator>();
 
@@ -82,14 +83,24 @@ public class PlayerController : MonoBehaviour
         myCol = GetComponent<BoxCollider2D>();
         curHealth = 3;
 
+        Debug.Log(inventoryLimit);
         //reload all collected items if the player is alive
         if (GamePersistentManager.Instance.currentLives > -1)
         {
+
             Time.timeScale = 1;
             inventoryManager.DisplayHeart(GamePersistentManager.Instance.currentLives);
             FillInventoryDuringStart();
         }
-        
+
+    }
+
+
+    public void StartOverAgain()
+    {
+        transform.position = GamePersistentManager.Instance.startPosition;
+        Time.timeScale = 1;
+        itemMismatchUI.SetActive(false);
     }
 
     void FixedUpdate()
@@ -141,10 +152,10 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if(GamePersistentManager.Instance.currentLives < -1)
-        {
-            isAlive = false;
-        }
+        //if (GamePersistentManager.Instance.currentLives < -1)
+        //{
+        //    isAlive = false;
+        //}
 
 
         if (GamePersistentManager.Instance.inventoryCount == inventoryLimit)
@@ -222,7 +233,8 @@ public class PlayerController : MonoBehaviour
 
             }
 
-            else
+            if (!itemsgenerator.itemsForCurrentlocation.Contains(objectName))
+
             {
                 //Die and restart
                 //Restart level
@@ -231,7 +243,7 @@ public class PlayerController : MonoBehaviour
                 if (HCGOneHit)
                 {
                     HCGOneHit = false;
-                    Destroy(col.gameObject);
+                    col.gameObject.SetActive(false);
                     GamePersistentManager.Instance.currentLives -= 1;
                     GamePersistentManager.Instance.irrelevantItemsCollected += 1;
                     inventoryManager.DisplayHeart(GamePersistentManager.Instance.currentLives);
@@ -243,7 +255,7 @@ public class PlayerController : MonoBehaviour
                         irrelevantImage.overrideSprite = col.gameObject.GetComponent<SpriteRenderer>().sprite;
                         Time.timeScale = 0;
                     }
-            
+
                 }
             }
 
@@ -252,7 +264,7 @@ public class PlayerController : MonoBehaviour
 
         if (col.CompareTag("Hazard"))
         {
-            Destroy(col.gameObject);
+            //Destroy(col.gameObject);
             if (oneHit)
             {
                 oneHit = false;
@@ -260,7 +272,8 @@ public class PlayerController : MonoBehaviour
             }
             //Debug.Log(GamePersistentManager.Instance.currentLives);
             inventoryManager.DisplayHeart(GamePersistentManager.Instance.currentLives);
-            Die();
+            StartOverAgain();
+            //Die();
         }
         if (col.CompareTag("Coin"))
         {
@@ -271,7 +284,7 @@ public class PlayerController : MonoBehaviour
 
         if (col.CompareTag("Tchest"))
         {
-            GamePersistentManager.Instance.inventoryCount = GetSceneIndex(SceneManager.GetActiveScene().buildIndex + 1);
+            inventoryLimit = GetSceneIndex(SceneManager.GetActiveScene().buildIndex + 1);
             GamePersistentManager.Instance.currentLives = 3;
             GamePersistentManager.Instance.inventoryItems.Clear();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);

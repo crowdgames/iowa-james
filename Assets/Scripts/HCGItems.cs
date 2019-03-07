@@ -26,7 +26,7 @@ public class HCGItems
 
     public static string[] tools = new string[]
 {
-     "driller","electricsaw","hammer","nails","Pilers","wrenchandscrewdriver"
+     "driller","electricsaw","hammer","nails","Pilers","wrenchandscredriver"
 };
 
 }

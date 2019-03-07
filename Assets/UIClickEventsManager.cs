@@ -13,6 +13,7 @@ public class UIClickEventsManager : MonoBehaviour
     }
     public void ContinueButtonOnItemMisMatchUI()
     {
-        playerController.Die();
+        //playerController.Die();
+        playerController.StartOverAgain();
     }
 }

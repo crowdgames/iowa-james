@@ -13,7 +13,7 @@ public class GamePersistentManager : MonoBehaviour {
 
     public int relevantItemsCollected = 0;
     public int irrelevantItemsCollected = 0;
-    //public Dictionary<string,GameObject> HCGItems = new Dictionary<string, GameObject>();
+    public Vector3 startPosition;
 
 
 
