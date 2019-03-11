@@ -15,7 +15,8 @@ public class GamePersistentManager : MonoBehaviour {
     public int irrelevantItemsCollected = 0;
     public Vector3 startPosition;
 
-
+    public List<SceneItemsManager> sceneItemsManager;
+    
 
     void Awake()
     {
@@ -30,4 +31,12 @@ public class GamePersistentManager : MonoBehaviour {
             Destroy(gameObject);
         }
     }
+}
+
+[Serializable]
+public class SceneItemsManager
+{
+    public string scene;
+    public int itemsInScene;
+
 }

@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
         myCol = GetComponent<BoxCollider2D>();
         curHealth = 3;
 
-        Debug.Log(inventoryLimit);
+        //Debug.Log(inventoryLimit);
         //reload all collected items if the player is alive
         if (GamePersistentManager.Instance.currentLives > -1)
         {
