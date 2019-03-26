@@ -36,16 +36,16 @@ public class LevelManager : MonoBehaviour {
         if(DataManager.mode == 3)
         {
             //No coins
-            coinTextObj.SetActive(false);
-            Debug.Log("No coins " + DataManager.mode);
-            DisableCoins();
+            //coinTextObj.SetActive(false);
+            //Debug.Log("No coins " + DataManager.mode);
+            //DisableCoins();
         }
         else
         {
             Debug.Log("Mode " + DataManager.mode);
             //Designer coins (==0) or Path coins (==1) or random coins (==2)
-            coinTextObj.SetActive(true);
-            GenerateCoins(DataManager.mode);
+            //coinTextObj.SetActive(true);
+            //GenerateCoins(DataManager.mode);
         }
         
     }
@@ -162,9 +162,10 @@ public class LevelManager : MonoBehaviour {
         player.anim.SetFloat("Speed", 0f);
         player.anim.SetFloat("vSpeed", 0f);
         yield return StartCoroutine(FadeCo(cg, cg.alpha, 1));
+  
         //Invoke("LoadNextLevel",3f);
-        Randomizer.LoadNextLevel();
-        Debug.Log("Exiting fade out");
+        //Randomizer.LoadNextLevel();
+        //Debug.Log("Exiting fade out");
     }
 
     public IEnumerator FadeCo(CanvasGroup cg, float start, float end, float lerpTime = 2f)

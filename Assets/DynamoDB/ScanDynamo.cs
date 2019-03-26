@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SimpleJSON;
 using UnityEngine.UI;
-using WindowsInput;
+//using WindowsInput;
 
 public class ScanDynamo : MonoBehaviour {
 
@@ -74,42 +74,42 @@ public class ScanDynamo : MonoBehaviour {
 
                 // Move player along path using recursive couroutines.
                 // This initial time passed in is just an initial delay.
-                StartCoroutine(ExecuteAfterTime(1.0f, 0));
+                //StartCoroutine(ExecuteAfterTime(1.0f, 0));
 
                 //InputSimulator.SimulateKeyDown(VirtualKeyCode.RIGHT);
             }
         }));
     }
 
-    IEnumerator ExecuteAfterTime(float time, int action_count)
-    {
-        yield return new WaitForSeconds(time);
+    //IEnumerator ExecuteAfterTime(float time, int action_count)
+    //{
+    //    yield return new WaitForSeconds(time);
 
-        // Code to execute after the delay
-        if (action_count + 1 < points.Length)
-        {
-            Debug.Log("Perform event: " + points[action_count].action);
-            PerformEvent(points[action_count].action);
-            float duration = Convert.ToSingle(points[action_count + 1].stamp - points[action_count].stamp);
-            StartCoroutine(ExecuteAfterTime(duration, action_count + 1));
-        }
-    }
+    //    // Code to execute after the delay
+    //    if (action_count + 1 < points.Length)
+    //    {
+    //        Debug.Log("Perform event: " + points[action_count].action);
+    //        PerformEvent(points[action_count].action);
+    //        float duration = Convert.ToSingle(points[action_count + 1].stamp - points[action_count].stamp);
+    //        StartCoroutine(ExecuteAfterTime(duration, action_count + 1));
+    //    }
+    //}
 
-    void PerformEvent(string Event)
-    {
-        switch(Event)
-        {
-            case "RightDown": InputSimulator.SimulateKeyDown(VirtualKeyCode.RIGHT); break;
-            case "RightUp": InputSimulator.SimulateKeyUp(VirtualKeyCode.RIGHT); break;
-            case "LeftDown": InputSimulator.SimulateKeyDown(VirtualKeyCode.LEFT); break;
-            case "LeftUp": InputSimulator.SimulateKeyUp(VirtualKeyCode.LEFT); break;
-            case "UpDown": InputSimulator.SimulateKeyDown(VirtualKeyCode.UP); break;
-            case "UpUp": InputSimulator.SimulateKeyUp(VirtualKeyCode.UP); break;
-            case "SDown": InputSimulator.SimulateKeyDown(VirtualKeyCode.VK_S); break;
-            case "SUp": InputSimulator.SimulateKeyUp(VirtualKeyCode.VK_S); break;
-            default: Debug.Log("Unknown key event"); break;
-        }
-    }
+    //void PerformEvent(string Event)
+    //{
+    //    switch(Event)
+    //    {
+    //        case "RightDown": InputSimulator.SimulateKeyDown(VirtualKeyCode.RIGHT); break;
+    //        case "RightUp": InputSimulator.SimulateKeyUp(VirtualKeyCode.RIGHT); break;
+    //        case "LeftDown": InputSimulator.SimulateKeyDown(VirtualKeyCode.LEFT); break;
+    //        case "LeftUp": InputSimulator.SimulateKeyUp(VirtualKeyCode.LEFT); break;
+    //        case "UpDown": InputSimulator.SimulateKeyDown(VirtualKeyCode.UP); break;
+    //        case "UpUp": InputSimulator.SimulateKeyUp(VirtualKeyCode.UP); break;
+    //        case "SDown": InputSimulator.SimulateKeyDown(VirtualKeyCode.VK_S); break;
+    //        case "SUp": InputSimulator.SimulateKeyUp(VirtualKeyCode.VK_S); break;
+    //        default: Debug.Log("Unknown key event"); break;
+    //    }
+    //}
 }
 
 // Action class for storing key events

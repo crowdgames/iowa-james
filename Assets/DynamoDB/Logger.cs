@@ -7,10 +7,10 @@ using UnityEngine.SceneManagement;
 
 public class Logger : MonoBehaviour
 {
-    string awsAccessKeyID = Credentials.awsAccessKeyID;
-    string awsSecretAccessKey = Credentials.awsSecretAccessKey;
-    string tableName = Credentials.tableName;
-    string primaryKey = Credentials.primaryKey;
+    string awsAccessKeyID;// = Credentials.awsAccessKeyID;
+    string awsSecretAccessKey;// = Credentials.awsSecretAccessKey;
+    string tableName;// = Credentials.tableName;
+    string primaryKey;// = Credentials.primaryKey;
     
     public static float X;
     public static float Y;
