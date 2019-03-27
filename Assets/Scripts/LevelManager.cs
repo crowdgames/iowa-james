@@ -22,12 +22,14 @@ public class LevelManager : MonoBehaviour {
     public GameObject deathEffect;
     public GameObject coin;
     GameObject coinTextObj;
+    //GameObject smo;
     SkillManager sm;
     GameObject errorObj;
     GameObject tryObj;
     GameObject errTryObj;
     SkipLevel skip;
     GameObject skipObj;
+    GameObject hcgCanvas;
 
     void Start()
     {
@@ -38,7 +40,18 @@ public class LevelManager : MonoBehaviour {
         fadePanel = GameObject.FindObjectOfType<Fade>();
         startPos = player.transform.position;
         coinTextObj = GameObject.FindGameObjectWithTag("CoinText");
-        sm = GameObject.Find("SkillManager").GetComponent<SkillManager>();
+        GameObject smo = GameObject.Find("SkillManager");
+        //GameObject ddb = GameObject.Find("DynamoDB");
+        if (smo)
+        {
+            sm = smo.GetComponent<SkillManager>();
+        }
+        else
+        {
+            GameObject smobj = new GameObject("SkillManager");
+            sm = smobj.AddComponent<SkillManager>();
+        }
+
         errorObj = GameObject.Find("Error");
         skipObj = GameObject.Find("Skip");
         tryObj = GameObject.Find("TryButton");
@@ -48,7 +61,9 @@ public class LevelManager : MonoBehaviour {
         if (errorObj)
             errorObj.SetActive(false);
 
-        if(DataManager.mode == 3)
+        Debug.Log("Mode: " + DataManager.mode);
+
+        if(DataManager.mode >= 3)
         {
             //No coins
             if(coinTextObj)
@@ -64,7 +79,19 @@ public class LevelManager : MonoBehaviour {
                 coinTextObj.SetActive(true);
             GenerateCoins(DataManager.mode);
         }
+
+        hcgCanvas = GameObject.Find("HCGCanvas");
+
+        if (DataManager.mode != 4)
+        {
+            hcgCanvas.SetActive(false);
+        }
         
+    }
+
+    public void EnableHCG()
+    {
+
     }
 
     public void DisableCoins()

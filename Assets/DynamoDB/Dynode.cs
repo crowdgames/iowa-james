@@ -40,7 +40,8 @@ namespace DynamoDB
             onSceneChanged(SceneManager.GetActiveScene(), SceneManager.GetActiveScene());
 
             GameObject smo = GameObject.Find("SkillManager");
-            sm = smo.GetComponent<SkillManager>();
+            if(smo)
+                sm = smo.GetComponent<SkillManager>();
             string test = "http://viridian.ccs.neu.edu/instructions.html?workerId=MT-8d151263359973cd187ffce12db71fe2&hitId=ensemble";
             #if UNITY_EDITOR
                     player_id = "MT-" + generateID();
