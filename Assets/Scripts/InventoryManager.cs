@@ -9,10 +9,9 @@ public class InventoryManager : MonoBehaviour
     public Sprite fullHeart;
     public Sprite emptyHeart;
 
-    public GameObject[] myInventory = new GameObject[3];
-    public Image[] inventorySections = new Image[3];
-
-    public int currentHealth;
+    public GameObject[] myInventory;
+    public Image[] inventorySections;
+    
     public Image[] heartsSection = new Image[3];
     
 
@@ -30,6 +29,13 @@ public class InventoryManager : MonoBehaviour
                 break;
             }
         }
+    }
+
+    public void InitInventory(int numItems)
+    {
+        Debug.Log("Inventory items: " + numItems);
+        myInventory = new GameObject[numItems];
+        inventorySections = new Image[numItems];
     }
 
     public void ClearInventory()

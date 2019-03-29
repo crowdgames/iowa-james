@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour {
     //Inventory script
     InventoryManager inventoryManager;
     int inventoryCount = 0;
-    public GameObject tChest;
+    public GameObject chest;
     public int inventoryLimit;
     public GameObject collectable = null;
     string collectableName;
@@ -88,7 +88,8 @@ public class PlayerController : MonoBehaviour {
     ItemsGenerator itemgenerator;
 
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
         /*AudioSource[] aSources = GetComponents<AudioSource>();
         audioFootstep = aSources[0];
         audioCoin = aSources[1];
@@ -131,6 +132,8 @@ public class PlayerController : MonoBehaviour {
             }
         }
 
+        chest = GameObject.Find("Chest");
+
         itemMismatchUI = GameObject.Find("ItemMismatchUI");
         irrelevantImage = GameObject.Find("IrrelevantImage").GetComponent<Image>();
         itemMismatchUI.SetActive(false);
@@ -140,15 +143,19 @@ public class PlayerController : MonoBehaviour {
         irrelevantItems = GameObject.Find("irrelevantText").GetComponent<Text>();
         gameOverUI.SetActive(false);
 
+        /*
         if (DataManager.mode == 4)
         {
-            GamePersistentManager.Instance.startPosition = transform.position;
+            //GamePersistentManager.Instance.startPosition = transform.position;
             //inventoryManager = GetComponent<InventoryManager>();
             inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
-            itemgenerator = GameObject.FindGameObjectWithTag("ItemsMaster").GetComponent<ItemsGenerator>();
-            inventoryLimit = GamePersistentManager.Instance.sceneItemsManager[SceneManager.GetActiveScene().buildIndex].itemsInScene;
+            //itemgenerator = GameObject.FindGameObjectWithTag("ItemsMaster").GetComponent<ItemsGenerator>();
+            //inventoryLimit = GamePersistentManager.Instance.sceneItemsManager[SceneManager.GetActiveScene().buildIndex].itemsInScene;
+            inventoryLimit = lm.items.Length;
             Debug.Log("Inventory LIMIT" + inventoryLimit);
+            //chest.GetComponent<SpriteRenderer>().sprite = 
 
+            /*
             //reload all collected items if the player is alive
             if (GamePersistentManager.Instance.currentLives > -1)
             {
@@ -156,7 +163,9 @@ public class PlayerController : MonoBehaviour {
                 inventoryManager.DisplayHeart(GamePersistentManager.Instance.currentLives);
                 FillInventoryDuringStart();
             }   
+            
         }
+        */
     }
 
     void FixedUpdate()
@@ -253,11 +262,12 @@ public class PlayerController : MonoBehaviour {
         DataManager.play_time += Time.deltaTime;
         //coinText.text = "Coins: " + coins + "/" + DataManager.NCOINS + "Time: " + DataManager.play_time + " Level: " + (SceneManager.GetActiveScene().buildIndex + 1) + "/" + (SceneManager.sceneCountInBuildSettings - 1); //+ " ID: " + logger.dynode.player_id;
 
+        /*
         if (DataManager.mode == 4)
         {
             if (GamePersistentManager.Instance.inventoryCount == inventoryLimit)
             {
-                tChest.GetComponent<SpriteRenderer>().sprite = openChest;
+                //tChest.GetComponent<SpriteRenderer>().sprite = openChest;
             }
 
             if (GamePersistentManager.Instance.currentLives < 0)
@@ -268,6 +278,7 @@ public class PlayerController : MonoBehaviour {
                 Time.timeScale = 0;
             }
         }
+        */
     }
 
 
@@ -287,8 +298,13 @@ public class PlayerController : MonoBehaviour {
 
             if (col.CompareTag("HCGItem"))//.gameObject.tag == "HCGItem" && gameObject.tag =="Player")
             {
+                lm.CollectItem(col.gameObject);
+                Destroy(col.gameObject);
+
                 //oneHit = false;
-                Debug.Log(col.gameObject.tag + gameObject.tag);
+                //Debug.Log(col.gameObject.tag + gameObject.tag);
+
+                /*
                 string objectName = col.gameObject.name;
                 objectName = objectName.Replace("(Clone)", "");
 
@@ -305,8 +321,6 @@ public class PlayerController : MonoBehaviour {
                     {
                         col.gameObject.SetActive(false);
                     }
-
-
                 }
 
                 if (!itemgenerator.itemsForCurrentlocation.Contains(objectName))
@@ -326,6 +340,7 @@ public class PlayerController : MonoBehaviour {
                         Time.timeScale = 0;
                     }
                 }
+                */
             }
         }
 

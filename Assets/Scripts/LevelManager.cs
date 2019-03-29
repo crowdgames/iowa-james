@@ -4,6 +4,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class LevelManager : MonoBehaviour {
 
@@ -32,7 +33,7 @@ public class LevelManager : MonoBehaviour {
     GameObject hcgCanvas;
     InventoryManager inventory;
     string scenario;
-    GameObject[] items;
+    public GameObject[] items;
     string[] relevant_items;
     string[] irrelevant_items;
 
@@ -49,7 +50,7 @@ public class LevelManager : MonoBehaviour {
         startPos = player.transform.position;
         coinTextObj = GameObject.FindGameObjectWithTag("CoinText");
         GameObject smo = GameObject.Find("SkillManager");
-
+        inventory = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
         
 
         //GameObject ddb = GameObject.Find("DynamoDB");
@@ -105,6 +106,7 @@ public class LevelManager : MonoBehaviour {
             string level_name = SceneManager.GetActiveScene().name;
             int num_items = int.Parse(level_name[level_name.LastIndexOf("_") + 1].ToString()) * 2;
             items = GameObject.FindGameObjectsWithTag("Item");
+            inventory.InitInventory(items.Length/2);
             LoadItems();
         }
     }
@@ -155,6 +157,18 @@ public class LevelManager : MonoBehaviour {
             }
         }
         return irrelevant;
+    }
+
+    public void CollectItem(GameObject item)
+    {
+        Debug.Log("Collected Item: " + item.name);
+        string item_name = item.name.Substring(0, item.name.IndexOf("("));
+        if (relevant_items.Contains(item_name))
+            Debug.Log("RELEVANT!");
+        else if (irrelevant_items.Contains(item_name))
+            Debug.Log("IRRELEV");
+        else
+            Debug.Log("C'est une blague?!");
     }
     
     public void DisableCoins()
