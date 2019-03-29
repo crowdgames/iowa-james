@@ -143,7 +143,8 @@ public class PlayerController : MonoBehaviour {
         if (DataManager.mode == 4)
         {
             GamePersistentManager.Instance.startPosition = transform.position;
-            inventoryManager = GetComponent<InventoryManager>();
+            //inventoryManager = GetComponent<InventoryManager>();
+            inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
             itemgenerator = GameObject.FindGameObjectWithTag("ItemsMaster").GetComponent<ItemsGenerator>();
             inventoryLimit = GamePersistentManager.Instance.sceneItemsManager[SceneManager.GetActiveScene().buildIndex].itemsInScene;
             Debug.Log("Inventory LIMIT" + inventoryLimit);
@@ -231,21 +232,7 @@ public class PlayerController : MonoBehaviour {
 
     void Update () {
 
-        if (DataManager.mode == 4)
-        {
-            if (GamePersistentManager.Instance.inventoryCount == inventoryLimit)
-            {
-                tChest.GetComponent<SpriteRenderer>().sprite = openChest;
-            }
-
-            if (GamePersistentManager.Instance.currentLives < 0)
-            {
-                gameOverUI.SetActive(true);
-                relevantItems.text = "Relevant Items Collected: " + GamePersistentManager.Instance.relevantItemsCollected;
-                irrelevantItems.text = "Irrelevant Items Collected: " + GamePersistentManager.Instance.irrelevantItemsCollected;
-                Time.timeScale = 0;
-            }
-        }
+        
         // Check if dead
         if (curHealth <= 0 && canDie)
         {
@@ -265,6 +252,22 @@ public class PlayerController : MonoBehaviour {
 
         DataManager.play_time += Time.deltaTime;
         //coinText.text = "Coins: " + coins + "/" + DataManager.NCOINS + "Time: " + DataManager.play_time + " Level: " + (SceneManager.GetActiveScene().buildIndex + 1) + "/" + (SceneManager.sceneCountInBuildSettings - 1); //+ " ID: " + logger.dynode.player_id;
+
+        if (DataManager.mode == 4)
+        {
+            if (GamePersistentManager.Instance.inventoryCount == inventoryLimit)
+            {
+                tChest.GetComponent<SpriteRenderer>().sprite = openChest;
+            }
+
+            if (GamePersistentManager.Instance.currentLives < 0)
+            {
+                gameOverUI.SetActive(true);
+                relevantItems.text = "Relevant Items Collected: " + GamePersistentManager.Instance.relevantItemsCollected;
+                irrelevantItems.text = "Irrelevant Items Collected: " + GamePersistentManager.Instance.irrelevantItemsCollected;
+                Time.timeScale = 0;
+            }
+        }
     }
 
 

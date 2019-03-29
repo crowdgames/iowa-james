@@ -30,7 +30,15 @@ public class LevelManager : MonoBehaviour {
     SkipLevel skip;
     GameObject skipObj;
     GameObject hcgCanvas;
+    InventoryManager inventory;
+    string scenario;
+    GameObject[] items;
+    string[] relevant_items;
+    string[] irrelevant_items;
 
+    [SerializeField]
+    List<GameObject> allItems;
+    
     void Start()
     {
 
@@ -41,6 +49,9 @@ public class LevelManager : MonoBehaviour {
         startPos = player.transform.position;
         coinTextObj = GameObject.FindGameObjectWithTag("CoinText");
         GameObject smo = GameObject.Find("SkillManager");
+
+        
+
         //GameObject ddb = GameObject.Find("DynamoDB");
         if (smo)
         {
@@ -80,20 +91,72 @@ public class LevelManager : MonoBehaviour {
             GenerateCoins(DataManager.mode);
         }
 
+        scenario = DataManager.scenarios[Random.Range(0, DataManager.scenarios.Length)];
+        //Debug.Log("SCENARIO: " + scenarios[scenario]);
         hcgCanvas = GameObject.Find("HCGCanvas");
-
         if (DataManager.mode != 4)
         {
             hcgCanvas.SetActive(false);
         }
-        
+        else
+        {
+            relevant_items = DataManager.hcg_items[scenario];
+            irrelevant_items = getIrrelevantItems().ToArray();
+            string level_name = SceneManager.GetActiveScene().name;
+            int num_items = int.Parse(level_name[level_name.LastIndexOf("_") + 1].ToString()) * 2;
+            items = GameObject.FindGameObjectsWithTag("Item");
+            LoadItems();
+        }
     }
 
-    public void EnableHCG()
+    void LoadItems()
     {
+        List<string> rel_temp = new List<string>(relevant_items);
+        List<string> irrel_temp = new List<string>(irrelevant_items);
 
+        Debug.Log("Length: " + items.Length);
+        for(int i=0; i < items.Length; i++)
+        {
+            if(i%2 == 0)
+            {
+                int idx = Random.Range(0, rel_temp.Count);
+                string item = rel_temp[idx];
+                string path = "Items/" + item;
+                Debug.Log(path + " " + item);
+                GameObject obj = Resources.Load(path) as GameObject;
+                Debug.Log(obj.name);
+                rel_temp.RemoveAt(idx);
+                items[i] = Instantiate(obj,items[i].transform);
+                
+            }
+            else
+            {
+                int idx = Random.Range(0, irrel_temp.Count);
+                string item = irrel_temp[idx];
+                string path = "Items/" + item;
+                Debug.Log(path + " " + item);
+                GameObject obj = Resources.Load(path) as GameObject;
+                Debug.Log(obj.name);
+                irrel_temp.RemoveAt(idx);
+                items[i] = Instantiate(obj, items[i].transform);
+            }
+        }
     }
 
+    public List<string> getIrrelevantItems()
+    {
+        List<string> irrelevant = new List<string>();
+        foreach(string scen in DataManager.hcg_items.Keys)
+        {
+            if(scen != scenario)
+            {
+                foreach (string item in DataManager.hcg_items[scen])
+                    irrelevant.Add(item);
+            }
+        }
+        return irrelevant;
+    }
+    
     public void DisableCoins()
     {
         GameObject[] coins = GameObject.FindGameObjectsWithTag("Coin");

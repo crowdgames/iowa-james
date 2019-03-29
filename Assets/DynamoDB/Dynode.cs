@@ -59,7 +59,7 @@ namespace DynamoDB
 
             DataManager.player_id = player_id;
             //DataManager.mode = player_id.ToCharArray()[player_id.Length - 1] % 4;
-            DataManager.mode = 1;
+            DataManager.mode = 4;
             //Debug.Log(player_id.ToCharArray()[player_id.Length - 1]);
             //Debug.Log("COIN MODE: " + DataManager.mode.ToString());
             

@@ -21,7 +21,6 @@ public class InventoryManager : MonoBehaviour
     {
         for (int i = 0; i < myInventory.Length; i++)
         {
-
             if (myInventory[i] == null)
             {
                 myInventory[i] = myObject;
@@ -30,7 +29,6 @@ public class InventoryManager : MonoBehaviour
                 //Destroy(myObject);
                 break;
             }
-
         }
     }
 

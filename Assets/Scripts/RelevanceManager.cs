@@ -4,27 +4,24 @@ using UnityEngine;
 
 public class RelevanceManager
 {
-
-
     public static string[] DetermineLocation(string locationName)
     {
         switch (locationName)
         {
             case "Grocery Store":
-                return HCGItems.groceryStore;
+                return HCGItems.grocery_store;
 
             case "Pastry Shop":
-
-                return HCGItems.pastry;
+                return HCGItems.pastry_shop;
 
             case "Clothing Store":
-                return HCGItems.clothing;
+                return HCGItems.clothing_store;
 
             case "Sports Equipment":
-                return HCGItems.sportsEquipment;
+                return HCGItems.sports_equipment;
 
             case "Tools Shop":
-                return HCGItems.tools;
+                return HCGItems.hardware_store;
 
             default:
                 return null;

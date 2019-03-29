@@ -4,29 +4,14 @@ using UnityEngine;
 
 public class HCGItems
 {
-    public static string[] groceryStore = new string[]
-    {
-        "breadslices","candy","carrot","milkcan","popcorn"
-    };
+    public static string[] grocery_store = new string[] { "bread", "candy", "carrot", "milk", "popcorn" };
 
-    public static string[] clothing = new string[]
-    {
-        "Formalshirts","hat","sweater","Trenchcoat","Tshirt"
-    };
+    public static string[] clothing_store = new string[]{"shirts","hat","sweater","trenchcoat","tshirt"};
 
-    public static string[] pastry = new string[]
-  {
-        "applepie","bun","cake","Croissant","donut"
-  };
+    public static string[] pastry_shop = new string[]{"pie","bun","cake","croissant","donut"};
 
-    public static string[] sportsEquipment = new string[]
-{
-      "BaseballKit","BasketBall","BoxingGloves","FootBall","FootBallBoots","RugbyBall"
-};
+    public static string[] sports_equipment = new string[]{"baseball","basketball","gloves","football","cleats","rugbyball"};
 
-    public static string[] tools = new string[]
-{
-     "driller","electricsaw","hammer","nails","Pilers","wrenchandscredriver","axe"
-};
+    public static string[] hardware_store = new string[]{"drill","saw","hammer","nails","pliers","wrench","axe"};
 
 }

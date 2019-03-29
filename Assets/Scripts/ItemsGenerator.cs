@@ -7,7 +7,6 @@ using System.Linq;
 
 public class ItemsGenerator : MonoBehaviour
 {
-
     int randomPositionForRelevantItems;
     int relevantItemsCount;
     public bool isStartingPhase = true;
@@ -34,53 +33,29 @@ public class ItemsGenerator : MonoBehaviour
             sceneItems = GameObject.FindGameObjectsWithTag("Item");
             myCount.Clear();
             isStartingPhase = false;
-
-            relevantItemsCount = GamePersistentManager.Instance.sceneItemsManager[SceneManager.GetActiveScene().buildIndex].itemsInScene;
-
+            relevantItemsCount = GamePersistentManager.Instance.sceneItemsManager[SceneManager.GetActiveScene().buildIndex + 1].itemsInScene;
+            Debug.Log("RIC: " + relevantItemsCount);
             for (int j = 0; j < sceneItems.Length; j++)
             {
                 CountRelevantItems();
                 if (myCount.Contains(j))
                 {
-                    if (SceneManager.GetActiveScene().buildIndex == 0)
-                    {
-                        sceneItems[j] = Instantiate(myInputList[relevantItemsIterator], sceneItems[j].transform.position, Quaternion.identity);
-                        //sceneItems[j] = Instantiate(GamePersistentManager.Instance.itemsList[Random.Range(5, 10)],
-                        //    sceneItems[j].transform.position, Quaternion.identity);
-                        relevantItemsIterator++;
-                    }
-
                     if (SceneManager.GetActiveScene().buildIndex == 1)
                     {
-                        //if (isFirstEntry)
-                        //{
-                        //    isFirstEntry = false;
-                        //    List<GameObject> myInputList = GamePersistentManager.Instance.itemsList.ToList().GetRange(0, 5);
-
-                        //    myInputList = ShuffleList(myInputList);
-                        //}
                         sceneItems[j] = Instantiate(myInputList[relevantItemsIterator], sceneItems[j].transform.position, Quaternion.identity);
-                        //sceneItems[j] = Instantiate(GamePersistentManager.Instance.itemsList[Random.Range(5, 10)],
-                        //    sceneItems[j].transform.position, Quaternion.identity);
                         relevantItemsIterator++;
-                        //sceneItems[j] = Instantiate(GamePersistentManager.Instance.itemsList[Random.Range(0, 5)],
-                        //    sceneItems[j].transform.position, Quaternion.identity);
                     }
 
                     if (SceneManager.GetActiveScene().buildIndex == 2)
                     {
-                        //if (isFirstEntry)
-                        //{
-                        //    isFirstEntry = false;
-                        //    List<GameObject> myInputList = GamePersistentManager.Instance.itemsList.ToList().GetRange(21, 27);
-                        //    myInputList = ShuffleList(myInputList);
-                        //}
                         sceneItems[j] = Instantiate(myInputList[relevantItemsIterator], sceneItems[j].transform.position, Quaternion.identity);
-                        //sceneItems[j] = Instantiate(GamePersistentManager.Instance.itemsList[Random.Range(5, 10)],
-                        //    sceneItems[j].transform.position, Quaternion.identity);
+                        relevantItemsIterator++;   
+                    }
+
+                    if (SceneManager.GetActiveScene().buildIndex == 3)
+                    {
+                        sceneItems[j] = Instantiate(myInputList[relevantItemsIterator], sceneItems[j].transform.position, Quaternion.identity);
                         relevantItemsIterator++;
-                        //sceneItems[j] = Instantiate(GamePersistentManager.Instance.itemsList[Random.Range(21, 27)],
-                        //    sceneItems[j].transform.position, Quaternion.identity);
                     }
                 }
                 else
@@ -93,8 +68,7 @@ public class ItemsGenerator : MonoBehaviour
 
     void CountRelevantItems()
     {
-
-        if (SceneManager.GetActiveScene().buildIndex == 0)
+        if (SceneManager.GetActiveScene().buildIndex == 1)
         {
             myInputList = GamePersistentManager.Instance.itemsList.ToList().GetRange(5, 5);
             myInputList = ShuffleList(myInputList);
@@ -107,7 +81,7 @@ public class ItemsGenerator : MonoBehaviour
             }
         }
 
-        if (SceneManager.GetActiveScene().buildIndex == 1)
+        if (SceneManager.GetActiveScene().buildIndex == 2)
         {
             myInputList = GamePersistentManager.Instance.itemsList.ToList().GetRange(0, 5);
             myInputList = ShuffleList(myInputList);
@@ -119,7 +93,7 @@ public class ItemsGenerator : MonoBehaviour
             }
         }
 
-        if (SceneManager.GetActiveScene().buildIndex == 2)
+        if (SceneManager.GetActiveScene().buildIndex == 3)
         {
             myInputList = GamePersistentManager.Instance.itemsList.ToList().GetRange(21, 7);
             myInputList = ShuffleList(myInputList);
@@ -135,15 +109,12 @@ public class ItemsGenerator : MonoBehaviour
 
     List<GameObject> ShuffleList(List<GameObject> inputList)
     {
-
         System.Random random = new System.Random();
-
         GameObject myGameobject;
 
         int n = inputList.Count;
         for (int i = 0; i < n; i++)
         {
-
             int r = i + (int)(random.NextDouble() * (n - i));
             myGameobject = inputList[r];
             inputList[r] = inputList[i];
@@ -151,7 +122,6 @@ public class ItemsGenerator : MonoBehaviour
         }
 
         return inputList;
-
     }
 
 
