@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
+using System;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -9,22 +11,24 @@ public class InventoryManager : MonoBehaviour
     public Sprite fullHeart;
     public Sprite emptyHeart;
 
-    public GameObject[] myInventory;
-    public Image[] inventorySections;
+    int[] filled;
     
-    public Image[] heartsSection = new Image[3];
-    
+    Image[] heartsSection = new Image[3];
+    GameObject[] slots;
+    GameObject[] hearts;
 
     // Use this for initialization
-    public void AddItem(GameObject myObject)
+    //public void AddItem(GameObject myObject)
+    public void AddItem(Sprite sprite)
     {
-        for (int i = 0; i < myInventory.Length; i++)
+        for (int i = 0; i < filled.Length; i++)
         {
-            if (myInventory[i] == null)
+            if (filled[i] == 0)
             {
-                myInventory[i] = myObject;
-                inventorySections[i].overrideSprite = myObject.GetComponent<SpriteRenderer>().sprite;
-                myObject.SetActive(false);
+                filled[i] = 1;
+                //slots[i].GetComponent<Image>().sprite = myObject.GetComponent<SpriteRenderer>().sprite;
+                slots[i].GetComponent<Image>().sprite = sprite;
+                //myObject.SetActive(false);
                 //Destroy(myObject);
                 break;
             }
@@ -34,49 +38,43 @@ public class InventoryManager : MonoBehaviour
     public void InitInventory(int numItems)
     {
         Debug.Log("Inventory items: " + numItems);
-        myInventory = new GameObject[numItems];
-        inventorySections = new Image[numItems];
+        filled = new int[numItems];
+        
+        slots = GameObject.FindGameObjectsWithTag("Slot");
+        hearts = GameObject.FindGameObjectsWithTag("Heart");
+        float[] slots_x = new float[slots.Length];
+        float[] hearts_x = new float[hearts.Length];
+        for(int i=0; i < slots_x.Length; i++)
+        {
+            slots_x[i] = slots[i].transform.position.x;
+        }
+        Array.Sort(slots_x, slots);
+
+        
+        for(int i=0; i < filled.Length; i++)
+        {
+            filled[i] = 0;
+        }
+        for(int i=0; i < hearts.Length; i++)
+        {
+            hearts[i].GetComponent<Image>().sprite = fullHeart;
+        }
+        Array.Sort(hearts_x, hearts);
     }
 
     public void ClearInventory()
     {
-        for(int i=0;i< myInventory.Length; i++)
+        for(int i=0;i< filled.Length; i++)
         {
-            myInventory[i] = null;
-            inventorySections[i].overrideSprite = emptySection;
+            filled[i] = 0;
+            slots[i].GetComponent<Image>().sprite = emptySection;
         }
     }
 
-    public void DisplayHeart(int value)
+    public void ManageHearts(int lives)
     {
-        //Debug.Log(value);
-        switch (value)
-        {
-            case 0:
-                heartsSection[0].overrideSprite = emptyHeart;
-                heartsSection[1].overrideSprite = emptyHeart;
-                heartsSection[2].overrideSprite = emptyHeart;
-                break;
-            case 1:
-                heartsSection[0].overrideSprite = fullHeart;
-                heartsSection[1].overrideSprite = emptyHeart;
-                heartsSection[2].overrideSprite = emptyHeart;
-                break;
-
-            case 2:
-                heartsSection[0].overrideSprite = fullHeart;
-                heartsSection[1].overrideSprite = fullHeart;
-                heartsSection[2].overrideSprite = emptyHeart;
-                break;
-
-            default:
-                heartsSection[0].overrideSprite = fullHeart;
-                heartsSection[1].overrideSprite = fullHeart;
-                heartsSection[2].overrideSprite = fullHeart;
-                break;
-        }
-
+        if (lives >= 3)
+            return;
+        hearts[lives].GetComponent<Image>().sprite = emptyHeart;
     }
-
-
 }

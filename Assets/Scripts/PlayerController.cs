@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour {
     DynamoDB.Dynode dynode;
 
     //UI text aspects
+    /*
     public GameObject gameOverUI;
     public Text relevantItems;
     public Text irrelevantItems;
@@ -86,6 +87,8 @@ public class PlayerController : MonoBehaviour {
     public CanvasGroup cg;
 
     ItemsGenerator itemgenerator;
+    */
+    public bool touched = false;
 
     // Use this for initialization
     void Start ()
@@ -131,41 +134,6 @@ public class PlayerController : MonoBehaviour {
                 coinText.text = "Coins: " + coins + "/" + DataManager.NCOINS; //+ "\tLevel: " + (SceneManager.GetActiveScene().buildIndex + 1) + "/" + (SceneManager.sceneCountInBuildSettings - 1); //+ " ID: " + logger.dynode.player_id;
             }
         }
-
-        chest = GameObject.Find("Chest");
-
-        itemMismatchUI = GameObject.Find("ItemMismatchUI");
-        irrelevantImage = GameObject.Find("IrrelevantImage").GetComponent<Image>();
-        itemMismatchUI.SetActive(false);
-
-        gameOverUI = GameObject.Find("GameOverUI");
-        relevantItems = GameObject.Find("relevantText").GetComponent<Text>();
-        irrelevantItems = GameObject.Find("irrelevantText").GetComponent<Text>();
-        gameOverUI.SetActive(false);
-
-        /*
-        if (DataManager.mode == 4)
-        {
-            //GamePersistentManager.Instance.startPosition = transform.position;
-            //inventoryManager = GetComponent<InventoryManager>();
-            inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
-            //itemgenerator = GameObject.FindGameObjectWithTag("ItemsMaster").GetComponent<ItemsGenerator>();
-            //inventoryLimit = GamePersistentManager.Instance.sceneItemsManager[SceneManager.GetActiveScene().buildIndex].itemsInScene;
-            inventoryLimit = lm.items.Length;
-            Debug.Log("Inventory LIMIT" + inventoryLimit);
-            //chest.GetComponent<SpriteRenderer>().sprite = 
-
-            /*
-            //reload all collected items if the player is alive
-            if (GamePersistentManager.Instance.currentLives > -1)
-            {
-                Time.timeScale = 1;
-                inventoryManager.DisplayHeart(GamePersistentManager.Instance.currentLives);
-                FillInventoryDuringStart();
-            }   
-            
-        }
-        */
     }
 
     void FixedUpdate()
@@ -240,7 +208,6 @@ public class PlayerController : MonoBehaviour {
 
 
     void Update () {
-
         
         // Check if dead
         if (curHealth <= 0 && canDie)
@@ -261,24 +228,7 @@ public class PlayerController : MonoBehaviour {
 
         DataManager.play_time += Time.deltaTime;
         //coinText.text = "Coins: " + coins + "/" + DataManager.NCOINS + "Time: " + DataManager.play_time + " Level: " + (SceneManager.GetActiveScene().buildIndex + 1) + "/" + (SceneManager.sceneCountInBuildSettings - 1); //+ " ID: " + logger.dynode.player_id;
-
-        /*
-        if (DataManager.mode == 4)
-        {
-            if (GamePersistentManager.Instance.inventoryCount == inventoryLimit)
-            {
-                //tChest.GetComponent<SpriteRenderer>().sprite = openChest;
-            }
-
-            if (GamePersistentManager.Instance.currentLives < 0)
-            {
-                gameOverUI.SetActive(true);
-                relevantItems.text = "Relevant Items Collected: " + GamePersistentManager.Instance.relevantItemsCollected;
-                irrelevantItems.text = "Irrelevant Items Collected: " + GamePersistentManager.Instance.irrelevantItemsCollected;
-                Time.timeScale = 0;
-            }
-        }
-        */
+        
     }
 
 
@@ -290,57 +240,22 @@ public class PlayerController : MonoBehaviour {
         transform.localScale = theScale;
     }
 
+    private void OnTriggerExit2D(Collider2D coll)
+    {
+        
+    }
+
     void OnTriggerEnter2D(Collider2D col)
     {
         if (DataManager.mode == 4)
         {
             //Save HCG Item
-
             if (col.CompareTag("HCGItem"))//.gameObject.tag == "HCGItem" && gameObject.tag =="Player")
             {
-                lm.CollectItem(col.gameObject);
+                string item = col.gameObject.name;
+                Sprite sprite = col.gameObject.GetComponent<SpriteRenderer>().sprite;
                 Destroy(col.gameObject);
-
-                //oneHit = false;
-                //Debug.Log(col.gameObject.tag + gameObject.tag);
-
-                /*
-                string objectName = col.gameObject.name;
-                objectName = objectName.Replace("(Clone)", "");
-
-
-                if (itemgenerator.itemsForCurrentlocation.Contains(objectName))
-                {
-
-                    inventoryManager.AddItem(col.gameObject);
-                    GamePersistentManager.Instance.inventoryItems.Add(objectName);
-                    GamePersistentManager.Instance.inventoryCount += 1;
-                    GamePersistentManager.Instance.relevantItemsCollected += 1;
-
-                    if (GamePersistentManager.Instance.inventoryCount > inventoryLimit)
-                    {
-                        col.gameObject.SetActive(false);
-                    }
-                }
-
-                if (!itemgenerator.itemsForCurrentlocation.Contains(objectName))
-                {
-                    //Die and restart
-                    //Restart level
-                    // Reduce one heart
-                    col.gameObject.SetActive(false);
-                    GamePersistentManager.Instance.currentLives -= 1;
-                    GamePersistentManager.Instance.irrelevantItemsCollected += 1;
-                    inventoryManager.DisplayHeart(GamePersistentManager.Instance.currentLives);
-
-                    if (GamePersistentManager.Instance.currentLives > 0)
-                    {
-                        itemMismatchUI.SetActive(true);
-                        irrelevantImage.overrideSprite = col.gameObject.GetComponent<SpriteRenderer>().sprite;
-                        Time.timeScale = 0;
-                    }
-                }
-                */
+                lm.CollectItem(item,sprite);
             }
         }
 
@@ -411,30 +326,4 @@ public class PlayerController : MonoBehaviour {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         
     }*/
-
-    void FillInventoryDuringStart()
-    {
-        Debug.Log("inside Fill Inventory");
-        //Clear the inventory
-        inventoryManager.ClearInventory();
-
-        //Debug.Log(GamePersistentManager.Instance.inventoryItems.Count);
-        //Grab the items from persistent manager
-
-        if (GamePersistentManager.Instance.inventoryItems.Count > 0)
-        {
-            //GameObject myObject;
-            for (int i = 0; i < GamePersistentManager.Instance.inventoryItems.Count; i++)
-            {
-                for (int j = 0; j < GamePersistentManager.Instance.itemsList.Count; j++)
-                {
-                    if (GamePersistentManager.Instance.inventoryItems[i] == GamePersistentManager.Instance.itemsList[j].gameObject.name)
-                    {
-                        inventoryManager.AddItem(GamePersistentManager.Instance.itemsList[j].gameObject);
-                    }
-                }
-            }
-        }
-    }
-
 }
