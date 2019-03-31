@@ -31,8 +31,11 @@ public class LevelManager : MonoBehaviour {
     GameObject errTryObj;
     SkipLevel skip;
     GameObject skipObj;
-    GameObject hcgCanvas;
     InventoryManager inventory;
+    HCGManager hcgm;
+    /*
+    GameObject hcgCanvas;
+    
     string scenario;
     public GameObject[] items;
     string[] relevant_items;
@@ -51,7 +54,8 @@ public class LevelManager : MonoBehaviour {
     public Sprite open;
     Text scenarioText;
     GameObject irrelevantText;
-    
+    */
+
     void Start()
     {
         Debug.Log("inside level manager start");
@@ -62,7 +66,7 @@ public class LevelManager : MonoBehaviour {
         coinTextObj = GameObject.FindGameObjectWithTag("CoinText");
         GameObject smo = GameObject.Find("SkillManager");
         inventory = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
-        
+        hcgm = GameObject.FindObjectOfType<HCGManager>();
 
         //GameObject ddb = GameObject.Find("DynamoDB");
         if (smo)
@@ -102,6 +106,7 @@ public class LevelManager : MonoBehaviour {
                 coinTextObj.SetActive(true);
             GenerateCoins(DataManager.mode);
         }
+        /*
         chest = GameObject.Find("Chest");
         scenario = DataManager.scenarios[UnityEngine.Random.Range(0, DataManager.scenarios.Length)];
         //Debug.Log("SCENARIO: " + scenarios[scenario]);
@@ -125,26 +130,15 @@ public class LevelManager : MonoBehaviour {
             chest.GetComponent<SpriteRenderer>().sprite = closed;
             LoadItems();
         }
+        */
     }
 
+    /*
     void LoadItems()
     {
         List<string> rel_temp = new List<string>(relevant_items);
         List<string> irrel_temp = new List<string>(irrelevant_items);
-
-        //Debug.Log("Length: " + items.Length);
-        /*
-        foreach(GameObject i in items)
-        {
-            Debug.Log(i.transform.position.x);
-        }
-        items = ShuffleList(items);
-        Debug.Log("SHUFFLED");
-        foreach (GameObject i in items)
-        {
-            Debug.Log(i.transform.position.x);
-        }
-        */
+        
         for (int i = 0; i < items.Length; i++)
         {
             string path = "";
@@ -217,7 +211,7 @@ IEnumerator ShowIrrelevant()
         else
             Debug.Log("C'est une blague?!");
     }
-    
+    */
     public void DisableCoins()
     {
         GameObject[] coins = GameObject.FindGameObjectsWithTag("Coin");
@@ -276,6 +270,7 @@ IEnumerator ShowIrrelevant()
         }
     }
 
+    /*
     GameObject[] ShuffleList(GameObject[] inputList)
     {
         System.Random random = new System.Random();
@@ -292,15 +287,26 @@ IEnumerator ShowIrrelevant()
 
         return inputList;
     }
-
+    */
     public void Die()
     {
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        lives--;
-        inventory.ManageHearts(lives);
-        Debug.Log("Inside die...");
-        StartCoroutine("Respawn");
-        Debug.Log("After respawn");
+        hcgm.lives--;
+        inventory.ManageHearts(hcgm.lives);
+        if (hcgm.lives < 1)
+        {
+            player.canMove = false;
+            Instantiate(deathEffect, player.transform.position, player.transform.rotation);
+            player.transform.parent = null;
+            player.gameObject.SetActive(false);
+            StartCoroutine(FadeOut());
+        }
+        else
+        {
+            Debug.Log("Inside die...");
+            StartCoroutine("Respawn");
+            Debug.Log("After respawn");
+        }
     }
 
     IEnumerator Respawn()

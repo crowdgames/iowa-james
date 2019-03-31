@@ -66,6 +66,8 @@ public class PlayerController : MonoBehaviour {
 
     DynamoDB.Dynode dynode;
 
+    HCGManager hcgm;
+
     //UI text aspects
     /*
     public GameObject gameOverUI;
@@ -114,6 +116,7 @@ public class PlayerController : MonoBehaviour {
         startPos = transform.position;
 
         lm = GameObject.FindObjectOfType<LevelManager>();
+        hcgm = GameObject.FindObjectOfType<HCGManager>();
 
         //Debug.Log("Start: " + startPos);
 
@@ -255,7 +258,7 @@ public class PlayerController : MonoBehaviour {
                 string item = col.gameObject.name;
                 Sprite sprite = col.gameObject.GetComponent<SpriteRenderer>().sprite;
                 Destroy(col.gameObject);
-                lm.CollectItem(item,sprite);
+                hcgm.CollectItem(item,sprite);
             }
         }
 
