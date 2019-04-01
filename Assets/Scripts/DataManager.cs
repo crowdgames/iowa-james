@@ -10,17 +10,17 @@ public class DataManager {
     public static int NCOINS = 10;
     public static float play_time = 0.0f;
     public static string player_id = "";
-    //public static string host = "viridian.ccs.neu.edu:3004";
-    public static string host = "localhost:3004";
+    public static string host = "viridian.ccs.neu.edu:3004";
+    //public static string host = "localhost:3004";
     
     public static string[] scenarios = new string[] {"Grocery Store","Pastry Shop","Clothing Store","Sports Store","Hardware Store"};
 
     public static Dictionary<string, string[]> hcg_items = new Dictionary<string, string[]>
     {
-        { "Grocery Store",new string[]{ "bread", "candy", "carrot", "milk", "popcorn" } },
-        { "Pastry Shop",new string[]{ "pie", "bun", "cake", "croissant", "donut" } },
-        { "Clothing Store",new string[]{ "shirts","hat","sweater","coat","tshirt" } },
-        { "Sports Store",new string[]{ "baseball", "basketball", "gloves", "soccerball", "cleats", "football" } },
+        { "Grocery Store",new string[]{ "bread", "candy", "carrot", "milk", "popcorn", "bananas", "bread" } },
+        { "Pastry Shop",new string[]{ "pie", "bun", "cake", "croissant", "donut", "cupcake", "doughnut" } },
+        { "Clothing Store",new string[]{ "shirts","hat","sweater","coat","tshirt", "shirts", "hat"} },
+        { "Sports Store",new string[]{ "baseball", "basketball", "gloves", "soccerball", "cleats", "football", "basketball"} },
         { "Hardware Store",new string[]{ "drill", "saw", "hammer", "nails", "pliers", "wrench", "axe" } }
     };
 

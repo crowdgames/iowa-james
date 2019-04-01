@@ -7,16 +7,18 @@ using System.Linq;
 
 public class HCGManager : MonoBehaviour {
 
-
     GameObject hcgCanvas;
     InventoryManager inventory;
     string scenario;
-    GameObject[] items;
+    [HideInInspector]
+    public GameObject[] items;
     string[] relevant_items;
     string[] irrelevant_items;
 
-    int relevant_count = 0;
-    int irrelevant_count = 0;
+    [HideInInspector]
+    public int relevant_count = 0;
+    [HideInInspector]
+    public int irrelevant_count = 0;
     [HideInInspector]
     public int lives = 3;
     
@@ -26,6 +28,7 @@ public class HCGManager : MonoBehaviour {
     public Sprite open;
     Text scenarioText;
     GameObject irrelevantText;
+    GameObject relevantText;
     PlayerController player;
 
     LevelManager lm;
@@ -38,6 +41,7 @@ public class HCGManager : MonoBehaviour {
         inventory = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
         chest = GameObject.Find("Chest");
         scenario = DataManager.scenarios[UnityEngine.Random.Range(0, DataManager.scenarios.Length)];
+        //scenario = "Hardware Store";
         //Debug.Log("SCENARIO: " + scenarios[scenario]);
         hcgCanvas = GameObject.Find("HCGCanvas");
         if (DataManager.mode != 4)
@@ -55,6 +59,8 @@ public class HCGManager : MonoBehaviour {
             scenarioText = GameObject.Find("ScenarioText").GetComponent<Text>();
             irrelevantText = GameObject.Find("Irrelevant");
             irrelevantText.SetActive(false);
+            relevantText = GameObject.Find("Relevant");
+            relevantText.SetActive(false);
             scenarioText.text = scenario;
             chest.GetComponent<SpriteRenderer>().sprite = closed;
             LoadItems();
@@ -98,6 +104,7 @@ public class HCGManager : MonoBehaviour {
                 irrel_temp.RemoveAt(idx);
             }
             GameObject obj = Resources.Load(path) as GameObject;
+            //Debug.Log("Path: " + path);
             items[i] = Instantiate(obj, items[i].transform);
         }
     }
@@ -107,6 +114,13 @@ public class HCGManager : MonoBehaviour {
         irrelevantText.SetActive(true);
         yield return new WaitForSeconds(2f);
         irrelevantText.SetActive(false);
+    }
+
+    public IEnumerator ShowRelevant()
+    {
+        relevantText.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        relevantText.SetActive(false);
     }
 
     public List<string> getIrrelevantItems()
@@ -144,7 +158,7 @@ public class HCGManager : MonoBehaviour {
             Debug.Log(("Lives: " + lives));
             inventory.ManageHearts(lives);
             StartCoroutine(ShowIrrelevant());
-            if (lives < 1)
+            if (lives < 0)
             {
                 player.canMove = false;
                 StartCoroutine(lm.FadeOut());

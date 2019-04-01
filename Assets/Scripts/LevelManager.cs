@@ -293,7 +293,8 @@ IEnumerator ShowIrrelevant()
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         hcgm.lives--;
         inventory.ManageHearts(hcgm.lives);
-        if (hcgm.lives < 1)
+
+        if (hcgm.lives < 0)
         {
             player.canMove = false;
             Instantiate(deathEffect, player.transform.position, player.transform.rotation);
@@ -303,6 +304,7 @@ IEnumerator ShowIrrelevant()
         }
         else
         {
+            
             Debug.Log("Inside die...");
             StartCoroutine("Respawn");
             Debug.Log("After respawn");
@@ -331,7 +333,8 @@ IEnumerator ShowIrrelevant()
         player.anim.SetFloat("Speed", 0f);
         player.anim.SetFloat("vSpeed", 0f);
         string level = SceneManager.GetActiveScene().name;
-        float score = Mathf.Max(0f, 1f - ((0.34f * player.deathCount)));
+        //float score = Mathf.Max(0f, 1f - ((0.34f * player.deathCount)));
+        float score = Mathf.Max(0f, 1f - ((0.25f * hcgm.lives)));
         Debug.Log("SCORE: " + score);
         sm.score = score;
         sm.level = level;

@@ -95,35 +95,23 @@ public class PlayerController : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        /*AudioSource[] aSources = GetComponents<AudioSource>();
-        audioFootstep = aSources[0];
-        audioCoin = aSources[1];
-        audioJump = aSources[2];*/
-        
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        //myCol = GetComponent<BoxCollider2D>();
         sr = GetComponent<SpriteRenderer>();
         logger = GetComponent<Logger>();
         
-
         killers = new string[] { "Killer", "RisingSpikes", "Spikes", "Bullet", "Ninja", "Lava", "Pit" };
-        //levelImage.SetActive(false);
 
         curHealth = 1;
-        //gm = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<gameMaster>();
 
         startPos = transform.position;
 
         lm = GameObject.FindObjectOfType<LevelManager>();
         hcgm = GameObject.FindObjectOfType<HCGManager>();
-
-        //Debug.Log("Start: " + startPos);
-
+        
         canMove = true;
         canDie = true;
         jumpPressed = false;
-        //Debug.Log("Can move in start: " + canMove);
 
         deathCount = 0;
 
@@ -158,29 +146,8 @@ public class PlayerController : MonoBehaviour {
         // Knockback and motion stuff
         if (knockbackCount <= 0) // You can't move while getting knocked back.
         {
-            /*
-            // Sliding stuff
-            float slideAccell;
-            /*if (Input.GetKey(KeyCode.S) && grounded && Mathf.Abs(rb.velocity.x) > 3.0f)
-            {
-                sliding = true;
-                slideAccell = 2.0f;
-                slidingCollider.enabled = true;
-                myCol.enabled = false;
-            }
-            //else
-            {
-                sliding = false;
-                slideAccell = 1.0f;
-                slidingCollider.enabled = false;
-                myCol.enabled = true;
-            }
-            anim.SetBool("Sliding", sliding);
-           */
-            // MOTION
-            if(canMove)
+           if(canMove)
                 rb.velocity = new Vector2(move * maxSpeed, rb.velocity.y);
-            
         }
         else
         {
@@ -213,6 +180,7 @@ public class PlayerController : MonoBehaviour {
     void Update () {
         
         // Check if dead
+        /*
         if (curHealth <= 0 && canDie)
         {
             lm.Die();
@@ -233,19 +201,13 @@ public class PlayerController : MonoBehaviour {
         //coinText.text = "Coins: " + coins + "/" + DataManager.NCOINS + "Time: " + DataManager.play_time + " Level: " + (SceneManager.GetActiveScene().buildIndex + 1) + "/" + (SceneManager.sceneCountInBuildSettings - 1); //+ " ID: " + logger.dynode.player_id;
         
     }
-
-
+    
     void Flip()
     {
         facingRight = !facingRight;
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
-    }
-
-    private void OnTriggerExit2D(Collider2D coll)
-    {
-        
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -266,14 +228,10 @@ public class PlayerController : MonoBehaviour {
         {
             if (col.CompareTag("Coin"))
             {
-                   //Debug.Log("Coin trigger called");
-                    //audioCoin.Play();
-                    Destroy(col.gameObject);
-                    //DataManager.points++;
-                    coins++;
+                Destroy(col.gameObject);
+                coins++;
                 //Debug.Log("ID: " + logger.dynode.player_id);
                 if (coinText)
-                    //coinText.text = "Coins: " + DataManager.points;
                     coinText.text = "Coins: " + coins + "/" + DataManager.NCOINS; // + "\tMode: " + DataManager.mode;// + "\tLevel: " + (SceneManager.GetActiveScene().buildIndex + 1) + "/" + (SceneManager.sceneCountInBuildSettings - 1); //+ " ID: " + logger.dynode.player_id;
                 if (coins == DataManager.NCOINS)
                 {
@@ -285,18 +243,24 @@ public class PlayerController : MonoBehaviour {
         
         if(col.CompareTag("Chest"))
         {
-            Debug.Log("Coins: " + coins);
-            logger.LogWin(coins);
-            logger.LogMatch("win");
-            canMove = false;
-            canDie = false;
-            StartCoroutine(lm.FadeOut());
+            if (hcgm.relevant_count == hcgm.items.Length / 2)
+            {
+                //Debug.Log("Coins: " + coins);
+                logger.LogWin(coins);
+                logger.LogMatch("win");
+                canMove = false;
+                canDie = false;
+                StartCoroutine(lm.FadeOut());
+            }
+            else
+            {
+                StartCoroutine(hcgm.ShowRelevant());
+            }
         }
 
         //if ((col.CompareTag("Enemy") || col.CompareTag("Killer")) && canDie)
         if ((System.Array.IndexOf(killers,col.tag) > -1) && canDie)
         {
-            
                 jumpPressed = false;
                 Debug.Log("Killed by: " + col.tag);
                 deathCount++;
@@ -307,26 +271,10 @@ public class PlayerController : MonoBehaviour {
                 logger.LogDeath(col.tag, deathCount, pos_x, pos_y);
         }
     }
-    
 
-    public void Damage(int dmg)
-    {
-        curHealth -= dmg;
-       // anim.Play("FlashRed");
-    }
-
-    
     void Footstep()
     {
-        //audioFootstep.Play();
-    }
 
-    /*IEnumerator Wait(float waitTime)
-    {
-        float fadeTime = GameObject.Find("GameMaster").GetComponent<Fading>().BeginFade(1);
-        yield return new WaitForSeconds(fadeTime);
-        
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        
-    }*/
+    }
+    
 }
