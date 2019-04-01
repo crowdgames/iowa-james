@@ -16,6 +16,12 @@ public class InventoryManager : MonoBehaviour
     Image[] heartsSection = new Image[3];
     GameObject[] slots;
     GameObject[] hearts;
+    HCGManager hcgm;
+
+    void Start()
+    {
+        hcgm = GameObject.FindObjectOfType<HCGManager>();
+    }
 
     // Use this for initialization
     //public void AddItem(GameObject myObject)
@@ -71,9 +77,10 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void ManageHearts(int lives)
+    public void ManageHearts()
     {
-        if(lives > 0)
-          hearts[lives-1].GetComponent<Image>().sprite = emptyHeart;
+        Debug.Log("Manage: " + hcgm.lives);
+        if(hcgm.lives > 0)
+          hearts[hcgm.lives-1].GetComponent<Image>().sprite = emptyHeart;
     }
 }

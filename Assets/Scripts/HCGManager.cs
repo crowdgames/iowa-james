@@ -152,18 +152,18 @@ public class HCGManager : MonoBehaviour {
         string item_name = item.Substring(0, item.IndexOf("("));
         if (relevant_items.Contains(item_name))
         {
-            relevant_count += 1;
+            relevant_count++;
             inventory.AddItem(sprite);
             if (relevant_count == items.Length / 2)
                 chest.GetComponent<SpriteRenderer>().sprite = open;
         }
         else if (irrelevant_items.Contains(item_name))
         {
-            irrelevant_count += 1;
+            irrelevant_count++;
             lives--;
-            inventory.ManageHearts(lives);
+            inventory.ManageHearts();
             StartCoroutine(ShowIrrelevant());
-            if (lives < 0)
+            if (lives <= 0)
             {
                 player.canMove = false;
                 StartCoroutine(lm.FadeOut());

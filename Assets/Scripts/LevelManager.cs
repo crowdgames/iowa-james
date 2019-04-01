@@ -23,6 +23,7 @@ public class LevelManager : MonoBehaviour {
     Fade fadePanel;
     public GameObject deathEffect;
     public GameObject coin;
+    int deathCount;
     GameObject coinTextObj;
     //GameObject smo;
     SkillManager sm;
@@ -46,6 +47,7 @@ public class LevelManager : MonoBehaviour {
         GameObject smo = GameObject.Find("SkillManager");
         inventory = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
         hcgm = GameObject.FindObjectOfType<HCGManager>();
+        deathCount = 0;
 
         //GameObject ddb = GameObject.Find("DynamoDB");
         if (smo)
@@ -145,11 +147,11 @@ public class LevelManager : MonoBehaviour {
     
     public void Die()
     {
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        deathCount++;
         hcgm.lives--;
-        inventory.ManageHearts(hcgm.lives);
+        inventory.ManageHearts();
 
-        if (hcgm.lives < 0)
+        if (hcgm.lives <= 0)
         {
             player.canMove = false;
             Instantiate(deathEffect, player.transform.position, player.transform.rotation);
@@ -186,24 +188,51 @@ public class LevelManager : MonoBehaviour {
         player.rb.velocity = Vector3.zero;
         player.anim.SetFloat("Speed", 0f);
         player.anim.SetFloat("vSpeed", 0f);
-        string level = SceneManager.GetActiveScene().name;
-        //float score = Mathf.Max(0f, 1f - ((0.34f * player.deathCount)));
-        float score = Mathf.Max(0f, (0.25f * hcgm.lives));
-        Debug.Log("SCORE: " + score);
-        sm.score = score;
-        sm.level = level;
-        yield return sm.ReportAndRequest();
-        Debug.Log("NEXT LEVEL: " + sm.server_data);
+
         string next_level = "";
-        try
+        string level = SceneManager.GetActiveScene().name;
+        sm.level = level;
+        if (DataManager.matchmaking == 0)
         {
-            next_level = sm.server_data.Substring(sm.server_data.IndexOf("Level"), 10);
+            //float score = Mathf.Max(0f, 1f - ((0.34f * player.deathCount)));
+            float score = Mathf.Max(0f, (0.25f * hcgm.lives));
+            Debug.Log("SCORE: " + score);
+            sm.score = score;
+            yield return sm.ReportAndRequest();
+            Debug.Log("NEXT LEVEL: " + sm.server_data);
+            
+            try
+            {
+                next_level = sm.server_data.Substring(sm.server_data.IndexOf("Level"), 10);
+            }
+            catch
+            {
+                if (sm.server_data != "ERROR")
+                    next_level = "Level_End";
+            }
         }
-        catch
+        else
         {
-            if(sm.server_data != "ERROR")
-                next_level = "Level_End";
+            float score_game = 1f - (0.25f * deathCount);
+            float score_task = (float)hcgm.relevant_count / (hcgm.relevant_count + hcgm.irrelevant_count);
+            Debug.Log("Game: " + score_game + "\tTask: " + score_task);
+            sm.score_game = score_game;
+            sm.score_task = score_task;
+            yield return sm.ReportAndRequest();
+            Debug.Log("NEXT LEVEL: " + sm.server_data);
+            try
+            {
+                //next_level = sm.server_data.Substring(sm.server_data.IndexOf("Level"), 10);
+                next_level = sm.ParseRequestResponse();
+                Debug.Log("NEXt LEVEL PARSED: " + next_level);
+            }
+            catch
+            {
+                if (sm.server_data != "ERROR")
+                    next_level = "Level_End";
+            }
         }
+
         if (sm.server_data != "ERROR")
         {
             yield return StartCoroutine(FadeCo(cg, cg.alpha, 1));

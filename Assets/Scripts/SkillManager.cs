@@ -28,6 +28,11 @@ public class SkillManager : MonoBehaviour {
         mapping.Add("pastry", "Pastry Shop");
         mapping.Add("hardware", "Hardware Store");
         mapping.Add("clothing", "Clothing Store");
+        mapping.Add("Sports Store", "sports");
+        mapping.Add("Grocery Store", "grocery");
+        mapping.Add("Pastry Shop", "pastry");
+        mapping.Add("Hardware Store", "hardware");
+        mapping.Add("Clothing Store", "clothing");
     }
 
     public IEnumerator RegisterPlayer(int trurat=1500)
@@ -66,7 +71,7 @@ public class SkillManager : MonoBehaviour {
     
     public IEnumerator ReportAndRequest()
     {
-     //   Debug.Log("INSIDE REPORTANDREQUEST");
+        Debug.Log("INSIDE REPORTANDREQUEST");
         string token = DateTime.UtcNow.ToString();
         if (DataManager.matchmaking == 0)
         {
@@ -76,15 +81,8 @@ public class SkillManager : MonoBehaviour {
         }
         else
         {
-            string task = "";
-            foreach(string m in mapping.Keys)
-            {
-                if(mapping[m] == scenario)
-                {
-                    task = m;
-                    break;
-                }
-            }
+            string task = mapping[scenario];
+            //Debug.Log("Task: " + task + "\tLevel: " + level);
             task = task + "_" + level.Substring(level.LastIndexOf("_") + 1, 1);
             level = level.Substring(0, level.LastIndexOf("_"));
             Debug.Log(task + "\t" + level);

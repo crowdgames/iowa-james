@@ -36,6 +36,7 @@ public class SkipLevel : MonoBehaviour {
         sm.score_task = 0f;
         sm.score_game = 0f;
         sm.level = level;
+
         yield return sm.ReportAndRequest();
         try
         {
