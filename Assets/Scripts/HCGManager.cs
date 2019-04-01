@@ -20,7 +20,7 @@ public class HCGManager : MonoBehaviour {
     [HideInInspector]
     public int irrelevant_count = 0;
     [HideInInspector]
-    public int lives = 3;
+    public int lives;
     
     GameObject chest;
 
@@ -41,15 +41,16 @@ public class HCGManager : MonoBehaviour {
         inventory = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
         chest = GameObject.Find("Chest");
         scenario = DataManager.scenarios[UnityEngine.Random.Range(0, DataManager.scenarios.Length)];
-        //scenario = "Hardware Store";
         //Debug.Log("SCENARIO: " + scenarios[scenario]);
         hcgCanvas = GameObject.Find("HCGCanvas");
+        
         if (DataManager.mode != 4)
         {
             hcgCanvas.SetActive(false);
         }
         else
         {
+            lives = 4;
             relevant_items = DataManager.hcg_items[scenario];
             irrelevant_items = getIrrelevantItems().ToArray();
             string level_name = SceneManager.GetActiveScene().name;
@@ -155,7 +156,6 @@ public class HCGManager : MonoBehaviour {
         {
             irrelevant_count += 1;
             lives--;
-            Debug.Log(("Lives: " + lives));
             inventory.ManageHearts(lives);
             StartCoroutine(ShowIrrelevant());
             if (lives < 0)

@@ -33,32 +33,11 @@ public class LevelManager : MonoBehaviour {
     GameObject skipObj;
     InventoryManager inventory;
     HCGManager hcgm;
-    /*
-    GameObject hcgCanvas;
     
-    string scenario;
-    public GameObject[] items;
-    string[] relevant_items;
-    string[] irrelevant_items;
-
-    int relevant_count = 0;
-    int irrelevant_count = 0;
-    int lives = 3;
-
-    [SerializeField]
-    List<GameObject> allItems;
-
-    GameObject chest;
-
-    public Sprite closed;
-    public Sprite open;
-    Text scenarioText;
-    GameObject irrelevantText;
-    */
 
     void Start()
     {
-        Debug.Log("inside level manager start");
+     //   Debug.Log("inside level manager start");
         player = GameObject.FindObjectOfType<PlayerController>();
         log = player.GetComponent<Logger>();
         fadePanel = GameObject.FindObjectOfType<Fade>();
@@ -87,9 +66,7 @@ public class LevelManager : MonoBehaviour {
             skip = skipObj.GetComponent<SkipLevel>();
         if (errorObj)
             errorObj.SetActive(false);
-
-        Debug.Log("Mode: " + DataManager.mode);
-
+        
         if(DataManager.mode >= 3)
         {
             //No coins
@@ -106,112 +83,8 @@ public class LevelManager : MonoBehaviour {
                 coinTextObj.SetActive(true);
             GenerateCoins(DataManager.mode);
         }
-        /*
-        chest = GameObject.Find("Chest");
-        scenario = DataManager.scenarios[UnityEngine.Random.Range(0, DataManager.scenarios.Length)];
-        //Debug.Log("SCENARIO: " + scenarios[scenario]);
-        hcgCanvas = GameObject.Find("HCGCanvas");
-        if (DataManager.mode != 4)
-        {
-            hcgCanvas.SetActive(false);
-        }
-        else
-        {   
-            relevant_items = DataManager.hcg_items[scenario];
-            irrelevant_items = getIrrelevantItems().ToArray();
-            string level_name = SceneManager.GetActiveScene().name;
-            int num_items = int.Parse(level_name[level_name.LastIndexOf("_") + 1].ToString()) * 2;
-            items = GameObject.FindGameObjectsWithTag("Item");
-            inventory.InitInventory(items.Length/2);
-            scenarioText = GameObject.Find("ScenarioText").GetComponent<Text>();
-            irrelevantText = GameObject.Find("Irrelevant");
-            irrelevantText.SetActive(false);
-            scenarioText.text = scenario;
-            chest.GetComponent<SpriteRenderer>().sprite = closed;
-            LoadItems();
-        }
-        */
     }
-
-    /*
-    void LoadItems()
-    {
-        List<string> rel_temp = new List<string>(relevant_items);
-        List<string> irrel_temp = new List<string>(irrelevant_items);
-        
-        for (int i = 0; i < items.Length; i++)
-        {
-            string path = "";
-            if (i % 2 == 0)
-            {
-                int idx = UnityEngine.Random.Range(0, rel_temp.Count);
-                string item = rel_temp[idx];
-                path = "Items/" + item;
-                rel_temp.RemoveAt(idx);
-            }
-            else
-            {
-                int idx = UnityEngine.Random.Range(0, irrel_temp.Count);
-                string item = irrel_temp[idx];
-                path = "Items/" + item;
-                irrel_temp.RemoveAt(idx);
-            }
-            GameObject obj = Resources.Load(path) as GameObject;
-            items[i] = Instantiate(obj, items[i].transform);
-        }
-    }
-
-IEnumerator ShowIrrelevant()
-    {
-        irrelevantText.SetActive(true);
-        yield return new WaitForSeconds(2f);
-        irrelevantText.SetActive(false);
-    }
-
-    public List<string> getIrrelevantItems()
-    {
-        List<string> irrelevant = new List<string>();
-        foreach(string scen in DataManager.hcg_items.Keys)
-        {
-            if(scen != scenario)
-            {
-                foreach (string item in DataManager.hcg_items[scen])
-                    irrelevant.Add(item);
-            }
-        }
-        return irrelevant;
-    }
-
-    public void CollectItem(string item, Sprite sprite)
-    {
-        //Debug.Log("Collected Item: " + item.name);
-        //item.SetActive(false);
-        //Destroy(item);
-        //string item_name = item.name.Substring(0, item.name.IndexOf("("));
-        string item_name = item.Substring(0, item.IndexOf("("));
-        if (relevant_items.Contains(item_name))
-        {
-            relevant_count += 1;
-            inventory.AddItem(sprite);
-            if (relevant_count == items.Length / 2)
-                chest.GetComponent<SpriteRenderer>().sprite = open;
-        }
-        else if (irrelevant_items.Contains(item_name))
-        {
-            irrelevant_count += 1;
-            lives--;
-            Debug.Log(("Lives: " + lives));
-            inventory.ManageHearts(lives);
-            StartCoroutine(ShowIrrelevant());
-            if (lives < 1)
-            {
-                StartCoroutine(FadeOut());
-            }
-        }
-        else
-            Debug.Log("C'est une blague?!");
-    }
-    */
+    
     public void DisableCoins()
     {
         GameObject[] coins = GameObject.FindGameObjectsWithTag("Coin");
@@ -269,25 +142,7 @@ IEnumerator ShowIrrelevant()
             }
         }
     }
-
-    /*
-    GameObject[] ShuffleList(GameObject[] inputList)
-    {
-        System.Random random = new System.Random();
-        GameObject myGameobject;
-        
-        int n = inputList.Length;
-        for (int i = 0; i < n; i++)
-        {
-            int r = i + (int)(random.NextDouble() * (n - i));
-            myGameobject = inputList[r];
-            inputList[r] = inputList[i];
-            inputList[i] = myGameobject;
-        }
-
-        return inputList;
-    }
-    */
+    
     public void Die()
     {
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -304,7 +159,6 @@ IEnumerator ShowIrrelevant()
         }
         else
         {
-            
             Debug.Log("Inside die...");
             StartCoroutine("Respawn");
             Debug.Log("After respawn");
@@ -334,7 +188,7 @@ IEnumerator ShowIrrelevant()
         player.anim.SetFloat("vSpeed", 0f);
         string level = SceneManager.GetActiveScene().name;
         //float score = Mathf.Max(0f, 1f - ((0.34f * player.deathCount)));
-        float score = Mathf.Max(0f, 1f - ((0.25f * hcgm.lives)));
+        float score = Mathf.Max(0f, (0.25f * hcgm.lives));
         Debug.Log("SCORE: " + score);
         sm.score = score;
         sm.level = level;
@@ -343,7 +197,7 @@ IEnumerator ShowIrrelevant()
         string next_level = "";
         try
         {
-            next_level = sm.server_data.Substring(sm.server_data.IndexOf("Level"), 8);
+            next_level = sm.server_data.Substring(sm.server_data.IndexOf("Level"), 10);
         }
         catch
         {

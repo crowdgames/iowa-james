@@ -97,7 +97,7 @@ public class SkillManager : MonoBehaviour {
         Debug.Log(request);
         yield return StartCoroutine(ContactServer());
         Debug.Log("DATA FROM REQUEST: " + server_data);
-        string first_level = server_data.Substring(server_data.IndexOf("Level"), 8);
+        string first_level = server_data.Substring(server_data.IndexOf("Level"), 10);
         SceneManager.LoadScene(first_level);
     }
 }

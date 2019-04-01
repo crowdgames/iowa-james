@@ -42,7 +42,7 @@ public class SkipLevel : MonoBehaviour {
         yield return sm.ReportAndRequest();
         try
         {
-            string next_level = sm.server_data.Substring(sm.server_data.IndexOf("Level"), 8);
+            string next_level = sm.server_data.Substring(sm.server_data.IndexOf("Level"), 10);
             SceneManager.LoadScene(next_level);
         }
         catch

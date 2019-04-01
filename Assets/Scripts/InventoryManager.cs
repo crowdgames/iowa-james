@@ -73,10 +73,7 @@ public class InventoryManager : MonoBehaviour
 
     public void ManageHearts(int lives)
     {
-        if (lives >= 3)
-            return;
-        //Debug.Log(lives);
-        if(lives >= 0)
-          hearts[lives].GetComponent<Image>().sprite = emptyHeart;
+        if(lives > 0)
+          hearts[lives-1].GetComponent<Image>().sprite = emptyHeart;
     }
 }
