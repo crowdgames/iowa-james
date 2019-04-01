@@ -12,6 +12,7 @@ public class DataManager {
     public static string player_id = "";
     //public static string host = "viridian.ccs.neu.edu:3004";
     public static string host = "localhost:3004";
+    public static int matchmaking = 1;   //0 - regular, 1 - combined
     
     public static string[] scenarios = new string[] {"Grocery Store","Pastry Shop","Clothing Store","Sports Store","Hardware Store"};
 

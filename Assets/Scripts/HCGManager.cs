@@ -32,15 +32,20 @@ public class HCGManager : MonoBehaviour {
     PlayerController player;
 
     LevelManager lm;
+    SkillManager sm;
 
     // Use this for initialization
     void Start () {
 
         player = GameObject.FindObjectOfType<PlayerController>();
         lm = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        sm = GameObject.Find("SkillManager").GetComponent<SkillManager>();
         inventory = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
         chest = GameObject.Find("Chest");
-        scenario = DataManager.scenarios[UnityEngine.Random.Range(0, DataManager.scenarios.Length)];
+        if (DataManager.matchmaking == 0)
+            scenario = DataManager.scenarios[UnityEngine.Random.Range(0, DataManager.scenarios.Length)];
+        else
+            scenario = sm.scenario;
         //Debug.Log("SCENARIO: " + scenarios[scenario]);
         hcgCanvas = GameObject.Find("HCGCanvas");
         
