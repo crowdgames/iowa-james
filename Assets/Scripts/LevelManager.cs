@@ -34,7 +34,7 @@ public class LevelManager : MonoBehaviour {
     GameObject skipObj;
     InventoryManager inventory;
     HCGManager hcgm;
-    
+    float deathPenalty;
 
     void Start()
     {
@@ -48,6 +48,8 @@ public class LevelManager : MonoBehaviour {
         inventory = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
         hcgm = GameObject.FindObjectOfType<HCGManager>();
         deathCount = 0;
+        deathPenalty = (float)Math.Round(1.0f / DataManager.INIT_LIVES,2);
+        Debug.Log("DEATH PEN: " + deathPenalty);
 
         //GameObject ddb = GameObject.Find("DynamoDB");
         if (smo)
@@ -194,8 +196,9 @@ public class LevelManager : MonoBehaviour {
         sm.level = level;
         if (DataManager.matchmaking == 0)
         {
+            ;
             //float score = Mathf.Max(0f, 1f - ((0.34f * player.deathCount)));
-            float score = Mathf.Max(0f, (0.25f * hcgm.lives));
+            float score = Mathf.Max(0f, (deathPenalty * hcgm.lives));
             Debug.Log("SCORE: " + score);
             sm.score = score;
             yield return sm.ReportAndRequest();
@@ -213,7 +216,7 @@ public class LevelManager : MonoBehaviour {
         }
         else
         {
-            float score_game = 1f - (0.25f * deathCount);
+            float score_game = 1f - (deathPenalty * deathCount);
             float score_task = (float)hcgm.relevant_count / (hcgm.relevant_count + hcgm.irrelevant_count);
             Debug.Log("Game: " + score_game + "\tTask: " + score_task);
             sm.score_game = score_game;

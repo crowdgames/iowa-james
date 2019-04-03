@@ -65,7 +65,6 @@ public class SkillManager : MonoBehaviour {
             LevelManager lm = GameObject.Find("LevelManager").GetComponent<LevelManager>();
             lm.HideError();
             server_data = www.downloadHandler.text;
-            //byte[] results = www.downloadHandler.data;
         }
     }
     
@@ -112,13 +111,11 @@ public class SkillManager : MonoBehaviour {
 
     public IEnumerator StartGame()
     {
-        //Debug.Log("Inside StartGame");
         yield return StartCoroutine(RegisterPlayer());
         if (server_data != "ERROR")
             StartCoroutine(RequestMatch());
         else
             server_error = "StartGame";
-        //Debug.Log("Exiting StartGame");
     }
 
     public IEnumerator RequestMatch()
@@ -144,19 +141,13 @@ public class SkillManager : MonoBehaviour {
     {
         string lev = "";
         string after_data1 = server_data.Substring(server_data.IndexOf("data1") + 9);
-        //Debug.Log("after1: " + after_data1);
         int index = after_data1.IndexOf("\"");
-        //Debug.Log(index);
         lev = server_data.Substring(server_data.IndexOf("data1") + 9, index);
-        //Debug.Log("Lev: " + lev);
 
         string scen = "";
         string after_data2 = server_data.Substring(server_data.IndexOf("data2") + 9);
-        //Debug.Log("after2: " + after_data2);
         index = after_data2.IndexOf("\"");
-        //Debug.Log(index);
         scen = server_data.Substring(server_data.IndexOf("data2") + 9, index);
-        //Debug.Log("Scen: " + scen);
 
         int num_items = int.Parse(scen.Substring(scen.IndexOf("_") + 1));
         scen = scen.Substring(0, scen.IndexOf("_"));

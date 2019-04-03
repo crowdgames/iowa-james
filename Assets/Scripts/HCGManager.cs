@@ -39,7 +39,18 @@ public class HCGManager : MonoBehaviour {
 
         player = GameObject.FindObjectOfType<PlayerController>();
         lm = GameObject.Find("LevelManager").GetComponent<LevelManager>();
-        sm = GameObject.Find("SkillManager").GetComponent<SkillManager>();
+        //sm = GameObject.Find("SkillManager").GetComponent<SkillManager>();
+        GameObject smo = GameObject.Find("SkillManager");
+        if (smo)
+        {
+            sm = smo.GetComponent<SkillManager>();
+        }
+        else
+        {
+            GameObject smobj = new GameObject("SkillManager");
+            sm = smobj.AddComponent<SkillManager>();
+        }
+
         inventory = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
         chest = GameObject.Find("Chest");
         if (DataManager.matchmaking == 0)
@@ -55,7 +66,7 @@ public class HCGManager : MonoBehaviour {
         }
         else
         {
-            lives = 4;
+            lives = DataManager.INIT_LIVES;
             relevant_items = DataManager.hcg_items[scenario];
             irrelevant_items = getIrrelevantItems().ToArray();
             string level_name = SceneManager.GetActiveScene().name;
@@ -80,20 +91,24 @@ public class HCGManager : MonoBehaviour {
         List<string> irrel_temp = new List<string>(irrelevant_items);
 
         //Debug.Log("Length: " + items.Length);
+        
         /*
         foreach(GameObject i in items)
         {
-            Debug.Log(i.transform.position.x);
+            Debug.Log(i.transform.position.x + "\t" + i.transform.position.y);
         }
+        */
         items = ShuffleList(items);
+        /*
         Debug.Log("SHUFFLED");
         foreach (GameObject i in items)
         {
-            Debug.Log(i.transform.position.x);
+            Debug.Log(i.transform.position.x + "\t" + i.transform.position.y);
         }
         */
         for (int i = 0; i < items.Length; i++)
         {
+            //Debug.Log(i + "\t" + items[i].transform.position.x + "\t" + items[i].transform.position.y);
             string path = "";
             if (i % 2 == 0)
             {
@@ -166,6 +181,7 @@ public class HCGManager : MonoBehaviour {
             if (lives <= 0)
             {
                 player.canMove = false;
+                player.canDie = false;
                 StartCoroutine(lm.FadeOut());
             }
         }

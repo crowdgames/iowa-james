@@ -179,19 +179,6 @@ public class PlayerController : MonoBehaviour {
 
     void Update () {
         
-        // Check if dead
-        /*
-        if (curHealth <= 0 && canDie)
-        {
-            lm.Die();
-        }
-
-        // Check for max health
-        /**if (curHealth > maxHealth)
-        {
-            curHealth = maxHealth;
-        }*/
-        
         if(Input.GetKeyDown(KeyCode.UpArrow) && !jumpPressed && grounded)
         {
             jumpPressed = true;
