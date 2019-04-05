@@ -81,6 +81,6 @@ public class InventoryManager : MonoBehaviour
     {
         Debug.Log("Manage: " + hcgm.lives);
         if(hcgm.lives > 0)
-          hearts[hcgm.lives-1].GetComponent<Image>().sprite = emptyHeart;
+          hearts[hcgm.lives].GetComponent<Image>().sprite = emptyHeart;
     }
 }

@@ -32,6 +32,7 @@ public class LevelManager : MonoBehaviour {
     GameObject errTryObj;
     SkipLevel skip;
     GameObject skipObj;
+    GameObject skipButton;
     InventoryManager inventory;
     HCGManager hcgm;
     float deathPenalty;
@@ -66,8 +67,14 @@ public class LevelManager : MonoBehaviour {
         skipObj = GameObject.Find("Skip");
         tryObj = GameObject.Find("TryButton");
         errTryObj = GameObject.Find("ErrorTry");
-        if(skipObj)
-            skip = skipObj.GetComponent<SkipLevel>();
+        if (skipObj)
+        {
+            //   skip = skipObj.GetComponent<SkipLevel>();
+            skipObj.SetActive(false);
+        }
+        skipButton = GameObject.Find("Button");
+        if (skipButton)
+            skipButton.SetActive(false);
         if (errorObj)
             errorObj.SetActive(false);
         
@@ -309,8 +316,8 @@ public class LevelManager : MonoBehaviour {
             sm.RegisterAndGetFirstMatch();
         else if (sm.server_error == "ReportAndRequest")
             StartCoroutine(FadeOut()); //StartCoroutine(sm.ReportAndRequest());
-        else if (sm.server_error == "SkipLevel")
-            skip.Skip();
+        //else if (sm.server_error == "SkipLevel")
+          //  skip.Skip();
     }
 
     public void HideError()
