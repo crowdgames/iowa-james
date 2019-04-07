@@ -43,7 +43,7 @@ public class InventoryManager : MonoBehaviour
 
     public void InitInventory(int numItems)
     {
-        Debug.Log("Inventory items: " + numItems);
+        //Debug.Log("Inventory items: " + numItems);
         filled = new int[numItems];
         
         slots = GameObject.FindGameObjectsWithTag("Slot");
@@ -79,7 +79,7 @@ public class InventoryManager : MonoBehaviour
 
     public void ManageHearts()
     {
-        Debug.Log("Manage: " + hcgm.lives);
+     //   Debug.Log("Manage: " + hcgm.lives);
         hearts[hcgm.lives].GetComponent<Image>().sprite = emptyHeart;
     }
 }

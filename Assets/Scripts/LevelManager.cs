@@ -50,7 +50,7 @@ public class LevelManager : MonoBehaviour {
         hcgm = GameObject.FindObjectOfType<HCGManager>();
         deathCount = 0;
         deathPenalty = (float)Math.Round(1.0f / DataManager.INIT_LIVES,2);
-        Debug.Log("DEATH PEN: " + deathPenalty);
+        //Debug.Log("DEATH PEN: " + deathPenalty);
 
         //GameObject ddb = GameObject.Find("DynamoDB");
         if (smo)
@@ -170,15 +170,15 @@ public class LevelManager : MonoBehaviour {
         }
         else
         {
-            Debug.Log("Inside die...");
+            //Debug.Log("Inside die...");
             StartCoroutine("Respawn");
-            Debug.Log("After respawn");
+            //Debug.Log("After respawn");
         }
     }
 
     IEnumerator Respawn()
     {
-        Debug.Log("Inside respawn...");
+        //Debug.Log("Inside respawn...");
         Debug.Log(player.transform.position);
         Instantiate(deathEffect, player.transform.position, player.transform.rotation);
         player.transform.parent = null;
@@ -193,7 +193,7 @@ public class LevelManager : MonoBehaviour {
 
     public IEnumerator FadeOut()
     {
-        Debug.Log("Inside fade out");
+        //Debug.Log("Inside fade out");
         player.rb.velocity = Vector3.zero;
         player.anim.SetFloat("Speed", 0f);
         player.anim.SetFloat("vSpeed", 0f);
@@ -206,10 +206,10 @@ public class LevelManager : MonoBehaviour {
             ;
             //float score = Mathf.Max(0f, 1f - ((0.34f * player.deathCount)));
             float score = Mathf.Max(0f, (deathPenalty * hcgm.lives));
-            Debug.Log("SCORE: " + score);
+            //Debug.Log("SCORE: " + score);
             sm.score = score;
             yield return sm.ReportAndRequest();
-            Debug.Log("NEXT LEVEL: " + sm.server_data);
+            //Debug.Log("NEXT LEVEL: " + sm.server_data);
             
             try
             {
@@ -225,16 +225,16 @@ public class LevelManager : MonoBehaviour {
         {
             float score_game = 1f - (deathPenalty * deathCount);
             float score_task = (float)hcgm.relevant_count / (hcgm.relevant_count + hcgm.irrelevant_count);
-            Debug.Log("Game: " + score_game + "\tTask: " + score_task);
+            //Debug.Log("Game: " + score_game + "\tTask: " + score_task);
             sm.score_game = score_game;
             sm.score_task = score_task;
             yield return sm.ReportAndRequest();
-            Debug.Log("NEXT LEVEL: " + sm.server_data);
+            //Debug.Log("NEXT LEVEL: " + sm.server_data);
             try
             {
                 //next_level = sm.server_data.Substring(sm.server_data.IndexOf("Level"), 10);
                 next_level = sm.ParseRequestResponse();
-                Debug.Log("NEXt LEVEL PARSED: " + next_level);
+             //   Debug.Log("NEXt LEVEL PARSED: " + next_level);
             }
             catch
             {
@@ -292,7 +292,7 @@ public class LevelManager : MonoBehaviour {
 
     void LoadNextLevel()
     {
-        Debug.Log("Called LoadNextLevel");
+        //Debug.Log("Called LoadNextLevel");
         Randomizer.LoadNextLevel();
     }
 
@@ -309,9 +309,9 @@ public class LevelManager : MonoBehaviour {
     public void Recontact()
     {
         HideError();
-        Debug.Log("Recontact");
-        Debug.Log("REQ: " + sm.server_request);
-        Debug.Log("ERR: " + sm.server_error);
+        //Debug.Log("Recontact");
+        //Debug.Log("REQ: " + sm.server_request);
+        //Debug.Log("ERR: " + sm.server_error);
         if (sm.server_error == "StartGame")
             sm.RegisterAndGetFirstMatch();
         else if (sm.server_error == "ReportAndRequest")

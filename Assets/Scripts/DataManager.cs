@@ -11,8 +11,8 @@ public class DataManager {
     public static float play_time = 0.0f;
     public static string player_id = "";
     public static int INIT_LIVES = 3;
-    //public static string host = "viridian.ccs.neu.edu:3004";
-    public static string host = "localhost:3004";
+    public static string host = "viridian.ccs.neu.edu:3004";
+    //public static string host = "localhost:3004";
     public static int matchmaking = 0;   //0 - regular, 1 - combined
     
     public static string[] scenarios = new string[] {"Grocery Store","Pastry Shop","Clothing Store","Sports Store","Hardware Store"};

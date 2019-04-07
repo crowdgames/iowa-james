@@ -249,11 +249,11 @@ public class PlayerController : MonoBehaviour {
         if ((System.Array.IndexOf(killers,col.tag) > -1) && canDie)
         {
                 jumpPressed = false;
-                Debug.Log("Killed by: " + col.tag);
+                //Debug.Log("Killed by: " + col.tag);
                 deathCount++;
                 float pos_x = transform.position.x;
                 float pos_y = transform.position.y;
-                Debug.Log("Tag: " + col.tag);
+                //Debug.Log("Tag: " + col.tag);
                 lm.Die();
                 logger.LogDeath(col.tag, deathCount, pos_x, pos_y);
         }
