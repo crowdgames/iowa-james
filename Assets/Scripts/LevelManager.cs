@@ -158,6 +158,7 @@ public class LevelManager : MonoBehaviour {
     {
         deathCount++;
         hcgm.lives--;
+        Debug.Log("IN DIE: " + hcgm.lives);
         inventory.ManageHearts();
 
         if (hcgm.lives <= 0)

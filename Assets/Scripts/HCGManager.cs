@@ -67,6 +67,7 @@ public class HCGManager : MonoBehaviour {
         else
         {
             lives = DataManager.INIT_LIVES;
+            Debug.Log("HCG Start: " + lives);
             relevant_items = DataManager.hcg_items[scenario];
             irrelevant_items = getIrrelevantItems().ToArray();
             string level_name = SceneManager.GetActiveScene().name;
@@ -176,6 +177,7 @@ public class HCGManager : MonoBehaviour {
         {
             irrelevant_count++;
             lives--;
+            Debug.Log("IN IRRELEV: " + lives);
             inventory.ManageHearts();
             StartCoroutine(ShowIrrelevant());
             if (lives <= 0)
