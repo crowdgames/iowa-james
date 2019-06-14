@@ -225,7 +225,12 @@ public class LevelManager : MonoBehaviour {
         else
         {
             float score_game = 1f - (deathPenalty * deathCount);
-            float score_task = (float)hcgm.relevant_count / (hcgm.relevant_count + hcgm.irrelevant_count);
+            float score_task = 0f;
+            
+                Debug.Log("Rel: " + hcgm.relevant_count + "\tIrrel: " + hcgm.irrelevant_count);
+                score_task = (float)hcgm.relevant_count / (hcgm.relevant_count + hcgm.irrelevant_count);
+                if (float.IsNaN(score_task))
+                    score_task = 0f;
             //Debug.Log("Game: " + score_game + "\tTask: " + score_task);
             sm.score_game = score_game;
             sm.score_task = score_task;

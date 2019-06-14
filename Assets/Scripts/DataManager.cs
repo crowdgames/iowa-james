@@ -13,7 +13,7 @@ public class DataManager {
     public static int INIT_LIVES = 3;
     public static string host = "viridian.ccs.neu.edu:3004";
     //public static string host = "localhost:3004";
-    public static int matchmaking = 0;   //0 - regular, 1 - combined
+    public static int matchmaking = 1;   //0 - regular, 1 - combined
     
     public static string[] scenarios = new string[] {"Grocery Store","Pastry Shop","Clothing Store","Sports Store","Hardware Store"};
 
