@@ -44,7 +44,7 @@ public class InventoryManager : MonoBehaviour
 
     public void InitInventory(int numItems)
     {
-        Debug.Log("Inventory items: " + numItems);
+        //Debug.Log("Inventory items: " + numItems);
         filled = new int[numItems];
         
         slots = GameObject.FindGameObjectsWithTag("Slot");
@@ -80,7 +80,7 @@ public class InventoryManager : MonoBehaviour
         for(int i=0; i < hearts.Length; i++)
         {
             empty[i] = 0;
-            Debug.Log("Hearts i: " + i);
+            //Debug.Log("Hearts i: " + i);
             hearts[i].GetComponent<Image>().sprite = fullHeart;
         }
         //Array.Sort(hearts_x, hearts);
@@ -109,21 +109,21 @@ public class InventoryManager : MonoBehaviour
 
     public void ManageHearts()
     {
-        Debug.Log("Manage: " + hcgm.lives);
+        //Debug.Log("Manage: " + hcgm.lives);
         //hearts[hcgm.lives].GetComponent<Image>().sprite = emptyHeart;
-        Debug.Log("Length: " + hearts.Length);
+        //Debug.Log("Length: " + hearts.Length);
         for(int i=hearts.Length-1; i >= 0; i--)
         {
             if (empty[i] == 0)
             {
-                Debug.Log("Heart " + i + " full");
+                //Debug.Log("Heart " + i + " full");
                 hearts[i].GetComponent<Image>().sprite = emptyHeart;
                 empty[i] = 1;
                 break;
             }
             else
             {
-                Debug.Log("Heart " + i + " empty");
+                //Debug.Log("Heart " + i + " empty");
             }
         }
     }

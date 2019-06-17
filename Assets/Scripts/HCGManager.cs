@@ -171,7 +171,10 @@ public class HCGManager : MonoBehaviour {
             relevant_count++;
             inventory.AddItem(sprite);
             if (relevant_count == items.Length / 2)
+            {
                 chest.GetComponent<SpriteRenderer>().sprite = open;
+                lm.opened = true;
+            }
         }
         else if (irrelevant_items.Contains(item_name))
         {

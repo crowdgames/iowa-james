@@ -37,6 +37,8 @@ public class LevelManager : MonoBehaviour {
     HCGManager hcgm;
     float deathPenalty;
 
+    public bool opened;
+
     void Start()
     {
      //   Debug.Log("inside level manager start");
@@ -51,7 +53,7 @@ public class LevelManager : MonoBehaviour {
         deathCount = 0;
         deathPenalty = (float)Math.Round(1.0f / DataManager.INIT_LIVES,2);
         //Debug.Log("DEATH PEN: " + deathPenalty);
-
+        opened = false;
         //GameObject ddb = GameObject.Find("DynamoDB");
         if (smo)
         {
@@ -224,14 +226,19 @@ public class LevelManager : MonoBehaviour {
         }
         else
         {
-            float score_game = 1f - (deathPenalty * deathCount);
-            float score_task = 0f;
-            
-                Debug.Log("Rel: " + hcgm.relevant_count + "\tIrrel: " + hcgm.irrelevant_count);
-                score_task = (float)hcgm.relevant_count / (hcgm.relevant_count + hcgm.irrelevant_count);
+            //float score_game = 1f - (deathPenalty * deathCount);
+            //Debug.Log("Death count: " + deathCount);
+            //Debug.Log("Finished: " + player.finished);
+            float score_game = (player.finished ? 0.5f : 0f) + Math.Max(0f, 0.5f - (deathCount / 6f));
+            //float score_task = 0f;
+            float total_count = hcgm.relevant_count + hcgm.irrelevant_count;
+            float count_factor = total_count > 0f ? (hcgm.relevant_count / total_count) : 0f;
+            float score_task = (opened ? 0.5f : 0f) + (0.5f*count_factor);
+            //Debug.Log("Rel: " + hcgm.relevant_count + "\tIrrel: " + hcgm.irrelevant_count);
+                //score_task = (float)hcgm.relevant_count / (hcgm.relevant_count + hcgm.irrelevant_count);
                 if (float.IsNaN(score_task))
                     score_task = 0f;
-            //Debug.Log("Game: " + score_game + "\tTask: " + score_task);
+            Debug.Log("Game: " + score_game + "\tTask: " + score_task);
             sm.score_game = score_game;
             sm.score_task = score_task;
             yield return sm.ReportAndRequest();

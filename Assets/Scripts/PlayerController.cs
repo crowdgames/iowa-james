@@ -91,6 +91,7 @@ public class PlayerController : MonoBehaviour {
     ItemsGenerator itemgenerator;
     */
     public bool touched = false;
+    public bool finished;
 
     // Use this for initialization
     void Start ()
@@ -125,6 +126,8 @@ public class PlayerController : MonoBehaviour {
                 coinText.text = "Coins: " + coins + "/" + DataManager.NCOINS; //+ "\tLevel: " + (SceneManager.GetActiveScene().buildIndex + 1) + "/" + (SceneManager.sceneCountInBuildSettings - 1); //+ " ID: " + logger.dynode.player_id;
             }
         }
+
+        finished = false;
     }
 
     void FixedUpdate()
@@ -230,6 +233,7 @@ public class PlayerController : MonoBehaviour {
         
         if(col.CompareTag("Chest"))
         {
+            finished = true;
             if (hcgm.relevant_count == hcgm.items.Length / 2)
             {
                 //Debug.Log("Coins: " + coins);
@@ -241,6 +245,7 @@ public class PlayerController : MonoBehaviour {
             }
             else
             {
+                
                 StartCoroutine(hcgm.ShowRelevant());
             }
         }
