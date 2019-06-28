@@ -1,0 +1,12 @@
+{
+"companyName": "PLAIT",
+"productName": "Iowa James: Hunter Collector Gatherer",
+"dataUrl": "ijdec.data.unityweb",
+"wasmCodeUrl": "ijdec.wasm.code.unityweb",
+"wasmFrameworkUrl": "ijdec.wasm.framework.unityweb",
+"TOTAL_MEMORY": 536870912,
+"graphicsAPI": ["WebGL 2.0", "WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#231F20"
+}

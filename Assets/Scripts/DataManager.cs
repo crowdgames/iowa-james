@@ -14,6 +14,7 @@ public class DataManager {
     public static string host = "viridian.ccs.neu.edu:3004";
     //public static string host = "localhost:3004";
     public static int matchmaking = 1;   //0 - regular, 1 - combined
+    public static int decoupled = 0;   //0 - coupled, 1 - decoupled 
     
     public static string[] scenarios = new string[] {"Grocery Store","Pastry Shop","Clothing Store","Sports Store","Hardware Store"};
 
@@ -26,4 +27,32 @@ public class DataManager {
         { "Hardware Store",new string[]{ "drill", "saw", "hammer", "nails", "pliers", "wrench", "axe" } }
     };
 
+    public static Dictionary<string, string> coupled_mapping = new Dictionary<string, string>
+    {
+        { "Level_00", "grocery_3"},
+        { "Level_02", "pastry_3"},
+        { "Level_15", "clothing_3"},
+        { "Level_01", "sports_3"},
+        { "Level_14", "hardware_3"},
+        { "Level_16", "grocery_3"},
+        { "Level_10", "pastry_3"},
+        { "Level_19", "sports_3"},
+        { "Level_03", "hardware_3"},
+        { "Level_20", "grocery_5"},
+        { "Level_18", "pastry_5"},
+        { "Level_17", "clothing_5"},
+        { "Level_21", "sports_5"},
+        { "Level_11", "hardware_5"},
+        { "Level_04", "grocery_5"},
+        { "Level_22", "pastry_5"},
+        { "Level_24", "clothing_5"},
+        { "Level_09", "grocery_7"},
+        { "Level_08", "pastry_7"},
+        { "Level_06", "clothing_7"},
+        { "Level_05", "sports_7"},
+        { "Level_23", "hardware_7"},
+        { "Level_12", "clothing_7"},
+        { "Level_07", "sports_7"},
+        { "Level_13", "hardware_7"},
+    };
 }

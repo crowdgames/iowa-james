@@ -241,6 +241,8 @@ public class LevelManager : MonoBehaviour {
             Debug.Log("Game: " + score_game + "\tTask: " + score_task);
             sm.score_game = score_game;
             sm.score_task = score_task;
+            sm.rel = hcgm.relevant_count;
+            sm.irrel = hcgm.irrelevant_count;
             yield return sm.ReportAndRequest();
             //Debug.Log("NEXT LEVEL: " + sm.server_data);
             try

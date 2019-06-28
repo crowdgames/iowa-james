@@ -16,6 +16,8 @@ public class SkillManager : MonoBehaviour {
     public float score = 0f;
     public float score_game = 0f;
     public float score_task = 0f;
+    public int rel = 0;
+    public int irrel = 0;
 
     Dictionary<string, string> mapping;
 
@@ -85,8 +87,8 @@ public class SkillManager : MonoBehaviour {
             task = task + "_" + level.Substring(level.LastIndexOf("_") + 1, 1);
             level = level.Substring(0, level.LastIndexOf("_"));
             Debug.Log(task + "\t" + level);
-            string report = "http://" + DataManager.host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"id3\":\"" + task + "\",\"score_game\":\"" + score_game + "\",\"score_task\":\"" + score_task + "\"}";
-            server_request = "http://" + DataManager.host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"id3\":\"" + task + "\",\"score_game\":\"" + score_game + "\",\"score_task\":\"" + score_task + "\"}";
+            string report = "http://" + DataManager.host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"id3\":\"" + task + "\",\"score_game\":\"" + score_game + "\",\"score_task\":\"" + score_task + "\",\"relevant\":\"" + rel + "\",\"irrelevant\":\"" + irrel + "\"}";
+            server_request = "http://" + DataManager.host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"id3\":\"" + task + "\",\"score_game\":\"" + score_game + "\",\"score_task\":\"" + score_task + "\",\"relevant\":\"" + rel + "\",\"irrelevant\":\"" + irrel + "\"}";
             Debug.Log("***REPORT****: " + report);
         }
         //yield return StartCoroutine(ContactServer(report));
@@ -143,16 +145,29 @@ public class SkillManager : MonoBehaviour {
         string after_data1 = server_data.Substring(server_data.IndexOf("data1") + 9);
         int index = after_data1.IndexOf("\"");
         lev = server_data.Substring(server_data.IndexOf("data1") + 9, index);
-
         string scen = "";
-        string after_data2 = server_data.Substring(server_data.IndexOf("data2") + 9);
-        index = after_data2.IndexOf("\"");
-        scen = server_data.Substring(server_data.IndexOf("data2") + 9, index);
+        if (DataManager.decoupled == 1)
+        {
+            string after_data2 = server_data.Substring(server_data.IndexOf("data2") + 9);
+            index = after_data2.IndexOf("\"");
+            scen = server_data.Substring(server_data.IndexOf("data2") + 9, index);
 
-        int num_items = int.Parse(scen.Substring(scen.IndexOf("_") + 1));
-        scen = scen.Substring(0, scen.IndexOf("_"));
-        scenario = mapping[scen];
-        lev = lev + "_" + num_items;
+            int num_items = int.Parse(scen.Substring(scen.IndexOf("_") + 1));
+            scen = scen.Substring(0, scen.IndexOf("_"));
+            scenario = mapping[scen];
+            lev = lev + "_" + num_items;
+        }
+        else
+        {
+            scen = DataManager.coupled_mapping[lev];
+            Debug.Log("Lev: " + lev + "\tScen: " + scen);
+            int num_items = int.Parse(scen.Substring(scen.IndexOf("_") + 1));
+            scen = scen.Substring(0, scen.IndexOf("_"));
+         
+            scenario = mapping[scen];
+            lev = lev + "_" + num_items;
+            Debug.Log("Level: " + lev + "\tScen: " + scenario);
+        }
         return lev;
     }
 }

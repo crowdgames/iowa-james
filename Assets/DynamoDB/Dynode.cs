@@ -58,6 +58,8 @@ namespace DynamoDB
             #endif
 
             DataManager.player_id = player_id;
+            DataManager.decoupled = player_id.ToCharArray()[player_id.Length - 1] % 2;
+            Debug.Log("Decoupled: " + DataManager.decoupled.ToString());
             //DataManager.mode = player_id.ToCharArray()[player_id.Length - 1] % 4;
             DataManager.mode = 4;
             //Debug.Log(player_id.ToCharArray()[player_id.Length - 1]);
