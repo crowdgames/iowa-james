@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Linq;
 using System;
+using UnityEngine.Tilemaps;
 
 public class LevelManager : MonoBehaviour {
 
@@ -41,7 +42,8 @@ public class LevelManager : MonoBehaviour {
 
     void Start()
     {
-     //   Debug.Log("inside level manager start");
+        //Debug.Log("inside level manager start");
+        Tilemap tm = GameObject.FindObjectOfType<Tilemap>();
         player = GameObject.FindObjectOfType<PlayerController>();
         log = player.GetComponent<Logger>();
         fadePanel = GameObject.FindObjectOfType<Fade>();
@@ -71,8 +73,8 @@ public class LevelManager : MonoBehaviour {
         errTryObj = GameObject.Find("ErrorTry");
         if (skipObj)
         {
-            //   skip = skipObj.GetComponent<SkipLevel>();
-            skipObj.SetActive(false);
+               skip = skipObj.GetComponent<SkipLevel>();
+           skipObj.SetActive(false);
         }
         skipButton = GameObject.Find("Button");
         if (skipButton)
@@ -96,6 +98,49 @@ public class LevelManager : MonoBehaviour {
                 coinTextObj.SetActive(true);
             GenerateCoins(DataManager.mode);
         }
+
+        //ScreenCapture.CaptureScreenshot(SceneManager.GetActiveScene().name + ".png");
+
+        /*
+        //Debug.Log("TILEMAP SHIT");
+        BoundsInt bounds = tm.cellBounds;
+        TileBase[] allTiles = tm.GetTilesBlock(bounds);
+
+        int width = bounds.size.x;
+        int height = bounds.size.y;
+        char[,] tile_arr = new char[height,width];
+        //Debug.Log("Width: " + width + "\tHeight: " + height);
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                TileBase tile = allTiles[x + y * width];
+                if (tile != null)
+                {
+                    //Debug.Log("x:" + x + " y:" + y + " tile:" + tile.name);
+                    tile_arr[(height-1)-y,x] = tile.name.ToCharArray()[0];
+                    //Debug.Log(tile_arr[(height-1) - y, x]);
+                }
+                else
+                {
+                    //Debug.Log("x:" + x + " y:" + y + " tile: (null)");
+                    tile_arr[(height-1) - y, x] = '-';
+                }
+            }
+        }
+        StreamWriter sw = new StreamWriter(SceneManager.GetActiveScene().name + ".txt");
+        for(int i=0; i<height; i++)
+        {
+            string output = "";
+            for(int j=0; j<width; j++)
+            {
+                //Debug.Log(tile_arr[i, j]);
+                output += tile_arr[i, j];
+            }
+            sw.WriteLine(output+'\n');
+        }
+        sw.Close();
+        */
     }
     
     public void DisableCoins()
@@ -204,6 +249,8 @@ public class LevelManager : MonoBehaviour {
         string next_level = "";
         string level = SceneManager.GetActiveScene().name;
         sm.level = level;
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
         if (DataManager.matchmaking == 0)
         {
             ;
@@ -211,6 +258,7 @@ public class LevelManager : MonoBehaviour {
             float score = Mathf.Max(0f, (deathPenalty * hcgm.lives));
             //Debug.Log("SCORE: " + score);
             sm.score = score;
+            sm.finished = player.finished ? 1 : 0;
             yield return sm.ReportAndRequest();
             //Debug.Log("NEXT LEVEL: " + sm.server_data);
             

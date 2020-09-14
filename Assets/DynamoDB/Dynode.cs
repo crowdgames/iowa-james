@@ -43,9 +43,10 @@ namespace DynamoDB
             if(smo)
                 sm = smo.GetComponent<SkillManager>();
             string test = "http://viridian.ccs.neu.edu/instructions.html?workerId=MT-8d151263359973cd187ffce12db71fe2&hitId=ensemble";
-            #if UNITY_EDITOR
-                    player_id = "MT-" + generateID();
-                    Debug.Log("Editor PID: " + player_id);
+#if UNITY_EDITOR
+            player_id = "MT-" + generateID();
+            //player_id = "7";
+            Debug.Log("Editor PID: " + player_id);
             #else
                     string url_string = Application.absoluteURL;
                     Debug.Log("URL: " + url_string);
@@ -58,8 +59,16 @@ namespace DynamoDB
             #endif
 
             DataManager.player_id = player_id;
-            DataManager.decoupled = player_id.ToCharArray()[player_id.Length - 1] % 2;
+            //DataManager.decoupled = player_id.ToCharArray()[player_id.Length - 1] % 2;
+            if(DataManager.separate_dbs)
+            {
+                int delta = player_id.ToCharArray()[player_id.Length - 1] % DataManager.num_dbs;
+                DataManager.port_number += delta;
+            }
             Debug.Log("Decoupled: " + DataManager.decoupled.ToString());
+            Debug.Log("Port: " + DataManager.port_number);
+            DataManager.host = DataManager.server + ":" + DataManager.port_number.ToString();
+            Debug.Log("Host: " + DataManager.host);
             //DataManager.mode = player_id.ToCharArray()[player_id.Length - 1] % 4;
             DataManager.mode = 4;
             //Debug.Log(player_id.ToCharArray()[player_id.Length - 1]);

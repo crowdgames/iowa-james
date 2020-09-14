@@ -11,10 +11,14 @@ public class DataManager {
     public static float play_time = 0.0f;
     public static string player_id = "";
     public static int INIT_LIVES = 3;
-    public static string host = "viridian.ccs.neu.edu:3004";
-    //public static string host = "localhost:3004";
-    public static int matchmaking = 1;   //0 - regular, 1 - combined
+    //public static string host = "viridian.ccs.neu.edu";
+    public static string server = "localhost";
+    public static int port_number = 3004;
+    public static int matchmaking = 0;   //0 - only levels have ratings, 1 - levels and tasks both have ratings
     public static int decoupled = 0;   //0 - coupled, 1 - decoupled 
+    public static string host = "";
+    public static bool separate_dbs = true;
+    public static int num_dbs = 2;
     
     public static string[] scenarios = new string[] {"Grocery Store","Pastry Shop","Clothing Store","Sports Store","Hardware Store"};
 

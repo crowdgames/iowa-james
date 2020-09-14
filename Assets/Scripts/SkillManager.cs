@@ -14,6 +14,7 @@ public class SkillManager : MonoBehaviour {
     public string level = "";
     public string scenario = "";
     public float score = 0f;
+    public int finished = 0;
     public float score_game = 0f;
     public float score_task = 0f;
     public int rel = 0;
@@ -74,11 +75,12 @@ public class SkillManager : MonoBehaviour {
     {
         Debug.Log("INSIDE REPORTANDREQUEST");
         string token = DateTime.UtcNow.ToString();
+        Debug.Log("Token: " +  token);
         if (DataManager.matchmaking == 0)
         {
-            string report = "http://" + DataManager.host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"score1\":\"" + score + "\"}";
+            // string report = "http://" + DataManager.host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"score1\":\"" + score + "\",\"finished\":\"" + finished + "\"}";
             server_request = "http://" + DataManager.host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"score1\":\"" + score + "\"}";
-            Debug.Log("***REPORT****: " + report);
+            Debug.Log("***REPORT****: " + server_request);
         }
         else
         {
@@ -87,18 +89,18 @@ public class SkillManager : MonoBehaviour {
             task = task + "_" + level.Substring(level.LastIndexOf("_") + 1, 1);
             level = level.Substring(0, level.LastIndexOf("_"));
             Debug.Log(task + "\t" + level);
-            string report = "http://" + DataManager.host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"id3\":\"" + task + "\",\"score_game\":\"" + score_game + "\",\"score_task\":\"" + score_task + "\",\"relevant\":\"" + rel + "\",\"irrelevant\":\"" + irrel + "\"}";
+            //string report = "http://" + DataManager.host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"id3\":\"" + task + "\",\"score_game\":\"" + score_game + "\",\"score_task\":\"" + score_task + "\",\"relevant\":\"" + rel + "\",\"irrelevant\":\"" + irrel + "\"}";
             server_request = "http://" + DataManager.host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"id3\":\"" + task + "\",\"score_game\":\"" + score_game + "\",\"score_task\":\"" + score_task + "\",\"relevant\":\"" + rel + "\",\"irrelevant\":\"" + irrel + "\"}";
-            Debug.Log("***REPORT****: " + report);
+            Debug.Log("***REPORT****: " + server_request);
         }
         //yield return StartCoroutine(ContactServer(report));
         yield return StartCoroutine(ContactServer());
         Debug.Log("DATA FROM REPORT: " + server_data);
         if (server_data != "ERROR")
         {
-            string request = "http://" + DataManager.host + "/requestMatch?q={\"id\":\"" + DataManager.player_id + "\"}";
+            //string request = "http://" + DataManager.host + "/requestMatch?q={\"id\":\"" + DataManager.player_id + "\"}";
             server_request = "http://" + DataManager.host + "/requestMatch?q={\"id\":\"" + DataManager.player_id + "\"}";
-            Debug.Log("***REQ***: " + request);
+            Debug.Log("***REQ***: " + server_request);
             yield return StartCoroutine(ContactServer());
             Debug.Log("DATA FROM REQUEST: " + server_data);
         }
@@ -123,9 +125,9 @@ public class SkillManager : MonoBehaviour {
     public IEnumerator RequestMatch()
     {
         Debug.Log("REQUESTING A MATCH");
-        string request = "http://" + DataManager.host + "/requestMatch?q={\"id\":\"" + DataManager.player_id + "\"}";
+        //string request = "http://" + DataManager.host + "/requestMatch?q={\"id\":\"" + DataManager.player_id + "\"}";
         server_request = "http://" + DataManager.host + "/requestMatch?q={\"id\":\"" + DataManager.player_id + "\"}";
-        Debug.Log(request);
+        Debug.Log(server_request);
         yield return StartCoroutine(ContactServer());
         Debug.Log("DATA FROM REQUEST: " + server_data);
         string first_level = "";
