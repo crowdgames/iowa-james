@@ -5,6 +5,8 @@ using SimpleJSON;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using System.IO;
+using System;
 
 public class PlayerController : MonoBehaviour {
 
@@ -93,6 +95,8 @@ public class PlayerController : MonoBehaviour {
     public bool touched = false;
     public bool finished;
 
+    StreamWriter sw;
+
     // Use this for initialization
     void Start ()
     {
@@ -128,6 +132,8 @@ public class PlayerController : MonoBehaviour {
         }
 
         finished = false;
+        if(DataManager.log_actions)
+            sw = new StreamWriter(SceneManager.GetActiveScene().name + ".txt");
     }
 
     void FixedUpdate()
@@ -144,13 +150,31 @@ public class PlayerController : MonoBehaviour {
             // Horizontal motion
             move = Input.GetAxis("Horizontal");
             anim.SetFloat("Speed", Mathf.Abs(move));
+            
         }
         
         // Knockback and motion stuff
         if (knockbackCount <= 0) // You can't move while getting knocked back.
         {
-           if(canMove)
+            if (canMove)
+            {
                 rb.velocity = new Vector2(move * maxSpeed, rb.velocity.y);
+                if (DataManager.log_actions)
+                {
+                    string action = "";
+                    if (move > 0)
+                        action = "right";
+                    else if (move < 0)
+                        action = "left";
+                    if (action != "")
+                    {
+                        string elements = GetObjectsAroundPlayer();
+                        sw.WriteLine(action + " " + elements);
+                        sw.Flush();
+                        //Debug.Log(action);
+                    }
+                }
+            }
         }
         else
         {
@@ -176,6 +200,13 @@ public class PlayerController : MonoBehaviour {
             grounded = false;
             //audioJump.Play();
             jumpPressed = false;
+            //Debug.Log("jump");
+            if (DataManager.log_actions)
+            {
+                string elements = GetObjectsAroundPlayer();
+                sw.WriteLine("jump " + elements);
+                sw.Flush();
+            }
         }
     }
 
@@ -210,7 +241,8 @@ public class PlayerController : MonoBehaviour {
                 string item = col.gameObject.name;
                 Sprite sprite = col.gameObject.GetComponent<SpriteRenderer>().sprite;
                 Destroy(col.gameObject);
-                hcgm.CollectItem(item,sprite);
+                string elements = GetObjectsAroundPlayer();
+                hcgm.CollectItem(item,sprite,sw,elements);
             }
         }
 
@@ -241,6 +273,12 @@ public class PlayerController : MonoBehaviour {
                 logger.LogMatch("win");
                 canMove = false;
                 canDie = false;
+                if (DataManager.log_actions)
+                {
+                    string output = GetObjectsAroundPlayer();
+                    sw.WriteLine("win " + output);
+                    sw.Flush();
+                }
                 StartCoroutine(lm.FadeOut());
             }
             else
@@ -258,8 +296,14 @@ public class PlayerController : MonoBehaviour {
                 deathCount++;
                 float pos_x = transform.position.x;
                 float pos_y = transform.position.y;
-                //Debug.Log("Tag: " + col.tag);
-                lm.Die();
+            //Debug.Log("Tag: " + col.tag);
+            if (DataManager.log_actions)
+            {
+                string output = GetObjectsAroundPlayer();
+                sw.WriteLine("hazard " + output);
+                sw.Flush();
+            }
+                lm.Die(sw);
                 logger.LogDeath(col.tag, deathCount, pos_x, pos_y);
         }
     }
@@ -267,6 +311,25 @@ public class PlayerController : MonoBehaviour {
     void Footstep()
     {
 
+    }
+
+    string GetObjectsAroundPlayer()
+    {
+        int[] elems = new int[7]; //ground, movingplatform, items, spikes, rising spikes, ninja
+        Dictionary<string, bool> elements = new Dictionary<string, bool>();
+        
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, new Vector2(10, 10), 0f);
+        foreach(Collider2D c in colliders)
+        {
+            if (c.tag == "GroundCheck") elems[0] = 1;
+            else if (c.tag == "MovingPlatform") elems[1] = 1;
+            else if (c.tag == "HCGItem") elems[2] = 1;
+            else if (c.tag == "Spikes") elems[3] = 1;
+            else if (c.tag == "RisingSpikes") elems[4] = 1;
+            else if (c.tag == "Ninja") elems[5] = 1;
+        }
+        string output = String.Join("", elems.Select(p => p.ToString()).ToArray());
+        return output;
     }
     
 }

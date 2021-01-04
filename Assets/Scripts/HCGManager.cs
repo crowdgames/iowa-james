@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using System.IO;
 
 public class HCGManager : MonoBehaviour {
 
@@ -159,7 +160,7 @@ public class HCGManager : MonoBehaviour {
         return irrelevant;
     }
 
-    public void CollectItem(string item, Sprite sprite)
+    public void CollectItem(string item, Sprite sprite, StreamWriter sw, string elements)
     {
         //Debug.Log("Collected Item: " + item.name);
         //item.SetActive(false);
@@ -183,10 +184,20 @@ public class HCGManager : MonoBehaviour {
             Debug.Log("IN IRRELEV: " + lives);
             inventory.ManageHearts();
             StartCoroutine(ShowIrrelevant());
+            if (DataManager.log_actions)
+            {
+                sw.WriteLine("wrong_item " + elements);
+                sw.Flush();
+            }
             if (lives <= 0)
             {
                 player.canMove = false;
                 player.canDie = false;
+                if (DataManager.log_actions)
+                {
+                    sw.WriteLine("item_loss " + elements);
+                    sw.Flush();
+                }
                 StartCoroutine(lm.FadeOut());
             }
         }

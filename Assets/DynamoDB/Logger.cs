@@ -64,6 +64,7 @@ public class Logger : MonoBehaviour
         // Remember to put in the data TYPE. This is VERY IMPORTANT!
         if (logging)
         {
+            //Debug.Log("Logging position");
             DataManager.index++;
             var Item = new JSONObject();
             var obj = new JSONObject();
@@ -88,6 +89,7 @@ public class Logger : MonoBehaviour
     {
         if (logging)
         {
+            Debug.Log("Logging win");
             logging = false;
             DataManager.index++;
             var Item = new JSONObject();
@@ -112,7 +114,7 @@ public class Logger : MonoBehaviour
             Item["coins"]["S"] = coins.ToString();
             Item["play_time"]["S"] = DataManager.play_time.ToString();
             dynode.Send(Item);
-            //Debug.Log("Coin logged: " + coins );
+            Debug.Log("Coin logged: " + coins );
         }
     }
 

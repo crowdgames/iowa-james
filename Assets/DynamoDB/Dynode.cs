@@ -60,13 +60,18 @@ namespace DynamoDB
 
             DataManager.player_id = player_id;
             //DataManager.decoupled = player_id.ToCharArray()[player_id.Length - 1] % 2;
-            if(DataManager.separate_dbs)
+            int delta = 0;
+            if(DataManager.separate_ports)
             {
-                int delta = player_id.ToCharArray()[player_id.Length - 1] % DataManager.num_dbs;
+                int last_char = (int)player_id.ToCharArray()[player_id.Length - 1];
+                Debug.Log("Last char: " + last_char.ToString());
+                //delta = ((int)player_id.ToCharArray()[player_id.Length - 1]) % DataManager.num_dbs;
+                delta = last_char % DataManager.num_ports;
                 DataManager.port_number += delta;
             }
             Debug.Log("Decoupled: " + DataManager.decoupled.ToString());
-            Debug.Log("Port: " + DataManager.port_number);
+            //Debug.Log("delta: " + delta.ToString());
+            //Debug.Log("Port: " + DataManager.port_number);
             DataManager.host = DataManager.server + ":" + DataManager.port_number.ToString();
             Debug.Log("Host: " + DataManager.host);
             //DataManager.mode = player_id.ToCharArray()[player_id.Length - 1] % 4;

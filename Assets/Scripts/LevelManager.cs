@@ -101,15 +101,15 @@ public class LevelManager : MonoBehaviour {
 
         //ScreenCapture.CaptureScreenshot(SceneManager.GetActiveScene().name + ".png");
 
-        /*
-        //Debug.Log("TILEMAP SHIT");
+        
+        Debug.Log("TILEMAP WRITE");
         BoundsInt bounds = tm.cellBounds;
         TileBase[] allTiles = tm.GetTilesBlock(bounds);
 
         int width = bounds.size.x;
         int height = bounds.size.y;
         char[,] tile_arr = new char[height,width];
-        //Debug.Log("Width: " + width + "\tHeight: " + height);
+        Debug.Log("Width: " + width + "\tHeight: " + height);
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
@@ -128,19 +128,21 @@ public class LevelManager : MonoBehaviour {
                 }
             }
         }
-        StreamWriter sw = new StreamWriter(SceneManager.GetActiveScene().name + ".txt");
-        for(int i=0; i<height; i++)
+        //StreamWriter sw = new StreamWriter(SceneManager.GetActiveScene().name + ".txt");
+        string output = "";
+        for (int i=0; i<height; i++)
         {
-            string output = "";
             for(int j=0; j<width; j++)
             {
-                //Debug.Log(tile_arr[i, j]);
+               // Debug.Log(tile_arr[i, j]);
                 output += tile_arr[i, j];
             }
-            sw.WriteLine(output+'\n');
+            output += '\n';
+            //sw.WriteLine(output+'\n');
         }
-        sw.Close();
-        */
+        Debug.Log(output);
+        //sw.Close();
+        
     }
     
     public void DisableCoins()
@@ -201,7 +203,7 @@ public class LevelManager : MonoBehaviour {
         }
     }
     
-    public void Die()
+    public void Die(StreamWriter sw)
     {
         deathCount++;
         hcgm.lives--;
@@ -210,6 +212,11 @@ public class LevelManager : MonoBehaviour {
 
         if (hcgm.lives <= 0)
         {
+            if (DataManager.log_actions)
+            {
+                sw.WriteLine("death loss");
+                sw.Flush();
+            }
             player.canMove = false;
             Instantiate(deathEffect, player.transform.position, player.transform.rotation);
             player.transform.parent = null;

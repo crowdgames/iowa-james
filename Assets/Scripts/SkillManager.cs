@@ -79,7 +79,7 @@ public class SkillManager : MonoBehaviour {
         if (DataManager.matchmaking == 0)
         {
             // string report = "http://" + DataManager.host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"score1\":\"" + score + "\",\"finished\":\"" + finished + "\"}";
-            server_request = "http://" + DataManager.host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"score1\":\"" + score + "\"}";
+            server_request = "http://" + DataManager.host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"score1\":\"" + score + "\",\"finished\":\"" + finished + "\"}";
             Debug.Log("***REPORT****: " + server_request);
         }
         else
