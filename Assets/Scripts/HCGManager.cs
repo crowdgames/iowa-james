@@ -160,7 +160,7 @@ public class HCGManager : MonoBehaviour {
         return irrelevant;
     }
 
-    public void CollectItem(string item, Sprite sprite, StreamWriter sw, string elements)
+    public void CollectItem(string item, Sprite sprite, StreamWriter sw, string context)
     {
         //Debug.Log("Collected Item: " + item.name);
         //item.SetActive(false);
@@ -186,8 +186,10 @@ public class HCGManager : MonoBehaviour {
             StartCoroutine(ShowIrrelevant());
             if (DataManager.log_actions)
             {
-                sw.WriteLine("wrong_item " + elements);
+                sw.WriteLine("wrong_item " + context);
                 sw.Flush();
+                KeyValuePair<string, string> traj_elem = new KeyValuePair<string, string>("wrong_item", context);
+                LevelManager.traj.trajectory.Add(traj_elem);
             }
             if (lives <= 0)
             {
@@ -195,8 +197,10 @@ public class HCGManager : MonoBehaviour {
                 player.canDie = false;
                 if (DataManager.log_actions)
                 {
-                    sw.WriteLine("item_loss " + elements);
+                    sw.WriteLine("item_loss " + context);
                     sw.Flush();
+                    KeyValuePair<string, string> traj_elem = new KeyValuePair<string, string>("item_loss", context);
+                    LevelManager.traj.trajectory.Add(traj_elem);
                 }
                 StartCoroutine(lm.FadeOut());
             }

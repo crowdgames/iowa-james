@@ -133,7 +133,7 @@ public class PlayerController : MonoBehaviour {
 
         finished = false;
         if(DataManager.log_actions)
-            sw = new StreamWriter(SceneManager.GetActiveScene().name + ".txt");
+            sw = new StreamWriter(SceneManager.GetActiveScene().name + "_" + DataManager.player_id + ".txt");
     }
 
     void FixedUpdate()
@@ -168,10 +168,13 @@ public class PlayerController : MonoBehaviour {
                         action = "left";
                     if (action != "")
                     {
-                        string elements = GetObjectsAroundPlayer();
-                        sw.WriteLine(action + " " + elements);
+                        string context = GetContext();
+                        sw.WriteLine(action + " " + context);
                         sw.Flush();
                         //Debug.Log(action);
+
+                        //KeyValuePair<string, string> traj_elem = new KeyValuePair<string, string>(action,context);
+                        //LevelManager.traj.trajectory.Add(traj_elem);
                     }
                 }
             }
@@ -203,9 +206,11 @@ public class PlayerController : MonoBehaviour {
             //Debug.Log("jump");
             if (DataManager.log_actions)
             {
-                string elements = GetObjectsAroundPlayer();
-                sw.WriteLine("jump " + elements);
+                string context = GetContext();
+                sw.WriteLine("jump " + context);
                 sw.Flush();
+                //KeyValuePair<string, string> traj_elem = new KeyValuePair<string, string>("jump", context);
+                //LevelManager.traj.trajectory.Add(traj_elem);
             }
         }
     }
@@ -241,7 +246,7 @@ public class PlayerController : MonoBehaviour {
                 string item = col.gameObject.name;
                 Sprite sprite = col.gameObject.GetComponent<SpriteRenderer>().sprite;
                 Destroy(col.gameObject);
-                string elements = GetObjectsAroundPlayer();
+                string elements = GetContext();
                 hcgm.CollectItem(item,sprite,sw,elements);
             }
         }
@@ -275,9 +280,11 @@ public class PlayerController : MonoBehaviour {
                 canDie = false;
                 if (DataManager.log_actions)
                 {
-                    string output = GetObjectsAroundPlayer();
-                    sw.WriteLine("win " + output);
+                    string context = GetContext();
+                    sw.WriteLine("win " + context);
                     sw.Flush();
+                    //KeyValuePair<string, string> traj_elem = new KeyValuePair<string, string>("win", context);
+                    //LevelManager.traj.trajectory.Add(traj_elem);
                 }
                 StartCoroutine(lm.FadeOut());
             }
@@ -297,13 +304,16 @@ public class PlayerController : MonoBehaviour {
                 float pos_x = transform.position.x;
                 float pos_y = transform.position.y;
             //Debug.Log("Tag: " + col.tag);
+            string context = "";
             if (DataManager.log_actions)
             {
-                string output = GetObjectsAroundPlayer();
-                sw.WriteLine("hazard " + output);
+                context = GetContext();
+                sw.WriteLine("hazard " + context);
                 sw.Flush();
+                //KeyValuePair<string, string> traj_elem = new KeyValuePair<string, string>("hazard", context);
+                //LevelManager.traj.trajectory.Add(traj_elem);
             }
-                lm.Die(sw);
+                lm.Die(sw,context);
                 logger.LogDeath(col.tag, deathCount, pos_x, pos_y);
         }
     }
@@ -313,7 +323,7 @@ public class PlayerController : MonoBehaviour {
 
     }
 
-    string GetObjectsAroundPlayer()
+    string GetContext()
     {
         int[] elems = new int[7]; //ground, movingplatform, items, spikes, rising spikes, ninja
         Dictionary<string, bool> elements = new Dictionary<string, bool>();
@@ -328,8 +338,8 @@ public class PlayerController : MonoBehaviour {
             else if (c.tag == "RisingSpikes") elems[4] = 1;
             else if (c.tag == "Ninja") elems[5] = 1;
         }
-        string output = String.Join("", elems.Select(p => p.ToString()).ToArray());
-        return output;
-    }
-    
+        string context = String.Join("", elems.Select(p => p.ToString()).ToArray());
+        return context;
+    }   
 }
+

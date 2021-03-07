@@ -39,6 +39,7 @@ public class LevelManager : MonoBehaviour {
     float deathPenalty;
 
     public bool opened;
+    public static Trajectory traj;
 
     void Start()
     {
@@ -142,7 +143,23 @@ public class LevelManager : MonoBehaviour {
         }
         Debug.Log(output);
         //sw.Close();
+
+        /*
+        string json_file = SceneManager.GetActiveScene().name + ".json";
+        string json_string = File.ReadAllText(json_file);
+        Debug.Log("JSONFILE: " + json_file);
+        Debug.Log("JSONSTRING: " + json_string);
         
+
+        traj = JsonUtility.FromJson<Trajectory>(json_string);
+        if (traj == null)
+        {
+            traj = new Trajectory();
+        }
+        if(traj.trajectory == null)
+            traj.trajectory = new List<KeyValuePair<string, string>>();
+        Debug.Log("Trajectory: " + traj.trajectory); 
+        */
     }
     
     public void DisableCoins()
@@ -203,7 +220,7 @@ public class LevelManager : MonoBehaviour {
         }
     }
     
-    public void Die(StreamWriter sw)
+    public void Die(StreamWriter sw,string context)
     {
         deathCount++;
         hcgm.lives--;
@@ -214,7 +231,7 @@ public class LevelManager : MonoBehaviour {
         {
             if (DataManager.log_actions)
             {
-                sw.WriteLine("death loss");
+                sw.WriteLine("death loss " + context);
                 sw.Flush();
             }
             player.canMove = false;
@@ -248,7 +265,14 @@ public class LevelManager : MonoBehaviour {
 
     public IEnumerator FadeOut()
     {
-        //Debug.Log("Inside fade out");
+        Debug.Log("Inside fade out");
+        /*
+        Debug.Log("TC: " + traj.trajectory.Count);
+        string json_string = JsonUtility.ToJson(traj);
+        Debug.Log("out js: " + json_string);
+        string json_filename = SceneManager.GetActiveScene().name + ".json";
+        File.WriteAllText(json_filename, json_string);
+        */
         player.rb.velocity = Vector3.zero;
         player.anim.SetFloat("Speed", 0f);
         player.anim.SetFloat("vSpeed", 0f);
@@ -396,4 +420,10 @@ public class LevelManager : MonoBehaviour {
             errorObj.SetActive(false);
 
     }
+}
+
+[Serializable]
+public class Trajectory
+{
+    public List<KeyValuePair<string, string>> trajectory;
 }
