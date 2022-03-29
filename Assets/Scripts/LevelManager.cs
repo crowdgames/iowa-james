@@ -19,7 +19,7 @@ public class LevelManager : MonoBehaviour {
 
     public CanvasGroup cg;
     PlayerController player;
-    Logger log;
+    Logger logger;
     Vector3 startPos;
     Fade fadePanel;
     public GameObject deathEffect;
@@ -37,16 +37,17 @@ public class LevelManager : MonoBehaviour {
     InventoryManager inventory;
     HCGManager hcgm;
     float deathPenalty;
+    bool writeTileMap = true;
 
     public bool opened;
     public static Trajectory traj;
 
     void Start()
     {
-        //Debug.Log("inside level manager start");
+        Debug.Log("inside level manager start");
         Tilemap tm = GameObject.FindObjectOfType<Tilemap>();
         player = GameObject.FindObjectOfType<PlayerController>();
-        log = player.GetComponent<Logger>();
+        logger = player.GetComponent<Logger>();
         fadePanel = GameObject.FindObjectOfType<Fade>();
         startPos = player.transform.position;
         coinTextObj = GameObject.FindGameObjectWithTag("CoinText");
@@ -74,7 +75,7 @@ public class LevelManager : MonoBehaviour {
         errTryObj = GameObject.Find("ErrorTry");
         if (skipObj)
         {
-               skip = skipObj.GetComponent<SkipLevel>();
+            skip = skipObj.GetComponent<SkipLevel>();
            skipObj.SetActive(false);
         }
         skipButton = GameObject.Find("Button");
@@ -102,7 +103,7 @@ public class LevelManager : MonoBehaviour {
 
         //ScreenCapture.CaptureScreenshot(SceneManager.GetActiveScene().name + ".png");
 
-        
+        /*
         Debug.Log("TILEMAP WRITE");
         BoundsInt bounds = tm.cellBounds;
         TileBase[] allTiles = tm.GetTilesBlock(bounds);
@@ -129,7 +130,7 @@ public class LevelManager : MonoBehaviour {
                 }
             }
         }
-        //StreamWriter sw = new StreamWriter(SceneManager.GetActiveScene().name + ".txt");
+        StreamWriter sw = new StreamWriter(SceneManager.GetActiveScene().name + ".txt");
         string output = "";
         for (int i=0; i<height; i++)
         {
@@ -139,10 +140,12 @@ public class LevelManager : MonoBehaviour {
                 output += tile_arr[i, j];
             }
             output += '\n';
-            //sw.WriteLine(output+'\n');
+            
         }
+        sw.WriteLine(output);
         Debug.Log(output);
-        //sw.Close();
+        sw.Close();
+        */
 
         /*
         string json_file = SceneManager.GetActiveScene().name + ".json";
@@ -224,15 +227,18 @@ public class LevelManager : MonoBehaviour {
     {
         deathCount++;
         hcgm.lives--;
-        Debug.Log("IN DIE: " + hcgm.lives);
+        //Debug.Log("IN DIE: " + hcgm.lives);
         inventory.ManageHearts();
 
         if (hcgm.lives <= 0)
         {
             if (DataManager.log_actions)
             {
-                sw.WriteLine("death loss " + context);
-                sw.Flush();
+                #if UNITY_EDITOR
+                    sw.WriteLine("death_loss " + context);
+                    sw.Flush();
+                #endif
+                logger.LogActionContext("death_loss",context);
             }
             player.canMove = false;
             Instantiate(deathEffect, player.transform.position, player.transform.rotation);
@@ -251,7 +257,7 @@ public class LevelManager : MonoBehaviour {
     IEnumerator Respawn()
     {
         //Debug.Log("Inside respawn...");
-        Debug.Log(player.transform.position);
+        //Debug.Log(player.transform.position);
         Instantiate(deathEffect, player.transform.position, player.transform.rotation);
         player.transform.parent = null;
         player.gameObject.SetActive(false);
@@ -260,12 +266,12 @@ public class LevelManager : MonoBehaviour {
         player.gameObject.SetActive(true);
         //Debug.Log("Active: " + player.gameObject.activeSelf);
         //Debug.Log("Set to true" + player.transform.position);
-        log.logging = true;
+        logger.logging = true;
     }
 
     public IEnumerator FadeOut()
     {
-        Debug.Log("Inside fade out");
+        //Debug.Log("Inside fade out");
         /*
         Debug.Log("TC: " + traj.trajectory.Count);
         string json_string = JsonUtility.ToJson(traj);

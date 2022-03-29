@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using SimpleJSON;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Linq;
@@ -132,8 +130,13 @@ public class PlayerController : MonoBehaviour {
         }
 
         finished = false;
-        if(DataManager.log_actions)
-            sw = new StreamWriter(SceneManager.GetActiveScene().name + "_" + DataManager.player_id + ".txt");
+        string scene_name = SceneManager.GetActiveScene().name;
+        if(DataManager.log_actions && scene_name != "Start")
+        {
+        #if UNITY_EDITOR
+            sw = new StreamWriter("trajectories/" + scene_name + "_" + DataManager.player_id + ".txt");
+        #endif
+        }
     }
 
     void FixedUpdate()
@@ -169,8 +172,11 @@ public class PlayerController : MonoBehaviour {
                     if (action != "")
                     {
                         string context = GetContext();
-                        sw.WriteLine(action + " " + context);
-                        sw.Flush();
+                        logger.LogActionContext(action,context);
+                        #if UNITY_EDITOR
+                            sw.WriteLine(action + " " + context);
+                            sw.Flush();
+                        #endif
                         //Debug.Log(action);
 
                         //KeyValuePair<string, string> traj_elem = new KeyValuePair<string, string>(action,context);
@@ -207,8 +213,11 @@ public class PlayerController : MonoBehaviour {
             if (DataManager.log_actions)
             {
                 string context = GetContext();
-                sw.WriteLine("jump " + context);
-                sw.Flush();
+                logger.LogActionContext("jump",context);
+                #if UNITY_EDITOR
+                    sw.WriteLine("jump " + context);
+                    sw.Flush();
+                #endif
                 //KeyValuePair<string, string> traj_elem = new KeyValuePair<string, string>("jump", context);
                 //LevelManager.traj.trajectory.Add(traj_elem);
             }
@@ -274,15 +283,18 @@ public class PlayerController : MonoBehaviour {
             if (hcgm.relevant_count == hcgm.items.Length / 2)
             {
                 //Debug.Log("Coins: " + coins);
-                logger.LogWin(coins);
-                logger.LogMatch("win");
+                //logger.LogWin(coins);
+                //logger.LogMatch("win");
                 canMove = false;
                 canDie = false;
                 if (DataManager.log_actions)
                 {
                     string context = GetContext();
-                    sw.WriteLine("win " + context);
-                    sw.Flush();
+                    logger.LogActionContext("win",context);
+                    #if UNITY_EDITOR
+                        sw.WriteLine("win " + context);
+                        sw.Flush();
+                    #endif
                     //KeyValuePair<string, string> traj_elem = new KeyValuePair<string, string>("win", context);
                     //LevelManager.traj.trajectory.Add(traj_elem);
                 }
@@ -308,13 +320,16 @@ public class PlayerController : MonoBehaviour {
             if (DataManager.log_actions)
             {
                 context = GetContext();
-                sw.WriteLine("hazard " + context);
-                sw.Flush();
+                logger.LogActionContext("hazard",context);
+                #if UNITY_EDITOR
+                    sw.WriteLine("hazard " + context);
+                    sw.Flush();
+                #endif
                 //KeyValuePair<string, string> traj_elem = new KeyValuePair<string, string>("hazard", context);
                 //LevelManager.traj.trajectory.Add(traj_elem);
             }
                 lm.Die(sw,context);
-                logger.LogDeath(col.tag, deathCount, pos_x, pos_y);
+                //logger.LogDeath(col.tag, deathCount, pos_x, pos_y);
         }
     }
 

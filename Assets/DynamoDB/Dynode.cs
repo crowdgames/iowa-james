@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using SimpleJSON;
 using UnityEngine.SceneManagement;
-using UnityEngine.Networking;
 
 namespace DynamoDB
 {
@@ -44,8 +41,8 @@ namespace DynamoDB
                 sm = smo.GetComponent<SkillManager>();
             string test = "http://viridian.ccs.neu.edu/instructions.html?workerId=MT-8d151263359973cd187ffce12db71fe2&hitId=ensemble";
 #if UNITY_EDITOR
-            player_id = "MT-" + generateID();
-            //player_id = "7";
+            int rndint = UnityEngine.Random.Range(0,10);
+            player_id = "MT-" + generateID() + rndint.ToString();
             Debug.Log("Editor PID: " + player_id);
             #else
                     string url_string = Application.absoluteURL;
@@ -97,6 +94,8 @@ namespace DynamoDB
         // Send the DDBHTTP request
         public void Send(JSONObject Item)
         {
+            //Debug.Log("Inside dynode send");
+            //Debug.Log("logging action: " + Item["action"]["S"]);
             action_count++;
             //Debug.Log (action_count);
             // This is the only time we ever create a time stamp,
@@ -113,12 +112,12 @@ namespace DynamoDB
             //obj["Item"]["action_count"]["S"] = action_count.ToString();
             //obj["Item"]["run_id"]["S"] = level_count.ToString();
             
-            obj["Item"]["player_id"]["S"] = player_id;
-            obj["Item"]["mode"]["S"] = DataManager.mode.ToString();
+            obj["Item"]["uid"]["S"] = player_id;
+            //obj["Item"]["mode"]["S"] = DataManager.mode.ToString();
             // obj["Item"]["level"]["S"] = scene;
             obj["Item"][primary_key]["S"] = generateID();
             //obj["Item"]["Stamp"]["S"] = (stamp - startTime).TotalSeconds.ToString();
-            obj["Item"]["Timestamp"]["S"] = DateTime.UtcNow.ToString();
+            obj["Item"]["timestamp"]["S"] = DateTime.UtcNow.ToString();
             //Debug.Log("OBJ: " + obj.ToString());
             // Scene scene = SceneManager.GetActiveScene();
             // Debug.Log("Active scene is '" + scene.name + "'.");
@@ -126,7 +125,7 @@ namespace DynamoDB
             StartCoroutine(http.WaitForRequest(http.www, callback => {
                 if (callback != null)
                 {
-                    //Debug.Log(callback);
+                    //Debug.Log("callback from send: " + callback);
                 }
             }));
         }

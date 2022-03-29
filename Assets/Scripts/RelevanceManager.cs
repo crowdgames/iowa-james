@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class RelevanceManager
+﻿public class RelevanceManager
 {
     public static string[] DetermineLocation(string locationName)
     {

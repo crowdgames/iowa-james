@@ -35,10 +35,13 @@ public class HCGManager : MonoBehaviour {
     LevelManager lm;
     SkillManager sm;
 
+    Logger logger;
+
     // Use this for initialization
     void Start () {
 
         player = GameObject.FindObjectOfType<PlayerController>();
+        logger = player.GetComponent<Logger>();
         lm = GameObject.Find("LevelManager").GetComponent<LevelManager>();
         //sm = GameObject.Find("SkillManager").GetComponent<SkillManager>();
         GameObject smo = GameObject.Find("SkillManager");
@@ -162,10 +165,6 @@ public class HCGManager : MonoBehaviour {
 
     public void CollectItem(string item, Sprite sprite, StreamWriter sw, string context)
     {
-        //Debug.Log("Collected Item: " + item.name);
-        //item.SetActive(false);
-        //Destroy(item);
-        //string item_name = item.name.Substring(0, item.name.IndexOf("("));
         string item_name = item.Substring(0, item.IndexOf("("));
         if (relevant_items.Contains(item_name))
         {
@@ -181,15 +180,18 @@ public class HCGManager : MonoBehaviour {
         {
             irrelevant_count++;
             lives--;
-            Debug.Log("IN IRRELEV: " + lives);
+            //Debug.Log("IN IRRELEV: " + lives);
             inventory.ManageHearts();
             StartCoroutine(ShowIrrelevant());
             if (DataManager.log_actions)
             {
-                sw.WriteLine("wrong_item " + context);
-                sw.Flush();
-                KeyValuePair<string, string> traj_elem = new KeyValuePair<string, string>("wrong_item", context);
-                LevelManager.traj.trajectory.Add(traj_elem);
+                #if UNITY_EDITOR
+                    sw.WriteLine("wrong_item " + context);
+                    sw.Flush();
+                #endif
+                logger.LogActionContext("wrong_item", context);
+                //KeyValuePair<string, string> traj_elem = new KeyValuePair<string, string>("wrong_item", context);
+                //LevelManager.traj.trajectory.Add(traj_elem);
             }
             if (lives <= 0)
             {
@@ -197,10 +199,13 @@ public class HCGManager : MonoBehaviour {
                 player.canDie = false;
                 if (DataManager.log_actions)
                 {
-                    sw.WriteLine("item_loss " + context);
-                    sw.Flush();
-                    KeyValuePair<string, string> traj_elem = new KeyValuePair<string, string>("item_loss", context);
-                    LevelManager.traj.trajectory.Add(traj_elem);
+                    #if UNITY_EDITOR
+                        sw.WriteLine("item_loss " + context);
+                        sw.Flush();
+                    #endif
+                    logger.LogActionContext("item_loss", context);
+                    //KeyValuePair<string, string> traj_elem = new KeyValuePair<string, string>("item_loss", context);
+                    //LevelManager.traj.trajectory.Add(traj_elem);
                 }
                 StartCoroutine(lm.FadeOut());
             }

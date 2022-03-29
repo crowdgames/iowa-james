@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using SimpleJSON;
 using System;
 using UnityEngine.SceneManagement;
@@ -154,6 +152,14 @@ public class Logger : MonoBehaviour
         }
     }
     
+    public void LogActionContext(string action, string context)
+    {
+        var Item = new JSONObject();
+        Item["action"]["S"] = action;
+        Item["context"]["S"] = context;
+        //Debug.Log("logging action: " + action);
+        dynode.Send(Item);
+    }
 
     // Call this function whenever user pauses the game!!!
     // Function will fire KeyUp events during pause menu, so that keys don't
@@ -185,7 +191,7 @@ public class Logger : MonoBehaviour
 
                 string sy = "" + Y;
                 string position = sx + ", " + sy;
-                LogPosition(sx, sy);
+                //LogPosition(sx, sy);
                 Scene scene = SceneManager.GetActiveScene();
                 nextTime += interval;
                 

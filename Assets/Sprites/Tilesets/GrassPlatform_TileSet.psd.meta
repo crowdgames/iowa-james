@@ -1,86 +1,234 @@
 fileFormatVersion: 2
 guid: 5bdebc31617e5475f9757dbb57389d3b
-timeCreated: 1510223522
-licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: Grass_Tileset_TL
-    21300002: Grass_Tileset_T
-    21300004: Grass_Tileset_TR
-    21300006: Grass_TileSet_3
-    21300008: Grass_TileSet_4
-    21300010: Grass_Tileset_L1
-    21300012: Grass_Tileset_M
-    21300014: Grass_Tileset_R1
-    21300016: Grass_TileSet_8
-    21300018: Grass_TileSet_9
-    21300020: Grass_Tileset_BL
-    21300022: Grass_Tileset_B1
-    21300024: Grass_Tileset_BR
-    21300026: Grass_TileSet_13
-    21300028: Grass_TileSet_14
-    21300030: Grass_Tileset_TRI
-    21300032: Grass_Tileset_TLI
-    21300034: Grass_TileSet_17
-    21300036: Grass_TileSet_18
-    21300038: Grass_TileSet_19
-    21300040: Grass_Tileset_BLI
-    21300042: Grass_Tileset_BRI
-    21300044: Grass_TileSet_22
-    21300046: Grass_Tileset_R2
-    21300048: Grass_Tileset_L2
-    21300050: Grass_TileSet_25
-    21300052: Grass_TileSet_26
-    21300054: Grass_TileSet_27
-    21300056: Grass_TileSet_28
-    21300058: Grass_TileSet_29
-    21300060: Grass_Tileset_R3
-    21300062: Grass_Tileset_L3
-    21300064: Grass_Tileset_L4
-    21300066: Grass_Tileset_R4
-    21300068: Grass_TileSet_0
-    21300070: Grass_TileSet_1
-    21300072: Grass_TileSet_2
-    21300074: Grass_TileSet_5
-    21300076: Grass_TileSet_6
-    21300078: Grass_TileSet_7
-    21300080: Grass_TileSet_10
-    21300082: Grass_TileSet_11
-    21300084: Grass_TileSet_12
-    21300086: Grass_TileSet_15
-    21300088: Grass_TileSet_16
-    21300090: Grass_TileSet_20
-    21300092: Grass_TileSet_21
-    21300094: Grass_TileSet_23
-    21300096: Grass_TileSet_24
-    21300098: GrassPlatform_TileSet_0
-    21300100: GrassPlatform_TileSet_1
-    21300102: GrassPlatform_TileSet_2
-    21300104: GrassPlatform_TileSet_3
-    21300106: GrassPlatform_TileSet_4
-    21300108: GrassPlatform_TileSet_5
-    21300110: GrassPlatform_TileSet_6
-    21300112: GrassPlatform_TileSet_7
-    21300114: GrassPlatform_TileSet_8
-    21300116: GrassPlatform_TileSet_9
-    21300118: GrassPlatform_TileSet_10
-    21300120: GrassPlatform_TileSet_11
-    21300122: GrassPlatform_TileSet_12
-    21300124: GrassPlatform_TileSet_13
-    21300126: GrassPlatform_TileSet_14
-    21300128: GrassPlatform_TileSet_15
-    21300130: GrassPlatform_TileSet_16
-    21300132: GrassPlatform_TileSet_17
-    21300134: GrassPlatform_TileSet_18
-    21300136: GrassPlatform_TileSet_19
-    21300138: GrassPlatform_TileSet_20
-    21300140: GrassPlatform_TileSet_21
-    21300142: GrassPlatform_TileSet_22
-    21300144: GrassPlatform_TileSet_23
-    21300146: GrassPlatform_TileSet_24
-    21300148: GrassPlatform_TileSet_25
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: Grass_Tileset_TL
+  - first:
+      213: 21300002
+    second: Grass_Tileset_T
+  - first:
+      213: 21300004
+    second: Grass_Tileset_TR
+  - first:
+      213: 21300006
+    second: Grass_TileSet_3
+  - first:
+      213: 21300008
+    second: Grass_TileSet_4
+  - first:
+      213: 21300010
+    second: Grass_Tileset_L1
+  - first:
+      213: 21300012
+    second: Grass_Tileset_M
+  - first:
+      213: 21300014
+    second: Grass_Tileset_R1
+  - first:
+      213: 21300016
+    second: Grass_TileSet_8
+  - first:
+      213: 21300018
+    second: Grass_TileSet_9
+  - first:
+      213: 21300020
+    second: Grass_Tileset_BL
+  - first:
+      213: 21300022
+    second: Grass_Tileset_B1
+  - first:
+      213: 21300024
+    second: Grass_Tileset_BR
+  - first:
+      213: 21300026
+    second: Grass_TileSet_13
+  - first:
+      213: 21300028
+    second: Grass_TileSet_14
+  - first:
+      213: 21300030
+    second: Grass_Tileset_TRI
+  - first:
+      213: 21300032
+    second: Grass_Tileset_TLI
+  - first:
+      213: 21300034
+    second: Grass_TileSet_17
+  - first:
+      213: 21300036
+    second: Grass_TileSet_18
+  - first:
+      213: 21300038
+    second: Grass_TileSet_19
+  - first:
+      213: 21300040
+    second: Grass_Tileset_BLI
+  - first:
+      213: 21300042
+    second: Grass_Tileset_BRI
+  - first:
+      213: 21300044
+    second: Grass_TileSet_22
+  - first:
+      213: 21300046
+    second: Grass_Tileset_R2
+  - first:
+      213: 21300048
+    second: Grass_Tileset_L2
+  - first:
+      213: 21300050
+    second: Grass_TileSet_25
+  - first:
+      213: 21300052
+    second: Grass_TileSet_26
+  - first:
+      213: 21300054
+    second: Grass_TileSet_27
+  - first:
+      213: 21300056
+    second: Grass_TileSet_28
+  - first:
+      213: 21300058
+    second: Grass_TileSet_29
+  - first:
+      213: 21300060
+    second: Grass_Tileset_R3
+  - first:
+      213: 21300062
+    second: Grass_Tileset_L3
+  - first:
+      213: 21300064
+    second: Grass_Tileset_L4
+  - first:
+      213: 21300066
+    second: Grass_Tileset_R4
+  - first:
+      213: 21300068
+    second: Grass_TileSet_0
+  - first:
+      213: 21300070
+    second: Grass_TileSet_1
+  - first:
+      213: 21300072
+    second: Grass_TileSet_2
+  - first:
+      213: 21300074
+    second: Grass_TileSet_5
+  - first:
+      213: 21300076
+    second: Grass_TileSet_6
+  - first:
+      213: 21300078
+    second: Grass_TileSet_7
+  - first:
+      213: 21300080
+    second: Grass_TileSet_10
+  - first:
+      213: 21300082
+    second: Grass_TileSet_11
+  - first:
+      213: 21300084
+    second: Grass_TileSet_12
+  - first:
+      213: 21300086
+    second: Grass_TileSet_15
+  - first:
+      213: 21300088
+    second: Grass_TileSet_16
+  - first:
+      213: 21300090
+    second: Grass_TileSet_20
+  - first:
+      213: 21300092
+    second: Grass_TileSet_21
+  - first:
+      213: 21300094
+    second: Grass_TileSet_23
+  - first:
+      213: 21300096
+    second: Grass_TileSet_24
+  - first:
+      213: 21300098
+    second: GrassPlatform_TileSet_0
+  - first:
+      213: 21300100
+    second: GrassPlatform_TileSet_1
+  - first:
+      213: 21300102
+    second: GrassPlatform_TileSet_2
+  - first:
+      213: 21300104
+    second: GrassPlatform_TileSet_3
+  - first:
+      213: 21300106
+    second: GrassPlatform_TileSet_4
+  - first:
+      213: 21300108
+    second: GrassPlatform_TileSet_5
+  - first:
+      213: 21300110
+    second: GrassPlatform_TileSet_6
+  - first:
+      213: 21300112
+    second: GrassPlatform_TileSet_7
+  - first:
+      213: 21300114
+    second: GrassPlatform_TileSet_8
+  - first:
+      213: 21300116
+    second: GrassPlatform_TileSet_9
+  - first:
+      213: 21300118
+    second: GrassPlatform_TileSet_10
+  - first:
+      213: 21300120
+    second: GrassPlatform_TileSet_11
+  - first:
+      213: 21300122
+    second: GrassPlatform_TileSet_12
+  - first:
+      213: 21300124
+    second: GrassPlatform_TileSet_13
+  - first:
+      213: 21300126
+    second: GrassPlatform_TileSet_14
+  - first:
+      213: 21300128
+    second: GrassPlatform_TileSet_15
+  - first:
+      213: 21300130
+    second: GrassPlatform_TileSet_16
+  - first:
+      213: 21300132
+    second: GrassPlatform_TileSet_17
+  - first:
+      213: 21300134
+    second: GrassPlatform_TileSet_18
+  - first:
+      213: 21300136
+    second: GrassPlatform_TileSet_19
+  - first:
+      213: 21300138
+    second: GrassPlatform_TileSet_20
+  - first:
+      213: 21300140
+    second: GrassPlatform_TileSet_21
+  - first:
+      213: 21300142
+    second: GrassPlatform_TileSet_22
+  - first:
+      213: 21300144
+    second: GrassPlatform_TileSet_23
+  - first:
+      213: 21300146
+    second: GrassPlatform_TileSet_24
+  - first:
+      213: 21300148
+    second: GrassPlatform_TileSet_25
   externalObjects: {}
-  serializedVersion: 4
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -98,6 +246,8 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -108,7 +258,7 @@ TextureImporter:
     serializedVersion: 2
     filterMode: 0
     aniso: -1
-    mipBias: -1
+    mipBias: -100
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -120,18 +270,22 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
+  singleChannelComponent: 0
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  applyGammaDecoding: 1
   platformSettings:
-  - buildTarget: DefaultTexturePlatform
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -140,7 +294,10 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-  - buildTarget: Standalone
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -149,7 +306,10 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-  - buildTarget: iPhone
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: iPhone
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -158,7 +318,10 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-  - buildTarget: Android
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -167,6 +330,8 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -184,6 +349,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 28305410000000000800000000000000
+      internalID: 21300098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrassPlatform_TileSet_1
       rect:
@@ -198,6 +370,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 48305410000000000800000000000000
+      internalID: 21300100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrassPlatform_TileSet_2
       rect:
@@ -212,6 +391,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 68305410000000000800000000000000
+      internalID: 21300102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrassPlatform_TileSet_3
       rect:
@@ -226,6 +412,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 88305410000000000800000000000000
+      internalID: 21300104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrassPlatform_TileSet_4
       rect:
@@ -240,6 +433,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: a8305410000000000800000000000000
+      internalID: 21300106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrassPlatform_TileSet_5
       rect:
@@ -254,6 +454,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: c8305410000000000800000000000000
+      internalID: 21300108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrassPlatform_TileSet_6
       rect:
@@ -268,6 +475,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: e8305410000000000800000000000000
+      internalID: 21300110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrassPlatform_TileSet_7
       rect:
@@ -282,6 +496,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 09305410000000000800000000000000
+      internalID: 21300112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrassPlatform_TileSet_8
       rect:
@@ -296,6 +517,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 29305410000000000800000000000000
+      internalID: 21300114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrassPlatform_TileSet_9
       rect:
@@ -310,6 +538,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 49305410000000000800000000000000
+      internalID: 21300116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrassPlatform_TileSet_10
       rect:
@@ -324,6 +559,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 69305410000000000800000000000000
+      internalID: 21300118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrassPlatform_TileSet_11
       rect:
@@ -338,6 +580,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 89305410000000000800000000000000
+      internalID: 21300120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrassPlatform_TileSet_12
       rect:
@@ -352,6 +601,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: a9305410000000000800000000000000
+      internalID: 21300122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrassPlatform_TileSet_13
       rect:
@@ -366,6 +622,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: c9305410000000000800000000000000
+      internalID: 21300124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrassPlatform_TileSet_14
       rect:
@@ -380,6 +643,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: e9305410000000000800000000000000
+      internalID: 21300126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrassPlatform_TileSet_15
       rect:
@@ -394,6 +664,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 0a305410000000000800000000000000
+      internalID: 21300128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrassPlatform_TileSet_16
       rect:
@@ -408,6 +685,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 2a305410000000000800000000000000
+      internalID: 21300130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrassPlatform_TileSet_17
       rect:
@@ -422,6 +706,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 4a305410000000000800000000000000
+      internalID: 21300132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrassPlatform_TileSet_18
       rect:
@@ -436,6 +727,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 6a305410000000000800000000000000
+      internalID: 21300134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrassPlatform_TileSet_19
       rect:
@@ -450,6 +748,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 8a305410000000000800000000000000
+      internalID: 21300136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrassPlatform_TileSet_20
       rect:
@@ -464,6 +769,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: aa305410000000000800000000000000
+      internalID: 21300138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrassPlatform_TileSet_21
       rect:
@@ -478,6 +790,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: ca305410000000000800000000000000
+      internalID: 21300140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrassPlatform_TileSet_22
       rect:
@@ -492,6 +811,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: ea305410000000000800000000000000
+      internalID: 21300142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrassPlatform_TileSet_23
       rect:
@@ -506,6 +832,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 0b305410000000000800000000000000
+      internalID: 21300144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrassPlatform_TileSet_24
       rect:
@@ -520,6 +853,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 2b305410000000000800000000000000
+      internalID: 21300146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: GrassPlatform_TileSet_25
       rect:
@@ -534,9 +874,26 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 4b305410000000000800000000000000
+      internalID: 21300148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
   spritePackingTag: 
+  pSDRemoveMatte: 1
+  pSDShowRemoveMatteOption: 1
   userData: 
   assetBundleName: 
   assetBundleVariant: 

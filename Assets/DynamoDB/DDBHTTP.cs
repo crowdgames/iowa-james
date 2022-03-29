@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 using System.Security.Cryptography;
 using System.Collections.Generic;
@@ -68,7 +67,7 @@ namespace DynamoDB
             string host = "dynamodb.us-east-2.amazonaws.com";
             string region = "us-east-2";
             string contentType = "application/x-amz-json-1.0";
-            string endpoint = "http://dynamodb.us-east-2.amazonaws.com/";
+            string endpoint = "https://dynamodb.us-east-2.amazonaws.com/";
 
             // quite sure this was needed, but appears to work without
             //string request_parameters = "DynamoDB_20120810.DescribeTable";

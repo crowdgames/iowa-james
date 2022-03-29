@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class HCGItems
+﻿public class HCGItems
 {
     public static string[] grocery_store = new string[] { "bread", "candy", "carrot", "milk", "popcorn" };
 

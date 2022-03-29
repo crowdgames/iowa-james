@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
-using System.Linq;
 
 public class SkillManager : MonoBehaviour {
 
@@ -19,6 +18,8 @@ public class SkillManager : MonoBehaviour {
     public float score_task = 0f;
     public int rel = 0;
     public int irrel = 0;
+    
+    public string http;
 
     Dictionary<string, string> mapping;
 
@@ -36,6 +37,8 @@ public class SkillManager : MonoBehaviour {
         mapping.Add("Pastry Shop", "pastry");
         mapping.Add("Hardware Store", "hardware");
         mapping.Add("Clothing Store", "clothing");
+        
+        http = "http";
     }
 
     public IEnumerator RegisterPlayer(int trurat=1500)
@@ -43,21 +46,29 @@ public class SkillManager : MonoBehaviour {
         Debug.Log("REGISTER PLAYER");
         //string reg_player = "http://" + DataManager.host + "/register?q={\"id\":\"" + DataManager.player_id + "\",\"type\":\"player\",\"trurat\":" + trurat + "}";
         //server_request = "http://" + DataManager.host + "/register?q={\"id\":\"" + DataManager.player_id + "\",\"type\":\"player\",\"trurat\":" + trurat + "}";
-        server_request = "http://" + DataManager.host + "/register?q={\"id\":\"" + DataManager.player_id + "\",\"type\":\"player\"}";
-        //Debug.Log(reg_player);
+        server_request = http + "://" + DataManager.host + "/register?q={\"id\":\"" + DataManager.player_id + "\",\"type\":\"player\"}";
+        //server_request = "http://" + DataManager.host + "/register?q={\"id\":\"" + DataManager.player_id + "\",\"type\":\"player\"}"; 
+        Debug.Log(server_request);
         yield return StartCoroutine(ContactServer());
     }
 
     public IEnumerator ContactServer()
     {
-        //Debug.Log(rp);
-        //UnityWebRequest www = UnityWebRequest.Get(rp);
+        Debug.Log(server_request);
         UnityWebRequest www = UnityWebRequest.Get(server_request);
+        www.certificateHandler = new AcceptAllCertificates();
         yield return www.SendWebRequest();
 
-        if (www.isNetworkError || www.isHttpError)
+        if (www.isNetworkError)
         {
-            Debug.Log("WWW ERROR: " + www.error);
+            server_data = "ERROR";
+            //LevelManager lm = GameObject.Find("Character").GetComponent<Logger>();
+            LevelManager lm = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+            StartCoroutine(lm.ShowError());
+        }
+        else if (www.isHttpError)
+        {
+            Debug.Log("WWW HTTP ERROR: " + www.error);
             server_data = "ERROR";
             //LevelManager lm = GameObject.Find("Character").GetComponent<Logger>();
             LevelManager lm = GameObject.Find("LevelManager").GetComponent<LevelManager>();
@@ -73,13 +84,13 @@ public class SkillManager : MonoBehaviour {
     
     public IEnumerator ReportAndRequest()
     {
-        Debug.Log("INSIDE REPORTANDREQUEST");
+        //Debug.Log("INSIDE REPORTANDREQUEST");
         string token = DateTime.UtcNow.ToString();
         Debug.Log("Token: " +  token);
         if (DataManager.matchmaking == 0)
         {
             // string report = "http://" + DataManager.host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"score1\":\"" + score + "\",\"finished\":\"" + finished + "\"}";
-            server_request = "http://" + DataManager.host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"score1\":\"" + score + "\",\"finished\":\"" + finished + "\"}";
+            server_request = http + "://" + DataManager.host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"score1\":\"" + score + "\",\"finished\":\"" + finished + "\"}";
             Debug.Log("***REPORT****: " + server_request);
         }
         else
@@ -90,7 +101,7 @@ public class SkillManager : MonoBehaviour {
             level = level.Substring(0, level.LastIndexOf("_"));
             Debug.Log(task + "\t" + level);
             //string report = "http://" + DataManager.host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"id3\":\"" + task + "\",\"score_game\":\"" + score_game + "\",\"score_task\":\"" + score_task + "\",\"relevant\":\"" + rel + "\",\"irrelevant\":\"" + irrel + "\"}";
-            server_request = "http://" + DataManager.host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"id3\":\"" + task + "\",\"score_game\":\"" + score_game + "\",\"score_task\":\"" + score_task + "\",\"relevant\":\"" + rel + "\",\"irrelevant\":\"" + irrel + "\"}";
+            server_request = http + "://" + DataManager.host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"id3\":\"" + task + "\",\"score_game\":\"" + score_game + "\",\"score_task\":\"" + score_task + "\",\"relevant\":\"" + rel + "\",\"irrelevant\":\"" + irrel + "\"}";
             Debug.Log("***REPORT****: " + server_request);
         }
         //yield return StartCoroutine(ContactServer(report));
@@ -99,7 +110,7 @@ public class SkillManager : MonoBehaviour {
         if (server_data != "ERROR")
         {
             //string request = "http://" + DataManager.host + "/requestMatch?q={\"id\":\"" + DataManager.player_id + "\"}";
-            server_request = "http://" + DataManager.host + "/requestMatch?q={\"id\":\"" + DataManager.player_id + "\"}";
+            server_request = http + "://" + DataManager.host + "/requestMatch?q={\"id\":\"" + DataManager.player_id + "\"}";
             Debug.Log("***REQ***: " + server_request);
             yield return StartCoroutine(ContactServer());
             Debug.Log("DATA FROM REQUEST: " + server_data);
@@ -126,7 +137,7 @@ public class SkillManager : MonoBehaviour {
     {
         Debug.Log("REQUESTING A MATCH");
         //string request = "http://" + DataManager.host + "/requestMatch?q={\"id\":\"" + DataManager.player_id + "\"}";
-        server_request = "http://" + DataManager.host + "/requestMatch?q={\"id\":\"" + DataManager.player_id + "\"}";
+        server_request = http + "://" + DataManager.host + "/requestMatch?q={\"id\":\"" + DataManager.player_id + "\"}";
         Debug.Log(server_request);
         yield return StartCoroutine(ContactServer());
         Debug.Log("DATA FROM REQUEST: " + server_data);
@@ -171,5 +182,14 @@ public class SkillManager : MonoBehaviour {
             Debug.Log("Level: " + lev + "\tScen: " + scenario);
         }
         return lev;
+    }
+
+    public class AcceptAllCertificates : CertificateHandler
+    {
+        protected override bool ValidateCertificate(byte[] certificateData)
+        {
+            //return base.ValidateCertificate(certificateData);
+            return true;
+        }
     }
 }

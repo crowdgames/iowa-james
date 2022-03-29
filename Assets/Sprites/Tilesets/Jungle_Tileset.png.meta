@@ -1,107 +1,297 @@
 fileFormatVersion: 2
 guid: 3b30003999f7c419b878b6e3e3948812
-timeCreated: 1510223560
-licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: Jungle_Tileset_Spritesheet_0
-    21300002: Jungle_Tileset_Spritesheet_1
-    21300004: Jungle_Tileset_Spritesheet_2
-    21300006: Jungle_Tileset_Spritesheet_3
-    21300008: Jungle_Tileset_Spritesheet_4
-    21300010: Jungle_Tileset_Spritesheet_5
-    21300012: Jungle_Tileset_Spritesheet_6
-    21300014: Jungle_Tileset_Spritesheet_7
-    21300016: Jungle_Tileset_Spritesheet_8
-    21300018: Jungle_Tileset_Spritesheet_9
-    21300020: Jungle_Tileset_Spritesheet_10
-    21300022: Jungle_Tileset_Spritesheet_11
-    21300024: Jungle_Tileset_Spritesheet_12
-    21300026: Jungle_Tileset_Spritesheet_13
-    21300028: Jungle_Tileset_Spritesheet_14
-    21300030: Jungle_Tileset_Spritesheet_15
-    21300032: Jungle_Tileset_Spritesheet_16
-    21300034: Jungle_Tileset_Spritesheet_17
-    21300036: Jungle_Tileset_Spritesheet_18
-    21300038: Jungle_Tileset_Spritesheet_19
-    21300040: Jungle_Tileset_Spritesheet_20
-    21300042: Jungle_Tileset_Spritesheet_21
-    21300044: Jungle_Tileset_Spritesheet_22
-    21300046: Jungle_Tileset_Spritesheet_23
-    21300048: Jungle_Tileset_Spritesheet_24
-    21300050: Jungle_Tileset_Spritesheet_25
-    21300052: Jungle_Tileset_Spritesheet_26
-    21300054: Jungle_Tileset_Spritesheet_27
-    21300056: Jungle_Tileset_Spritesheet_28
-    21300058: Jungle_Tileset_Spritesheet_29
-    21300060: Jungle_Tileset_Spritesheet_30
-    21300062: Jungle_Tileset_Spritesheet_31
-    21300064: Jungle_Tileset_Spritesheet_32
-    21300066: Jungle_Tileset_Spritesheet_33
-    21300068: Jungle_Tileset_Spritesheet_34
-    21300070: Jungle_Tileset_Spritesheet_35
-    21300072: Jungle_Tileset_Spritesheet_36
-    21300074: Jungle_Tileset_Spritesheet_37
-    21300076: Jungle_Tileset_Spritesheet_38
-    21300078: Jungle_Tileset_Spritesheet_39
-    21300080: Jungle_Tileset_Spritesheet_40
-    21300082: Jungle_Tileset_Spritesheet_41
-    21300084: Jungle_Tileset_Spritesheet_42
-    21300086: Jungle_Tileset_Spritesheet_43
-    21300088: Jungle_Tileset_Spritesheet_44
-    21300090: Jungle_Tileset_Spritesheet_45
-    21300092: Jungle_Tileset_Spritesheet_46
-    21300094: Jungle_Tileset_Spritesheet_47
-    21300096: Jungle_Tileset_0
-    21300098: Jungle_Tileset_1
-    21300100: Jungle_Tileset_2
-    21300102: Jungle_Tileset_3
-    21300104: Jungle_Tileset_4
-    21300106: Jungle_Tileset_5
-    21300108: Jungle_Tileset_6
-    21300110: Jungle_Tileset_7
-    21300112: Jungle_Tileset_8
-    21300114: Jungle_Tileset_9
-    21300116: Jungle_Tileset_10
-    21300118: Jungle_Tileset_11
-    21300120: Jungle_Tileset_12
-    21300122: Jungle_Tileset_13
-    21300124: Jungle_Tileset_14
-    21300126: Jungle_Tileset_15
-    21300128: Jungle_Tileset_16
-    21300130: Jungle_Tileset_17
-    21300132: Jungle_Tileset_18
-    21300134: Jungle_Tileset_19
-    21300136: Jungle_Tileset_20
-    21300138: Jungle_Tileset_21
-    21300140: Jungle_Tileset_22
-    21300142: Jungle_Tileset_23
-    21300144: Jungle_Tileset_24
-    21300146: Jungle_Tileset_25
-    21300148: Jungle_Tileset_26
-    21300150: Jungle_Tileset_27
-    21300152: Jungle_Tileset_28
-    21300154: Jungle_Tileset_29
-    21300156: Jungle_Tileset_30
-    21300158: Jungle_Tileset_31
-    21300160: Jungle_Tileset_32
-    21300162: Jungle_Tileset_33
-    21300164: Jungle_Tileset_34
-    21300166: Jungle_Tileset_35
-    21300168: Jungle_Tileset_36
-    21300170: Jungle_Tileset_37
-    21300172: Jungle_Tileset_38
-    21300174: Jungle_Tileset_39
-    21300176: Jungle_Tileset_40
-    21300178: Jungle_Tileset_41
-    21300180: Jungle_Tileset_42
-    21300182: Jungle_Tileset_43
-    21300184: Jungle_Tileset_44
-    21300186: Jungle_Tileset_45
-    21300188: Jungle_Tileset_46
-    21300190: Jungle_Tileset_47
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: Jungle_Tileset_Spritesheet_0
+  - first:
+      213: 21300002
+    second: Jungle_Tileset_Spritesheet_1
+  - first:
+      213: 21300004
+    second: Jungle_Tileset_Spritesheet_2
+  - first:
+      213: 21300006
+    second: Jungle_Tileset_Spritesheet_3
+  - first:
+      213: 21300008
+    second: Jungle_Tileset_Spritesheet_4
+  - first:
+      213: 21300010
+    second: Jungle_Tileset_Spritesheet_5
+  - first:
+      213: 21300012
+    second: Jungle_Tileset_Spritesheet_6
+  - first:
+      213: 21300014
+    second: Jungle_Tileset_Spritesheet_7
+  - first:
+      213: 21300016
+    second: Jungle_Tileset_Spritesheet_8
+  - first:
+      213: 21300018
+    second: Jungle_Tileset_Spritesheet_9
+  - first:
+      213: 21300020
+    second: Jungle_Tileset_Spritesheet_10
+  - first:
+      213: 21300022
+    second: Jungle_Tileset_Spritesheet_11
+  - first:
+      213: 21300024
+    second: Jungle_Tileset_Spritesheet_12
+  - first:
+      213: 21300026
+    second: Jungle_Tileset_Spritesheet_13
+  - first:
+      213: 21300028
+    second: Jungle_Tileset_Spritesheet_14
+  - first:
+      213: 21300030
+    second: Jungle_Tileset_Spritesheet_15
+  - first:
+      213: 21300032
+    second: Jungle_Tileset_Spritesheet_16
+  - first:
+      213: 21300034
+    second: Jungle_Tileset_Spritesheet_17
+  - first:
+      213: 21300036
+    second: Jungle_Tileset_Spritesheet_18
+  - first:
+      213: 21300038
+    second: Jungle_Tileset_Spritesheet_19
+  - first:
+      213: 21300040
+    second: Jungle_Tileset_Spritesheet_20
+  - first:
+      213: 21300042
+    second: Jungle_Tileset_Spritesheet_21
+  - first:
+      213: 21300044
+    second: Jungle_Tileset_Spritesheet_22
+  - first:
+      213: 21300046
+    second: Jungle_Tileset_Spritesheet_23
+  - first:
+      213: 21300048
+    second: Jungle_Tileset_Spritesheet_24
+  - first:
+      213: 21300050
+    second: Jungle_Tileset_Spritesheet_25
+  - first:
+      213: 21300052
+    second: Jungle_Tileset_Spritesheet_26
+  - first:
+      213: 21300054
+    second: Jungle_Tileset_Spritesheet_27
+  - first:
+      213: 21300056
+    second: Jungle_Tileset_Spritesheet_28
+  - first:
+      213: 21300058
+    second: Jungle_Tileset_Spritesheet_29
+  - first:
+      213: 21300060
+    second: Jungle_Tileset_Spritesheet_30
+  - first:
+      213: 21300062
+    second: Jungle_Tileset_Spritesheet_31
+  - first:
+      213: 21300064
+    second: Jungle_Tileset_Spritesheet_32
+  - first:
+      213: 21300066
+    second: Jungle_Tileset_Spritesheet_33
+  - first:
+      213: 21300068
+    second: Jungle_Tileset_Spritesheet_34
+  - first:
+      213: 21300070
+    second: Jungle_Tileset_Spritesheet_35
+  - first:
+      213: 21300072
+    second: Jungle_Tileset_Spritesheet_36
+  - first:
+      213: 21300074
+    second: Jungle_Tileset_Spritesheet_37
+  - first:
+      213: 21300076
+    second: Jungle_Tileset_Spritesheet_38
+  - first:
+      213: 21300078
+    second: Jungle_Tileset_Spritesheet_39
+  - first:
+      213: 21300080
+    second: Jungle_Tileset_Spritesheet_40
+  - first:
+      213: 21300082
+    second: Jungle_Tileset_Spritesheet_41
+  - first:
+      213: 21300084
+    second: Jungle_Tileset_Spritesheet_42
+  - first:
+      213: 21300086
+    second: Jungle_Tileset_Spritesheet_43
+  - first:
+      213: 21300088
+    second: Jungle_Tileset_Spritesheet_44
+  - first:
+      213: 21300090
+    second: Jungle_Tileset_Spritesheet_45
+  - first:
+      213: 21300092
+    second: Jungle_Tileset_Spritesheet_46
+  - first:
+      213: 21300094
+    second: Jungle_Tileset_Spritesheet_47
+  - first:
+      213: 21300096
+    second: Jungle_Tileset_0
+  - first:
+      213: 21300098
+    second: Jungle_Tileset_1
+  - first:
+      213: 21300100
+    second: Jungle_Tileset_2
+  - first:
+      213: 21300102
+    second: Jungle_Tileset_3
+  - first:
+      213: 21300104
+    second: Jungle_Tileset_4
+  - first:
+      213: 21300106
+    second: Jungle_Tileset_5
+  - first:
+      213: 21300108
+    second: Jungle_Tileset_6
+  - first:
+      213: 21300110
+    second: Jungle_Tileset_7
+  - first:
+      213: 21300112
+    second: Jungle_Tileset_8
+  - first:
+      213: 21300114
+    second: Jungle_Tileset_9
+  - first:
+      213: 21300116
+    second: Jungle_Tileset_10
+  - first:
+      213: 21300118
+    second: Jungle_Tileset_11
+  - first:
+      213: 21300120
+    second: Jungle_Tileset_12
+  - first:
+      213: 21300122
+    second: Jungle_Tileset_13
+  - first:
+      213: 21300124
+    second: Jungle_Tileset_14
+  - first:
+      213: 21300126
+    second: Jungle_Tileset_15
+  - first:
+      213: 21300128
+    second: Jungle_Tileset_16
+  - first:
+      213: 21300130
+    second: Jungle_Tileset_17
+  - first:
+      213: 21300132
+    second: Jungle_Tileset_18
+  - first:
+      213: 21300134
+    second: Jungle_Tileset_19
+  - first:
+      213: 21300136
+    second: Jungle_Tileset_20
+  - first:
+      213: 21300138
+    second: Jungle_Tileset_21
+  - first:
+      213: 21300140
+    second: Jungle_Tileset_22
+  - first:
+      213: 21300142
+    second: Jungle_Tileset_23
+  - first:
+      213: 21300144
+    second: Jungle_Tileset_24
+  - first:
+      213: 21300146
+    second: Jungle_Tileset_25
+  - first:
+      213: 21300148
+    second: Jungle_Tileset_26
+  - first:
+      213: 21300150
+    second: Jungle_Tileset_27
+  - first:
+      213: 21300152
+    second: Jungle_Tileset_28
+  - first:
+      213: 21300154
+    second: Jungle_Tileset_29
+  - first:
+      213: 21300156
+    second: Jungle_Tileset_30
+  - first:
+      213: 21300158
+    second: Jungle_Tileset_31
+  - first:
+      213: 21300160
+    second: Jungle_Tileset_32
+  - first:
+      213: 21300162
+    second: Jungle_Tileset_33
+  - first:
+      213: 21300164
+    second: Jungle_Tileset_34
+  - first:
+      213: 21300166
+    second: Jungle_Tileset_35
+  - first:
+      213: 21300168
+    second: Jungle_Tileset_36
+  - first:
+      213: 21300170
+    second: Jungle_Tileset_37
+  - first:
+      213: 21300172
+    second: Jungle_Tileset_38
+  - first:
+      213: 21300174
+    second: Jungle_Tileset_39
+  - first:
+      213: 21300176
+    second: Jungle_Tileset_40
+  - first:
+      213: 21300178
+    second: Jungle_Tileset_41
+  - first:
+      213: 21300180
+    second: Jungle_Tileset_42
+  - first:
+      213: 21300182
+    second: Jungle_Tileset_43
+  - first:
+      213: 21300184
+    second: Jungle_Tileset_44
+  - first:
+      213: 21300186
+    second: Jungle_Tileset_45
+  - first:
+      213: 21300188
+    second: Jungle_Tileset_46
+  - first:
+      213: 21300190
+    second: Jungle_Tileset_47
   externalObjects: {}
-  serializedVersion: 4
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -119,6 +309,8 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -129,7 +321,7 @@ TextureImporter:
     serializedVersion: 2
     filterMode: -1
     aniso: -1
-    mipBias: -1
+    mipBias: -100
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -141,18 +333,22 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 128
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
+  singleChannelComponent: 0
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  applyGammaDecoding: 1
   platformSettings:
-  - buildTarget: DefaultTexturePlatform
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -161,7 +357,10 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-  - buildTarget: Standalone
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -170,7 +369,10 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-  - buildTarget: iPhone
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: iPhone
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -179,7 +381,10 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-  - buildTarget: Android
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -188,6 +393,8 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -205,6 +412,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 08305410000000000800000000000000
+      internalID: 21300096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_1
       rect:
@@ -219,6 +433,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 28305410000000000800000000000000
+      internalID: 21300098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_2
       rect:
@@ -233,6 +454,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 48305410000000000800000000000000
+      internalID: 21300100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_3
       rect:
@@ -247,6 +475,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 68305410000000000800000000000000
+      internalID: 21300102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_4
       rect:
@@ -261,6 +496,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 88305410000000000800000000000000
+      internalID: 21300104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_5
       rect:
@@ -275,6 +517,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: a8305410000000000800000000000000
+      internalID: 21300106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_6
       rect:
@@ -289,6 +538,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: c8305410000000000800000000000000
+      internalID: 21300108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_7
       rect:
@@ -303,6 +559,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: e8305410000000000800000000000000
+      internalID: 21300110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_8
       rect:
@@ -317,6 +580,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 09305410000000000800000000000000
+      internalID: 21300112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_9
       rect:
@@ -331,6 +601,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 29305410000000000800000000000000
+      internalID: 21300114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_10
       rect:
@@ -345,6 +622,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 49305410000000000800000000000000
+      internalID: 21300116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_11
       rect:
@@ -359,6 +643,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 69305410000000000800000000000000
+      internalID: 21300118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_12
       rect:
@@ -373,6 +664,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 89305410000000000800000000000000
+      internalID: 21300120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_13
       rect:
@@ -387,6 +685,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: a9305410000000000800000000000000
+      internalID: 21300122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_14
       rect:
@@ -401,6 +706,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: c9305410000000000800000000000000
+      internalID: 21300124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_15
       rect:
@@ -415,6 +727,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: e9305410000000000800000000000000
+      internalID: 21300126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_16
       rect:
@@ -429,6 +748,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 0a305410000000000800000000000000
+      internalID: 21300128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_17
       rect:
@@ -443,6 +769,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 2a305410000000000800000000000000
+      internalID: 21300130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_18
       rect:
@@ -457,6 +790,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 4a305410000000000800000000000000
+      internalID: 21300132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_19
       rect:
@@ -471,6 +811,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 6a305410000000000800000000000000
+      internalID: 21300134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_20
       rect:
@@ -485,6 +832,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 8a305410000000000800000000000000
+      internalID: 21300136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_21
       rect:
@@ -499,6 +853,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: aa305410000000000800000000000000
+      internalID: 21300138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_22
       rect:
@@ -513,6 +874,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: ca305410000000000800000000000000
+      internalID: 21300140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_23
       rect:
@@ -527,6 +895,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: ea305410000000000800000000000000
+      internalID: 21300142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_24
       rect:
@@ -541,6 +916,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 0b305410000000000800000000000000
+      internalID: 21300144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_25
       rect:
@@ -555,6 +937,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 2b305410000000000800000000000000
+      internalID: 21300146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_26
       rect:
@@ -569,6 +958,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 4b305410000000000800000000000000
+      internalID: 21300148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_27
       rect:
@@ -583,6 +979,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 6b305410000000000800000000000000
+      internalID: 21300150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_28
       rect:
@@ -597,6 +1000,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 8b305410000000000800000000000000
+      internalID: 21300152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_29
       rect:
@@ -611,6 +1021,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: ab305410000000000800000000000000
+      internalID: 21300154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_30
       rect:
@@ -625,6 +1042,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: cb305410000000000800000000000000
+      internalID: 21300156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Jungle_Tileset_31
       rect:
@@ -639,9 +1063,26 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: eb305410000000000800000000000000
+      internalID: 21300158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
   spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 public class DataManager {
 
@@ -11,15 +9,15 @@ public class DataManager {
     public static float play_time = 0.0f;
     public static string player_id = "";
     public static int INIT_LIVES = 3;
-    //public static string server = "viridian.ccs.neu.edu";
-    public static string server = "localhost";
+    public static string server = "viridian.khoury.neu.edu";
+    //public static string server = "localhost";
     public static int port_number = 3004;
     public static int matchmaking = 0;   //0 - only levels have ratings, 1 - levels and tasks both have ratings
     public static int decoupled = 0;   //0 - coupled, 1 - decoupled 
     public static string host = "";
     public static bool separate_ports = false;
-    public static int num_ports = 2;
-    public static bool log_actions = true;
+    public static int num_ports = 1;
+    public static bool log_actions = false;
     
     public static string[] scenarios = new string[] {"Grocery Store","Pastry Shop","Clothing Store","Sports Store","Hardware Store"};
 

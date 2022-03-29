@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 namespace UnityEditor
@@ -65,7 +62,7 @@ namespace UnityEditor
 	}
 
 	[CustomEditor(typeof(PrefabBrush))]
-	public class PrefabBrushEditor : GridBrushEditorBase
+	public class PrefabBrushEditor : UnityEditor.Tilemaps.GridBrushEditorBase
 	{
 		private PrefabBrush prefabBrush { get { return target as PrefabBrush; } }
 
