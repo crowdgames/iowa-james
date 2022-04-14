@@ -296,6 +296,8 @@ public class LevelManager : MonoBehaviour {
             //Debug.Log("SCORE: " + score);
             sm.score = score;
             sm.finished = player.finished ? 1 : 0;
+            sm.correct = hcgm.relevant_count;
+            sm.incorrect = hcgm.irrelevant_count;
             yield return sm.ReportAndRequest();
             //Debug.Log("NEXT LEVEL: " + sm.server_data);
             

@@ -21,6 +21,9 @@ public class SkillManager : MonoBehaviour {
     
     public string http;
 
+    public int correct = 0;
+    public int incorrect = 0;
+
     Dictionary<string, string> mapping;
 
     void Awake()
@@ -38,7 +41,7 @@ public class SkillManager : MonoBehaviour {
         mapping.Add("Hardware Store", "hardware");
         mapping.Add("Clothing Store", "clothing");
         
-        http = "http";
+        http = "https";
     }
 
     public IEnumerator RegisterPlayer(int trurat=1500)
@@ -90,7 +93,7 @@ public class SkillManager : MonoBehaviour {
         if (DataManager.matchmaking == 0)
         {
             // string report = "http://" + DataManager.host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"score1\":\"" + score + "\",\"finished\":\"" + finished + "\"}";
-            server_request = http + "://" + DataManager.host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"score1\":\"" + score + "\",\"finished\":\"" + finished + "\"}";
+            server_request = http + "://" + DataManager.host + "/reportMatch?q={\"token\":\"" + token + "\",\"id1\":\"" + DataManager.player_id + "\",\"id2\":\"" + level + "\",\"score1\":\"" + score + "\",\"finished\":\"" + finished + "\",\"correct\":\"" + correct + "\",\"incorrect\":\"" + incorrect + "\"}";
             Debug.Log("***REPORT****: " + server_request);
         }
         else
